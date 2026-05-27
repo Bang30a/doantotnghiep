@@ -1,0 +1,121 @@
+/* public/css/student_show.css */
+
+/* ==========================================
+   CÁC CLASS TIỆN ÍCH ĐẶC THÙ
+========================================== */
+.backdrop-blur { backdrop-filter: blur(8px); }
+.border-dashed { border-style: dashed !important; border-width: 2px !important; }
+
+/* Nút quay lại */
+.back-link {
+    transition: all 0.2s ease;
+}
+.back-link:hover {
+    background-color: var(--theme-light) !important;
+    color: var(--theme-primary) !important;
+    border-color: var(--theme-subtle) !important;
+    transform: translateX(-4px);
+}
+
+/* ==========================================
+   BANNER LỚP HỌC (Purple Gradient)
+========================================== */
+.class-banner {
+    background: linear-gradient(135deg, var(--theme-primary) 0%, #C026D3 100%);
+    position: relative;
+    z-index: 0;
+}
+
+/* Hiệu ứng mảng mờ phía sau banner */
+.class-banner-bg-shape {
+    position: absolute;
+    top: -50px;
+    right: -20px;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.class-banner-icon {
+    position: absolute;
+    top: -20px;
+    right: 40px;
+    width: 180px;
+    height: 180px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    opacity: 0.95;
+    z-index: 1;
+    transform: rotate(15deg);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* ==========================================
+   THẺ THỐNG KÊ (Stat Boxes)
+========================================== */
+.stat-box {
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 24px;
+    background: white;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(124, 58, 237, 0.15) !important;
+    border-color: var(--theme-subtle);
+}
+
+/* ==========================================
+   DANH SÁCH BÀI TẬP (Task Items)
+========================================== */
+.task-item {
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    background: white;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.task-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(124, 58, 237, 0.15) !important;
+    border-color: var(--theme-subtle);
+}
+
+.task-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+}
+
+@media (min-width: 768px) {
+    .border-start-md {
+        border-left: 1px solid var(--border-soft);
+    }
+}
+
+/* ==========================================
+   NÚT BẤM (Riêng của trang này)
+========================================== */
+.btn-outline-success {
+    border-width: 2px;
+    transition: all 0.2s ease;
+}
+.btn-outline-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(25, 135, 84, 0.2);
+}

@@ -1,0 +1,173 @@
+/* ========================================================
+   THEME STYLE: GIAO BÀI TẬP PREMIUM (TÍM CHỦ ĐẠO)
+======================================================== */
+
+:root {
+    --theme-primary: #7e22ce;
+    --theme-primary-hover: #6b21a8;
+    --theme-purple-soft: #f3e8ff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --border-soft: #e2e8f0;
+}
+
+/* Kiểu chữ độ dày lớn cho tiêu đề */
+.fw-800 { font-weight: 800; }
+
+/* Thẻ card bo góc hiệu ứng đổ bóng mềm */
+.premium-card {
+    border-radius: 24px;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:hover {
+    box-shadow: 0 12px 40px rgba(126, 34, 206, 0.04);
+}
+
+/* Nút quay lại học tập */
+.btn-back {
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+.btn-back:hover {
+    color: var(--theme-primary) !important;
+    transform: translateX(-2px);
+}
+.back-icon-box {
+    width: 32px;
+    height: 32px;
+    transition: all 0.2s ease;
+}
+.btn-back:hover .back-icon-box {
+    background-color: var(--theme-purple-soft) !important;
+    border-color: #d8b4fe !important;
+}
+
+/* Background cho cụm icon tiêu đề */
+.icon-bg-purple {
+    width: 46px;
+    height: 46px;
+    background-color: var(--theme-purple-soft);
+    color: var(--theme-primary);
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+/* Label tùy chỉnh khoảng cách */
+.form-label-custom {
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-autospace: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Ô nhập liệu bọc ngoài bo góc ẩn border */
+.custom-input-group {
+    border-radius: 16px;
+    border: 1px solid var(--border-soft);
+    overflow: hidden;
+    transition: all 0.25s ease;
+    background-color: #f8fafc;
+}
+
+.custom-input-group:focus-within {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.12);
+    background-color: #ffffff;
+}
+
+.custom-input-group .input-group-text {
+    background-color: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding-left: 1.25rem;
+}
+
+.custom-input-group .form-control, 
+.custom-input-group .form-select {
+    border: none;
+    background-color: transparent;
+    padding: 0.85rem 1rem;
+    box-shadow: none;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.custom-input-group .form-control::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* Nút bấm chủ đề Tím Gradient */
+.btn-theme-primary {
+    background: linear-gradient(135deg, #9333ea, var(--theme-primary));
+    border: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-theme-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(126, 34, 206, 0.3);
+}
+
+.btn-cancel {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid var(--border-soft);
+}
+.btn-cancel:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+/* CSS Đồ họa cho khối Sidebar bên phải */
+.info-sidebar-card {
+    background: linear-gradient(to bottom right, #ffffff, #faf5ff);
+}
+.classroom-avatar {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #a855f7, var(--theme-primary));
+    border-radius: 16px;
+    font-size: 1.5rem;
+    border-color: rgba(255, 255, 255, 0.6) !important;
+}
+.class-title-text {
+    color: var(--theme-primary);
+}
+.dashed-info-box {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    border: 1px dashed #cbd5e1;
+}
+
+/* Thẻ widget Mẹo hay đen tuyền */
+.widget-tips-box {
+    background-color: #0f172a !important;
+    position: relative;
+}
+.widget-tips-box .sparkle-icon {
+    position: absolute;
+    right: -10px;
+    bottom: -20px;
+    font-size: 7rem;
+    color: #eab308;
+    opacity: 0.15;
+    transform: rotate(-15deg);
+}
+
+/* Kiểu thông báo lỗi dịu mắt */
+.alert-danger-soft {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fee2e2;
+}

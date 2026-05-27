@@ -1,0 +1,144 @@
+/* ==========================================
+   CSS CHO BẢNG ĐIỀU KHIỂN (TEACHER DASHBOARD)
+   Chuẩn form EduQuiz AI
+========================================== */
+
+/* 1. Emoji vẫy tay (Chỉ dùng ở trang chủ Dashboard) */
+@keyframes wave {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+}
+.wave-emoji {
+    display: inline-block;
+    animation: wave 2s infinite;
+    transform-origin: 70% 70%;
+}
+
+/* 2. Thẻ Thống kê 4 ô vuông trên cùng */
+.stat-card-top {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.stat-card-top:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08) !important;
+    border-color: #CBD5E1;
+}
+
+.icon-box-rounded {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+/* 3. Khối Danh sách (VD: Lớp học gần đây) */
+.section-card {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 28px;
+    height: 100%;
+}
+
+.list-item-teacher {
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+.list-item-teacher:hover {
+    border-color: var(--purple-subtle, #E9D5FF); /* Dùng fallback nếu biến chưa tải kịp */
+    background-color: var(--purple-light, #F3E8FF);
+    transform: translateX(4px);
+}
+
+.avatar-placeholder {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background-color: var(--purple-light, #F3E8FF);
+    color: var(--purple-main, #7E22CE);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 1px solid var(--purple-subtle, #E9D5FF);
+}
+
+/* 4. Hành động nhanh (Khối màu tím đậm) */
+.bg-theme-primary { background-color: var(--purple-main, #7E22CE) !important; }
+
+.quick-action-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.quick-action-item.dark {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.quick-action-item.dark:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.quick-action-item.light {
+    background-color: white;
+    border: 1px solid #E2E8F0;
+}
+.quick-action-item.light:hover {
+    background-color: var(--purple-light, #F3E8FF);
+    border-color: var(--purple-subtle, #E9D5FF);
+    transform: translateY(-2px);
+}
+
+.qa-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+.qa-text {
+    flex-grow: 1;
+    line-height: 1.4;
+}
+
+/* 5. Thống kê dưới cùng (Pastel Theme) */
+.bottom-stat {
+    border-radius: 20px;
+    padding: 28px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+.bottom-stat:hover {
+    transform: translateY(-4px);
+}

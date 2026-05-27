@@ -1,0 +1,30 @@
+/* ==========================================
+   CSS CHO QUẢN LÝ HỌC VIÊN (TEACHER STUDENTS)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* 1. Avatar Học Viên trong Bảng */
+.student-avatar {
+    width: 44px; 
+    height: 44px;
+    border-radius: 12px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-weight: 800; 
+    font-size: 1.2rem; 
+    flex-shrink: 0;
+}
+
+/* 2. Nhãn (Tag) Lớp học */
+.class-tag {
+    display: inline-flex; 
+    align-items: center;
+    padding: 4px 10px;
+    background-color: var(--theme-light);
+    color: var(--theme-primary);
+    border-radius: 8px;
+    font-size: 0.8rem; 
+    font-weight: 700;
+    border: 1px solid var(--theme-subtle);
+}

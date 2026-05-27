@@ -1,0 +1,50 @@
+/* ==========================================
+   CSS CHO QUẢN LÝ LỚP HỌC (TEACHER)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* 1. Thẻ Lớp học (Classroom Cards) */
+.classroom-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-soft) !important;
+}
+.classroom-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(126, 34, 206, 0.08) !important;
+    border-color: var(--theme-subtle) !important;
+}
+
+/* 2. Avatar chữ cái đầu tiên của lớp */
+.class-avatar {
+    width: 48px; 
+    height: 48px;
+    background: linear-gradient(135deg, #A855F7 0%, var(--theme-primary) 100%);
+    border-radius: 14px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+/* 3. Badge Mã Lớp */
+.code-badge {
+    background-color: var(--bg-soft);
+    color: var(--theme-primary);
+    font-family: monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px dashed var(--theme-subtle);
+}
+
+/* 4. Meta Tags (Số học viên, Số bài thi) */
+.meta-tag {
+    background-color: var(--bg-soft);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--theme-gray);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}

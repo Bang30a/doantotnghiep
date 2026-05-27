@@ -1,0 +1,64 @@
+/* ==========================================
+   CSS CHO TRANG CHI TIẾT LỚP HỌC (TEACHER)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* 1. Banner & Glassmorphism */
+.class-banner {
+    background: linear-gradient(135deg, var(--theme-primary-hover) 0%, #4F46E5 100%);
+    box-shadow: 0 10px 25px rgba(126, 34, 206, 0.2) !important;
+}
+
+.banner-bg-shape {
+    position: absolute;
+    top: -20%; 
+    right: -5%;
+    font-size: 16rem;
+    color: white;
+    opacity: 0.08;
+    transform: rotate(15deg);
+    pointer-events: none;
+}
+
+.glass-box {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-copy {
+    width: 45px; 
+    height: 45px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-copy:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 2. Tabs Custom (Pills) */
+.custom-nav-pills .nav-link {
+    background-color: white;
+    color: var(--theme-gray);
+    border: 1px solid var(--border-soft);
+    transition: all 0.3s ease;
+}
+
+.custom-nav-pills .nav-link:hover {
+    background-color: var(--bg-soft);
+    color: var(--theme-primary);
+}
+
+.custom-nav-pills .nav-link.active {
+    background: linear-gradient(135deg, #9333EA 0%, var(--theme-primary) 100%);
+    color: white !important;
+    border-color: transparent;
+    box-shadow: 0 8px 16px rgba(126, 34, 206, 0.25) !important;
+}
+
+/* Note: Các nút bấm và class .hover-lift đã được hệ thống hóa trong dashboard.css */

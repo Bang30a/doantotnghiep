@@ -1,0 +1,81 @@
+/* ==========================================
+   CSS CHO CHI TIẾT HỌC VIÊN (ADMIN)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* 1. Ảnh bìa Profile (Tone Xanh Ngọc) */
+.profile-cover {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    position: relative;
+}
+
+/* 2. Khối bọc Avatar (Cắt lên trên ảnh bìa) */
+.profile-avatar-wrapper {
+    margin-top: -60px;
+    border-radius: 50%;
+    background-color: white;
+    padding: 4px;
+    z-index: 2;
+}
+
+/* 3. Ảnh Avatar */
+.profile-avatar {
+    width: 120px; 
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f8f9fa;
+}
+
+/* 4. Các Button và Input Form */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    transform: translateX(-3px);
+}
+
+.custom-input {
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s;
+}
+
+.custom-input:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.25);
+    outline: none;
+}
+
+.btn-purple-gradient {
+    background: linear-gradient(135deg, #8b5cf6 0%, #c026d3 100%);
+    border: none;
+}
+
+.btn-purple-gradient:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #a21caf 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.15);
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+.icon-wrapper-md { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+.letter-spacing-1 { letter-spacing: 1px; }

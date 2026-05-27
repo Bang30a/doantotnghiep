@@ -1,0 +1,286 @@
+/* =========================================================
+   HỆ THỐNG GIAO DIỆN (DESIGN SYSTEM) - EDUQUIZ AI
+   File: public/css/dashboard.css (Bản chốt chuẩn hóa)
+========================================================= */
+
+:root {
+    /* 1. Tông màu Tím Chủ Đạo (Primary Theme) */
+    --theme-primary: #7E22CE;       
+    --theme-primary-hover: #6B21A8; 
+    --theme-light: #F3E8FF;         
+    --theme-subtle: #E9D5FF;        
+    --theme-dark: #2E1065;          
+    --theme-gray: #64748B;          
+    
+    /* 2. Màu Phụ & Trạng thái (Secondary & Alerts) */
+    --fuchsia-main: #C026D3;
+    --emerald-main: #059669;
+    --blue-main: #2563EB;
+    --orange-main: #EA580C;
+    --success: #059669;       --success-light: #D1FAE5;
+    --warning: #D97706;       --warning-light: #FEF3C7;
+    --danger: #DC2626;        --danger-light: #FEE2E2;
+
+    /* 3. Tông màu Nền & Viền (Layout) */
+    --bg-soft: #F8FAFC;             
+    --border-soft: #E2E8F0;         
+}
+
+/* =========================================================
+   1. CẤU TRÚC CHUNG & TEXT (GLOBAL & TYPOGRAPHY)
+========================================================= */
+body {
+    background-color: var(--bg-soft);
+    font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.main-content { margin-left: 280px; padding: 32px 40px; min-height: 100vh; }
+
+.fw-800 { font-weight: 800 !important; }
+.fw-900 { font-weight: 900 !important; }
+.letter-spacing-1 { letter-spacing: 0.5px; }
+.text-shadow-sm { text-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+/* Text Colors */
+.theme-text-primary, .text-purple { color: var(--theme-primary) !important; }
+.theme-text-dark { color: var(--theme-dark) !important; }
+.text-purple-dark { color: var(--theme-primary-hover) !important; }
+.text-fuchsia { color: var(--fuchsia-main) !important; }
+.text-blue { color: var(--blue-main) !important; }
+.text-green, .text-emerald { color: var(--emerald-main) !important; }
+.text-orange { color: var(--orange-main) !important; }
+.text-info { color: #0369a1 !important; }
+.text-warning { color: var(--warning) !important; }
+.text-warning-dark { color: #B45309 !important; }
+.text-warning-emphasis { color: #92400E !important; }
+.text-danger { color: var(--danger) !important; }
+
+/* =========================================================
+   2. TIỆN ÍCH MÀU NỀN & VIỀN (BACKGROUNDS & BORDERS)
+========================================================= */
+/* Backgrounds */
+.bg-soft, .bg-body-custom { background-color: var(--bg-soft) !important; }
+.bg-gray-soft { background-color: #F1F5F9 !important; }
+.bg-purple-light { background-color: var(--theme-light) !important; }
+.bg-purple-soft { background-color: var(--theme-subtle) !important; }
+.bg-purple-custom { background-color: var(--theme-primary) !important; color: white !important; }
+.bg-purple-gradient { background: linear-gradient(135deg, #9333EA 0%, var(--theme-primary) 100%); }
+
+/* Pastel Backgrounds */
+.bg-blue-subtle { background-color: #DBEAFE !important; }
+.bg-blue-light { background-color: #EFF6FF !important; }
+.bg-info-soft { background-color: #e0f2fe !important; }
+.bg-green-subtle { background-color: #D1FAE5 !important; }
+.bg-green-light, .bg-emerald-soft { background-color: var(--success-light) !important; }
+.bg-orange-subtle { background-color: #FFEDD5 !important; }
+.bg-warning-light, .bg-warning-soft { background-color: var(--warning-light) !important; }
+.bg-danger-light, .bg-danger-soft { background-color: var(--danger-light) !important; }
+
+/* Borders */
+.border-soft { border-color: var(--border-soft) !important; }
+.border-purple-subtle { border-color: var(--theme-subtle) !important; border-width: 1px; border-style: solid; }
+.border-blue { border: 1px solid #BFDBFE !important; }
+.border-green, .border-emerald-subtle { border: 1px solid #A7F3D0 !important; }
+.border-warning-subtle { border: 1px solid #FDE68A !important; }
+.border-danger-subtle { border: 1px solid #FECACA !important; }
+.border-dashed { border-style: dashed !important; border-width: 2px !important; }
+
+/* =========================================================
+   3. NÚT BẤM (BUTTONS)
+========================================================= */
+.btn-theme-primary, .btn-purple-main {
+    background-color: var(--theme-primary); border: none; color: white !important; transition: all 0.3s ease;
+}
+.btn-theme-primary:hover, .btn-purple-main:hover {
+    background-color: var(--theme-primary-hover); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(126, 34, 206, 0.3) !important;
+}
+
+.btn-purple-gradient { 
+    background: linear-gradient(135deg, #9333EA 0%, var(--theme-primary) 100%);
+    color: white !important; border: none; transition: all 0.3s ease;
+}
+.btn-purple-gradient:hover { box-shadow: 0 8px 20px rgba(126, 34, 206, 0.3); transform: translateY(-2px); }
+
+.btn-outline-theme, .btn-outline-purple {
+    background: transparent; color: var(--theme-primary); border: 1px solid var(--theme-primary); transition: all 0.3s ease;
+}
+.btn-outline-theme:hover, .btn-outline-purple:hover {
+    background: var(--theme-primary); color: white !important; box-shadow: 0 4px 12px rgba(126, 34, 206, 0.15);
+}
+
+.btn-purple-soft {
+    background-color: white; color: var(--theme-primary); border: 1px solid var(--theme-primary);
+}
+.btn-purple-soft:hover {
+    background-color: var(--theme-primary); color: white; box-shadow: 0 4px 10px rgba(126, 34, 206, 0.2);
+}
+
+.btn-emerald-soft {
+    background-color: var(--success-light); color: var(--success); border: 1px solid #A7F3D0; transition: all 0.3s ease;
+}
+.btn-emerald-soft:hover {
+    background-color: var(--success); color: white; border-color: var(--success); box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2) !important;
+}
+
+.btn-danger-soft {
+    background-color: var(--danger-light); color: var(--danger); border: 1px solid #FECACA; transition: all 0.3s ease;
+}
+.btn-danger-soft:hover {
+    background-color: var(--danger); color: white; border-color: var(--danger); box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2) !important;
+}
+
+.btn-white { 
+    background: white; color: var(--theme-gray); border: 1px solid var(--border-soft); transition: all 0.3s ease;
+}
+.btn-white:hover { background: #F1F5F9; color: var(--theme-dark); transform: translateY(-1px); }
+
+.btn-outline-white {
+    border: 2px solid rgba(255, 255, 255, 0.3); color: white; background: transparent; transition: all 0.3s;
+}
+.btn-outline-white:hover { background: rgba(255, 255, 255, 0.15); color: white; border-color: white; }
+
+.btn-black {
+    background-color: var(--theme-dark, #0F172A); color: white !important; border: 1px solid transparent; transition: all 0.3s ease;
+}
+.btn-black:hover {
+    background-color: #1E293B; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2); transform: translateY(-2px);
+}
+
+.btn-back {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 50px;
+    background-color: white; color: var(--theme-gray); border: 1px solid var(--border-soft);
+    text-decoration: none; font-weight: 600; font-size: 0.875rem; transition: all 0.3s ease;
+}
+.btn-back:hover {
+    background-color: var(--theme-light); color: var(--theme-primary); border-color: var(--theme-primary); transform: translateX(-3px);
+}
+
+.btn-light-hover { background: transparent; color: var(--theme-gray); transition: all 0.2s; }
+.btn-light-hover:hover { background: #F1F5F9; color: var(--theme-primary); }
+
+/* =========================================================
+   4. THẺ, ICON VÀ HIỆU ỨNG (CARDS, ICONS & HOVER)
+========================================================= */
+.hover-lift { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease; }
+.hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(126, 34, 206, 0.15) !important; border-color: var(--theme-subtle) !important; }
+.hover-pulse:hover { transform: scale(1.02); }
+.hover-purple:hover { background-color: var(--theme-light) !important; color: var(--theme-primary) !important; border-color: var(--theme-primary) !important; }
+
+.dash-card, .stat-card {
+    background: #ffffff; border-radius: 16px; border: 1px solid transparent; padding: 24px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dash-card:hover, .stat-card:hover {
+    transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(126, 34, 206, 0.15); border-color: var(--theme-subtle);
+}
+
+.stat-card-mini {
+    background: white; border-radius: 1.25rem; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: all 0.3s ease; border: 1px solid var(--border-soft);
+}
+.stat-card-mini:hover {
+    transform: translateY(-5px); box-shadow: 0 10px 25px rgba(126, 34, 206, 0.1) !important; border-color: var(--theme-subtle);
+}
+
+.icon-wrapper { display: flex; align-items: center; justify-content: center; width: 65px; height: 65px; border-radius: 18px; font-size: 1.8rem; }
+.icon-wrapper-md { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 12px; font-size: 1.4rem; }
+.icon-wrapper.purple { background-color: var(--theme-light); color: var(--theme-primary); }
+.icon-wrapper.emerald { background-color: var(--success-light); color: var(--emerald-main); }
+.icon-wrapper.fuchsia { background-color: #FAE8FF; color: var(--fuchsia-main); }
+.empty-icon-wrapper { width: 100px; height: 100px; background-color: var(--theme-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+
+.avatar-sm { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #a855f7 0%, var(--theme-primary) 100%); color: white; font-weight: 800; font-size: 0.9rem; }
+
+/* =========================================================
+   5. THÔNG BÁO VÀ HUY HIỆU (ALERTS & BADGES)
+========================================================= */
+.alert-emerald-soft { background-color: var(--success-light); color: #065F46; border: 1px solid #A7F3D0 !important; }
+.alert-danger-soft { background-color: var(--danger-light); color: var(--danger); border: 1px solid #FECACA !important; }
+
+.badge-emerald { background-color: var(--success-light); color: var(--success); border: 1px solid #A7F3D0; }
+.badge-warning { background-color: var(--warning-light); color: #B45309; border: 1px solid #FDE68A; }
+
+.trend-badge { font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; }
+.trend-up { background-color: var(--success-light); color: var(--success); }
+.trend-down { background-color: var(--danger-light); color: var(--danger); }
+
+/* =========================================================
+   6. BẢNG BIỂU & FORMS (TABLES, PAGINATION, INPUTS)
+========================================================= */
+.custom-table thead th { background-color: var(--bg-soft); color: var(--theme-gray); text-transform: uppercase; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.5px; padding: 1.2rem 1.5rem; border-bottom: 2px solid var(--border-soft); }
+.custom-table tbody td { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-soft); background-color: white; transition: all 0.2s ease; }
+.hover-row:hover td, .student-row:hover td { background-color: var(--theme-light) !important; transition: background-color 0.2s ease; }
+
+.custom-pagination .pagination {
+    --bs-pagination-color: var(--theme-gray); --bs-pagination-bg: white; --bs-pagination-border-color: var(--border-soft);
+    --bs-pagination-hover-color: var(--theme-primary); --bs-pagination-hover-bg: var(--theme-light); --bs-pagination-hover-border-color: var(--theme-primary);
+    --bs-pagination-active-color: white; --bs-pagination-active-bg: var(--theme-primary); --bs-pagination-active-border-color: var(--theme-primary);
+    gap: 6px;
+}
+.custom-pagination .page-link { border-radius: 10px !important; font-weight: 700; min-width: 42px; text-align: center; border: 1px solid transparent; transition: all 0.3s ease; }
+.custom-pagination .page-item:not(.active) .page-link { background-color: white; border: 1px solid var(--border-soft); }
+.custom-pagination .page-item.active .page-link { box-shadow: 0 4px 10px rgba(126, 34, 206, 0.3); }
+
+.custom-input { background-color: #F8FAFC; border: 1px solid #E2E8F0; transition: all 0.2s ease; }
+.custom-input:focus { background-color: #ffffff; border-color: var(--theme-primary); box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.1); }
+
+.input-group-custom, .custom-input-group { border: 1px solid var(--border-soft); border-radius: 0.5rem; transition: all 0.3s ease; }
+.input-group-custom:focus-within, .custom-input-group:focus-within { border-color: var(--theme-primary); box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.1); }
+.input-group-custom .form-control, .input-group-custom .input-group-text { background-color: var(--bg-soft); }
+.input-group-custom:focus-within .form-control, .input-group-custom:focus-within .input-group-text { background-color: white; }
+
+.custom-radio { width: 1.1em; height: 1.1em; border: 2px solid #CBD5E1; cursor: pointer; }
+.custom-radio:checked { background-color: var(--success); border-color: var(--success); }
+
+/* =========================================================
+   7. SIDEBAR (MENU BÊN TRÁI)
+========================================================= */
+.sidebar { width: 280px; height: 100vh; position: fixed; top: 0; left: 0; background-color: #ffffff; border-right: 1px solid var(--border-soft); display: flex; flex-direction: column; z-index: 1000; transition: all 0.3s ease; }
+.sidebar-header { padding: 24px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-soft); }
+.sidebar-logo { width: 48px; height: 48px; background-color: var(--theme-light); color: var(--theme-primary); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 2px 8px rgba(126, 34, 206, 0.15); }
+
+.sidebar-menu { list-style: none; padding: 16px 12px; margin: 0; flex-grow: 1; overflow-y: auto; }
+.sidebar-menu::-webkit-scrollbar { width: 4px; }
+.sidebar-menu::-webkit-scrollbar-track { background: transparent; }
+.sidebar-menu::-webkit-scrollbar-thumb { background: transparent; border-radius: 10px; }
+.sidebar:hover .sidebar-menu::-webkit-scrollbar-thumb { background: #cbd5e1; }
+
+.sidebar-menu a { display: flex; align-items: center; gap: 14px; padding: 12px 16px; color: var(--theme-gray); text-decoration: none; border-radius: 12px; font-weight: 600; margin-bottom: 4px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-menu a i { font-size: 1.25rem; transition: transform 0.2s ease; opacity: 0.8; }
+.sidebar-menu a:hover { background-color: var(--bg-soft); color: var(--theme-primary); transform: translateX(4px); }
+.sidebar-menu a:hover i { transform: scale(1.15); opacity: 1; }
+.sidebar-menu a.active { background-color: var(--theme-light); color: var(--theme-primary); box-shadow: 0 2px 4px rgba(126, 34, 206, 0.05); }
+.sidebar-menu a.active i { opacity: 1; color: var(--theme-primary); }
+
+.sidebar-footer { padding: 20px; border-top: 1px solid var(--border-soft); background-color: var(--bg-soft); }
+.btn-emerald-gradient {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: white !important;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-emerald-gradient:hover {
+    box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+    transform: translateY(-2px);
+}
+/* ==========================================
+   KHUNG NỘI DUNG CHÍNH (CONTENT AREA)
+========================================== */
+.content-area {
+    background-color: #ffffff; /* Nền trắng tinh khôi */
+    border-radius: 24px; /* Bo góc đồng bộ với hệ thống */
+    padding: 32px; /* Lề trong rộng rãi cho thoáng */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02); /* Bóng đổ cực nhẹ, tạo chiều sâu */
+    border: 1px solid var(--border-soft, #E2E8F0); /* Viền xám mờ */
+    min-height: calc(100vh - 140px); /* Đẩy khung dài xuống sát mép dưới màn hình */
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+
+/* Tối ưu riêng cho màn hình điện thoại (đỡ bị chật lề) */
+@media (max-width: 768px) {
+    .content-area {
+        padding: 16px;
+        border-radius: 16px;
+    }
+}

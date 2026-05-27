@@ -1,0 +1,40 @@
+/* ==========================================
+   TOP HEADER & TOGGLE BUTTON
+========================================== */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.85);
+}
+
+.modern-tophead {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    padding: 12px 24px;
+    margin-bottom: 24px;
+    position: sticky;
+    top: 16px;
+    z-index: 999;
+}
+
+.toggle-btn {
+    background: white;
+    border: 1px solid #E2E8F0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #0F172A;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background: #F8FAFC;
+    color: #7E22CE;
+    transform: scale(1.05);
+}

@@ -1,0 +1,108 @@
+/* ==========================================
+   CSS CHO ADMIN - LỊCH SỬ AI (API LOGS)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* Thẻ thống kê */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08) !important;
+}
+
+.stat-icon-box {
+    width: 52px; 
+    height: 52px;
+    border-radius: 14px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Nút Export */
+.btn-export:hover {
+    background-color: #f8f9fa !important;
+    border-color: var(--theme-primary, #7e22ce) !important;
+    color: var(--theme-primary, #7e22ce) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(126, 34, 206, 0.15) !important;
+}
+
+/* Tên user đổi màu khi hover */
+.user-name { transition: color 0.2s ease; }
+.hover-row:hover .user-name { color: var(--theme-primary, #7e22ce) !important; cursor: pointer; }
+
+/* Trạng thái Thành công (Pill xanh ngọc) */
+.custom-badge-success {
+    background-color: #d1fae5; 
+    color: #047857; 
+    border: 1px solid #a7f3d0 !important;
+}
+
+/* Hiệu ứng Hover Bảng */
+.hover-row:hover td {
+    background-color: #f8fafc !important; /* Xanh nhạt cực nhẹ khi hover */
+}
+
+/* ==========================================
+   BẢNG DANH SÁCH (TABLE STYLING & SCROLL)
+========================================== */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+/* CỐ ĐỊNH HEADER KHI CUỘN (STICKY) */
+.custom-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #f8f9fa; /* Màu nền trùng thiết kế */
+    color: #6c757d; 
+    text-transform: uppercase; 
+    font-size: 0.75rem; 
+    font-weight: 800; 
+    letter-spacing: 0.5px;
+    padding: 1.2rem 1.5rem; 
+    border-bottom: 2px solid #e9ecef;
+    border-top: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Đổ bóng nhẹ phân tầng 3D */
+}
+
+.custom-table tbody td {
+    padding: 1.25rem 1.5rem; 
+    border-bottom: 1px solid #f1f5f9;
+    background-color: white; 
+    transition: all 0.2s ease;
+    vertical-align: middle;
+}
+.custom-table tbody tr:last-child td { border-bottom: none; }
+
+/* TẠO THANH CUỘN CHO BẢNG */
+.table-responsive {
+    max-height: calc(100vh - 280px); 
+    overflow-y: auto !important; 
+    overflow-x: auto !important; 
+}
+
+/* Custom thanh cuộn cho thẩm mỹ (Webkit) */
+.table-responsive::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.table-responsive::-webkit-scrollbar-track {
+    background: transparent;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 10px;
+}
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8;
+}
+
+/* Bỏ bo góc của thẻ th khi dùng Sticky để tránh lỗi giao diện */
+.custom-table thead th:first-child { border-top-left-radius: 0; }
+.custom-table thead th:last-child { border-top-right-radius: 0; }

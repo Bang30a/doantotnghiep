@@ -1,0 +1,100 @@
+/* ==========================================
+   CSS CHO CHẤM BÀI CHI TIẾT (SPLIT VIEW)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* 1. Header Thông tin bài thi */
+.grading-header {
+    background: linear-gradient(135deg, var(--theme-primary-hover) 0%, #4f46e5 100%);
+    color: white; 
+    border-radius: 1.5rem; 
+    position: relative; 
+    overflow: hidden;
+}
+
+.grading-header .bg-icon {
+    position: absolute;
+    top: -20px; 
+    right: 20px; 
+    font-size: 12rem; 
+    color: rgba(255, 255, 255, 0.05);
+    transform: rotate(15deg); 
+    z-index: 0; 
+    pointer-events: none;
+}
+
+/* Số điểm tổng khổng lồ */
+.badge-score {
+    font-size: 2.5rem; 
+    font-weight: 900; 
+    line-height: 1;
+    background: -webkit-linear-gradient(135deg, var(--theme-primary-hover) 0%, #4f46e5 100%);
+    -webkit-background-clip: text; 
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 2. Thẻ Câu hỏi bao ngoài */
+.question-box {
+    border-left: 5px solid var(--border-soft); 
+    transition: all 0.3s ease; 
+    background-color: #ffffff;
+}
+.question-box:hover {
+    transform: translateY(-2px); 
+    box-shadow: 0 10px 25px rgba(126, 34, 206, 0.08) !important;
+    border-color: var(--theme-subtle);
+}
+
+/* 3. Cột Trái: Box bài làm học sinh */
+.student-answer-box { 
+    background-color: var(--bg-soft); 
+    border: 1px solid var(--border-soft); 
+    font-size: 1.05rem; 
+}
+
+/* 4. Cột Phải: Box AI Gợi ý */
+.ai-hint-box { 
+    background-color: var(--theme-light); 
+    border: 1px dashed var(--theme-subtle); 
+}
+
+/* 5. Form nhập điểm của Giảng viên */
+.grading-input-wrapper {
+    background: #ffffff; 
+    border: 2px solid var(--theme-subtle); 
+    transition: all 0.3s;
+}
+.grading-input-wrapper:focus-within {
+    border-color: var(--theme-primary); 
+    box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.1);
+}
+
+/* Ô nhập điểm mini */
+.score-input {
+    font-size: 1.7rem !important; 
+    color: var(--theme-primary-hover) !important; 
+    background: #ffffff !important; 
+    border: 2px solid var(--theme-subtle) !important;
+}
+.score-input:focus { 
+    box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.2) !important; 
+    outline: none !important; 
+    border-color: var(--theme-primary) !important; 
+}
+
+/* Textarea nhận xét */
+.feedback-input {
+    border: 1px solid var(--border-soft); 
+    border-radius: 12px; 
+    font-size: 0.95rem; 
+    resize: vertical; 
+    transition: all 0.2s ease; 
+    color: var(--theme-dark);
+}
+.feedback-input:focus { 
+    border-color: var(--theme-primary); 
+    box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.1); 
+    outline: none; 
+    background-color: #ffffff !important; 
+}

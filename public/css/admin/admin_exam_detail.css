@@ -1,0 +1,84 @@
+/* ========================================================
+   CSS CHI TIẾT ĐỀ THI - DÀNH CHO ADMIN
+   Chuẩn form EduQuiz AI - Design System
+   ======================================================== */
+
+/* Banner Đề thi */
+.exam-banner {
+    background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-hover) 100%);
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Thống kê Glassmorphism */
+.glass-stat {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 1rem;
+    transition: transform 0.3s ease;
+}
+.glass-stat:hover {
+    transform: translateY(-3px);
+}
+
+/* Thẻ Câu hỏi */
+.question-card { 
+    border-left: 5px solid var(--theme-primary) !important; 
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-soft);
+}
+.question-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+    border-color: #e2e8f0;
+}
+
+/* Hộp Đáp án / Gợi ý AI */
+.answer-box { 
+    background-color: var(--purple-soft); 
+    border: 1px dashed var(--theme-primary); 
+    border-radius: 12px; 
+    padding: 1.5rem; 
+    transition: all 0.3s ease;
+}
+.answer-box.hidden-answer .answer-content {
+    display: none;
+}
+
+/* Đáp án trắc nghiệm */
+.option-item {
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-soft);
+    cursor: default;
+}
+.option-item:hover {
+    background-color: var(--bg-soft);
+    border-color: #cbd5e1;
+}
+.correct-option {
+    background-color: var(--purple-soft) !important;
+    border-color: var(--theme-primary) !important;
+    color: var(--theme-primary) !important; 
+    box-shadow: 0 2px 10px rgba(168, 85, 247, 0.15);
+}
+
+/* Nút tiện ích (Copy, Toggle) */
+.btn-tool {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border-soft);
+    color: var(--theme-gray);
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.btn-tool:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}

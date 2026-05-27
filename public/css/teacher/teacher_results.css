@@ -1,0 +1,34 @@
+/* ========================================================
+   CSS BẢNG ĐIỂM LỚP HỌC (TEACHER RESULTS)
+   Chuẩn form EduQuiz AI - Design System
+======================================================== */
+
+/* 1. Header Bảng điểm */
+.score-header {
+    background: linear-gradient(135deg, var(--theme-primary-hover) 0%, #4f46e5 100%);
+    color: white;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.score-header .bg-icon {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    font-size: 8rem;
+    color: rgba(255, 255, 255, 0.1);
+    transform: rotate(15deg);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 2. Badge điểm số trong bảng */
+.badge-score {
+    font-weight: 800;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.95rem;
+    display: inline-block;
+    min-width: 60px;
+}

@@ -1,0 +1,101 @@
+/* public/css/student_question_banks.css */
+
+/* ==========================================
+   Tiện ích hover đặc thù
+========================================== */
+.hover-theme:hover {
+    color: var(--theme-primary) !important;
+    background-color: var(--theme-light) !important;
+    border-color: var(--theme-subtle) !important;
+}
+
+/* ==========================================
+   Bộ lọc (Filter Bar)
+========================================== */
+.input-group-custom .form-control:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+.input-group-custom:focus-within {
+    box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.15);
+    border-radius: 8px;
+}
+
+.form-select-custom {
+    border: 1px solid #dee2e6;
+}
+.form-select-custom:focus {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.15);
+}
+
+/* ==========================================
+   Bank Card Styling (Thẻ đề thi)
+========================================== */
+.bank-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.bank-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px -8px rgba(124, 58, 237, 0.15) !important;
+    border-color: var(--theme-subtle) !important;
+}
+
+.bank-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.bank-card:hover .bank-icon {
+    transform: scale(1.05) rotate(-5deg);
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;         
+    line-clamp: 2;                 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 40px; 
+}
+
+/* ==========================================
+   Trạng thái trống & Alert
+========================================== */
+.border-dashed {
+    border-style: dashed !important;
+    border-width: 2px !important;
+}
+
+.alert-custom-success {
+    background-color: #F0FDF4;
+    color: #166534;
+    border-left: 4px solid #22C55E !important;
+}
+
+/* ==========================================
+   Phân trang (Pagination) Custom
+========================================== */
+.pagination-custom .page-link {
+    color: var(--theme-primary);
+    border-radius: 8px;
+    margin: 0 4px;
+    border: none;
+    font-weight: 500;
+}
+.pagination-custom .page-item.active .page-link {
+    background-color: var(--theme-primary);
+    color: white;
+}
+.pagination-custom .page-link:hover {
+    background-color: var(--theme-light);
+}

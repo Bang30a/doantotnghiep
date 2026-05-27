@@ -1,0 +1,96 @@
+/* ==========================================
+   CSS CHO CHI TIẾT GIẢNG VIÊN (ADMIN)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* 1. Ảnh bìa Profile (Đổi sang tone Tím Xanh đặc trưng cho Giảng viên) */
+.profile-cover {
+    background: linear-gradient(135deg, #8b5cf6 0%, #4f46e5 100%);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    position: relative;
+}
+
+/* 2. Khối bọc Avatar (Cắt lên trên ảnh bìa) */
+.profile-avatar-wrapper {
+    margin-top: -60px; /* Kéo avatar lẹm lên phần cover */
+    border-radius: 50%;
+    padding: 4px;
+    background: white;
+    z-index: 2;
+}
+
+/* 3. Ảnh Avatar */
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f8f9fa;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* 4. Các nút bấm và Input Form */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    transform: translateX(-3px);
+}
+
+.custom-input {
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s;
+}
+
+.custom-input:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.25);
+    outline: none;
+}
+
+.btn-purple-gradient {
+    background: linear-gradient(135deg, #8b5cf6 0%, #c026d3 100%);
+    border: none;
+}
+
+.btn-purple-gradient:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #a21caf 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.15);
+}
+
+/* Hiệu ứng hover nhấc card */
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 5. Tiện ích (Utilities) */
+.fw-800 { font-weight: 800; }
+.theme-text-primary { color: #8b5cf6; }
+.bg-purple-light { background-color: #f3e8ff; }
+.bg-gray-soft { background-color: #f9fafb; }
+.bg-emerald-soft { background-color: #d1fae5; }
+.text-emerald { color: #059669; }
+.border-emerald-subtle { border-color: #a7f3d0 !important; }
+.bg-danger-soft { background-color: #fee2e2; }
+.letter-spacing-1 { letter-spacing: 1px; }
+.icon-wrapper-md { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }

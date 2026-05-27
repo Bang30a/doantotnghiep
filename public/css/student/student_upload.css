@@ -1,0 +1,125 @@
+/* ==========================================
+   Khu vực Upload (Drag & Drop)
+========================================== */
+.upload-drop-zone {
+    border: 2px dashed #CBD5E1;
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: var(--bg-body); /* Đã dùng biến từ CSS gốc */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-icon-wrapper {
+    transition: transform 0.3s ease;
+}
+
+.upload-drop-zone:hover {
+    border-color: var(--theme-primary);
+    background-color: var(--theme-light);
+}
+
+.upload-drop-zone:hover .upload-icon-wrapper {
+    transform: translateY(-5px) scale(1.1);
+}
+
+/* Trạng thái khi đang kéo file vào (Dragover) */
+.upload-drop-zone.dragover {
+    border-color: var(--theme-primary);
+    background-color: var(--theme-subtle);
+    border-width: 3px;
+}
+
+/* Input custom */
+.form-control-custom {
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+    padding: 0.6rem 1rem;
+}
+.form-control-custom:focus {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.15);
+}
+.input-group-text {
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #E2E8F0;
+}
+
+/* ==========================================
+   Danh sách tài liệu đã lưu
+========================================== */
+/* Tùy chỉnh thanh cuộn (Scrollbar) */
+.document-list::-webkit-scrollbar {
+    width: 6px;
+}
+.document-list::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+}
+.document-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 10px;
+}
+.document-list::-webkit-scrollbar-thumb:hover {
+    background: var(--theme-subtle); 
+}
+
+.document-item {
+    border: 1px solid #F1F5F9;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.document-item:hover {
+    box-shadow: 0 8px 16px -4px rgba(124, 58, 237, 0.1);
+    border-color: var(--theme-subtle);
+    transform: translateY(-2px);
+}
+
+.doc-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-body);
+    border: 1px solid #E2E8F0;
+}
+
+.document-item:hover .doc-icon {
+    background-color: var(--theme-light);
+    border-color: var(--theme-subtle);
+}
+
+/* Các nút thao tác (Xem, Tải, Xóa) */
+.btn-action-icon {
+    color: var(--theme-gray);
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-size: 1.1rem;
+}
+
+.btn-action-icon:hover {
+    background: var(--theme-light);
+    color: var(--theme-primary);
+}
+
+.btn-action-icon.text-danger:hover {
+    background: #FEF2F2;
+    color: #EF4444 !important;
+}
+
+/* Alert custom */
+.alert-custom-success {
+    background-color: #F0FDF4;
+    color: #166534;
+    border-left: 4px solid #22C55E !important;
+}

@@ -1,0 +1,106 @@
+/* ==================================================
+   CSS CHO TRANG CHI TIẾT LỚP HỌC (TEACHER & STUDENT)
+   Chuẩn form EduQuiz AI - Design System
+================================================== */
+
+/* 1. Banner Lớp học */
+.class-banner {
+    background: linear-gradient(135deg, var(--theme-primary-hover) 0%, var(--theme-primary) 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 32px 40px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(126, 34, 206, 0.2);
+}
+
+.class-banner-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.1;
+    font-size: 12rem;
+    transform: translate(15%, -20%);
+    pointer-events: none;
+}
+
+/* 2. Hệ thống Tabs Custom */
+.nav-tabs-custom {
+    border-bottom: 2px solid var(--border-soft);
+    margin-bottom: 24px;
+    gap: 24px;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+}
+
+.nav-tabs-custom .nav-link {
+    border: none;
+    color: var(--theme-gray);
+    font-weight: 600;
+    padding: 12px 4px;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.nav-tabs-custom .nav-link:hover {
+    color: var(--theme-primary);
+}
+
+.nav-tabs-custom .nav-link.active {
+    color: var(--theme-primary);
+    border-bottom: 3px solid var(--theme-primary);
+}
+
+/* 3. Thẻ Bài tập / Học viên (Item Cards) */
+.item-card {
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+.item-card:hover {
+    border-color: var(--theme-subtle);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* 4. Avatar (Chữ cái đầu tên Học viên) */
+.avatar-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--theme-light);
+    color: var(--theme-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    border: 1px solid var(--theme-subtle);
+}
+
+/* 5. Thẻ thống kê mini */
+.stat-box {
+    background-color: #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    height: 100%;
+    transition: all 0.2s ease;
+}
+.stat-box:hover {
+    border-color: var(--theme-subtle);
+    box-shadow: 0 8px 16px rgba(126, 34, 206, 0.05);
+}

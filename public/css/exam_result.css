@@ -1,0 +1,219 @@
+/* ========================================================
+   CSS KẾT QUẢ BÀI THI - PREMIUM UI 2024
+======================================================== */
+
+.bg-soft { background-color: #F8FAFC; }
+.transition-all { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Utilities Màu Tím */
+.text-purple-dark { color: #5B21B6 !important; }
+.hover-text-primary:hover { color: var(--theme-primary) !important; }
+
+/* Nút bấm và hiệu ứng Lift */
+.hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important; }
+
+/* --- CỘT TRÁI: Box Câu hỏi Premium --- */
+.premium-question-card {
+    border-radius: 24px;
+    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.04), 0 4px 12px -4px rgba(0, 0, 0, 0.02) !important;
+    border: 1px solid #F1F5F9;
+    overflow: hidden;
+}
+
+.q-number-circle {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+    color: var(--theme-primary);
+    border-radius: 16px; /* Vuông bo góc */
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
+}
+
+/* --- Layout Đáp Án (Không viền, Dynamic Colors) --- */
+.premium-ans-box {
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+/* Trạng thái tĩnh (Neutral) */
+.ans-box-neutral { background-color: #F8FAFC; }
+/* Trạng thái chọn ĐÚNG */
+.ans-box-correct { background-color: #ECFDF5; }
+/* Trạng thái chọn SAI */
+.ans-box-wrong { background-color: #FEF2F2; }
+/* Trạng thái Highlight (Đáp án đúng nhưng không chọn) */
+.ans-box-highlight { background-color: #F0FDF4; border: 2px dashed #A7F3D0; }
+
+.ans-icon-wrapper { width: 32px; height: 32px; }
+
+/* --- Layout Tự luận --- */
+.premium-essay-box { border-radius: 16px; border: 1px solid rgba(0,0,0,0.05); }
+
+/* --- AI Giải thích Box (Ngầu & Công nghệ) --- */
+.ai-explain-box {
+    background: linear-gradient(135deg, #F5F3FF 0%, #FAF5FF 100%);
+    border-radius: 20px;
+    border: 1px solid #E9D5FF;
+}
+.ai-glow-effect {
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, rgba(255,255,255,0) 70%);
+    z-index: 0; pointer-events: none;
+}
+.ai-avatar {
+    width: 45px; height: 45px; border-radius: 14px;
+    background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 100%);
+    box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
+}
+
+/* --- CỘT PHẢI: Bảng điểm Dynamic Glassmorphism --- */
+.premium-result-card {
+    border-radius: 32px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    transition: background 0.5s ease;
+}
+
+/* 4 Trạng thái màu sắc (Dynamic Color) */
+.premium-result-card.status-success { background: linear-gradient(135deg, #059669 0%, #10B981 100%); box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25) !important; }
+.premium-result-card.status-info { background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%); box-shadow: 0 15px 35px rgba(59, 130, 246, 0.25) !important; }
+.premium-result-card.status-warning { background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%); box-shadow: 0 15px 35px rgba(245, 158, 11, 0.25) !important; }
+.premium-result-card.status-danger { background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%); box-shadow: 0 15px 35px rgba(239, 68, 68, 0.25) !important; }
+
+/* Overlay tạo hiệu ứng mờ nhạt sang trọng */
+.premium-glass-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
+    mix-blend-mode: overlay; z-index: 0;
+}
+
+/* SVG Progress Ring Animation */
+.score-circle-wrapper { width: 160px; height: 160px; }
+.progress-ring { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+.progress-ring-fill { transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1); stroke-linecap: round; }
+.score-value-inner { position: absolute; inset: 0; z-index: 2; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+/* Glass Panel Thống kê */
+.glass-stats-panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+/* ========================================================
+   RIGHT SIDE: NHAN XET GIANG VIEN + BAREME
+======================================================== */
+
+.result-side-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #F1F5F9;
+    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.04),
+                0 4px 12px -4px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+}
+
+.result-side-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.result-side-title {
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #5B21B6;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.result-score-badge {
+    background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+    color: #5B21B6;
+    border: 1px solid #DDD6FE;
+    border-radius: 999px;
+    padding: 7px 13px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.teacher-feedback-content {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #334155;
+    font-weight: 500;
+}
+
+.bareme-details summary {
+    list-style: none;
+}
+
+.bareme-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.bareme-summary {
+    cursor: pointer;
+    color: #059669;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bareme-summary::after {
+    content: "⌄";
+    margin-left: auto;
+    font-size: 1.1rem;
+    font-weight: 900;
+    transition: transform 0.25s ease;
+}
+
+.bareme-details[open] .bareme-summary::after {
+    transform: rotate(180deg);
+}
+
+.bareme-scroll {
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #DCFCE7;
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: #334155;
+}
+
+.bareme-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bareme-scroll::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.35);
+    border-radius: 999px;
+}
+
+.bareme-scroll::-webkit-scrollbar-track {
+    background: rgba(16, 185, 129, 0.08);
+    border-radius: 999px;
+}
+
+@media (max-width: 991px) {
+    .bareme-scroll {
+        max-height: 260px;
+    }
+}

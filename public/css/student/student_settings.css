@@ -1,0 +1,121 @@
+/* public/css/student_settings.css */
+
+/* ==========================================
+   TIỆN ÍCH MÀU SẮC ĐẶC THÙ
+========================================== */
+.border-indigo { border-color: var(--indigo) !important; }
+
+/* --------------------------------------
+   Menu Tabs Bên Trái
+--------------------------------------- */
+.settings-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-tab-btn {
+    background: transparent;
+    border: none;
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--theme-gray); /* Đồng bộ dùng biến */
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-tab-btn i { font-size: 1.25rem; transition: transform 0.2s; }
+
+.settings-tab-btn:hover {
+    background-color: var(--bg-soft); /* Đồng bộ dùng biến */
+    color: var(--theme-primary);
+}
+
+.settings-tab-btn:hover i {
+    transform: scale(1.1);
+}
+
+.settings-tab-btn.active {
+    background-color: var(--theme-light);
+    color: var(--theme-primary);
+    border-left-color: var(--theme-primary);
+}
+
+/* --------------------------------------
+   Khối xem trước Avatar
+--------------------------------------- */
+.avatar-preview-container {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: white;
+}
+
+.avatar-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Hover nhẹ vào avatar cho ảnh zoom lên tí */
+.avatar-preview-container:hover img {
+    transform: scale(1.05);
+}
+
+.avatar-upload-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--theme-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid white;
+}
+
+.avatar-upload-btn:hover {
+    background-color: var(--theme-primary-hover);
+    transform: scale(1.15) rotate(10deg);
+}
+
+/* --------------------------------------
+   Custom Input Form
+--------------------------------------- */
+.input-group-custom .input-group-text {
+    border-color: #E2E8F0;
+    border-radius: 10px 0 0 10px;
+    transition: border-color 0.2s;
+}
+
+.input-group-custom .form-control {
+    border-color: #E2E8F0;
+    border-radius: 0 10px 10px 0;
+}
+
+/* Hiệu ứng khi focus vào ô input */
+.input-group-custom:focus-within .input-group-text,
+.input-group-custom:focus-within .form-control {
+    border-color: var(--theme-primary);
+}
+
+.input-group-custom .form-control:focus {
+    box-shadow: none; /* Tắt shadow mặc định của bootstrap vì ta dùng viền chung */
+}
+
+/* Alert thành công */
+.alert-custom-success {
+    background-color: #F0FDF4;
+    color: #166534;
+    border-left: 4px solid #22C55E !important;
+}

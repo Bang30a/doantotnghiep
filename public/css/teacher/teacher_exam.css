@@ -1,0 +1,594 @@
+/* ========================================================
+   public/css/student_create_exam.css
+   FORM KHỞI TẠO ĐỀ (ĐÃ TỐI ƯU BIẾN TOÀN CỤC & HIỆU ỨNG)
+======================================================== */
+
+.hover-text-purple:hover { color: var(--theme-primary) !important; }
+
+/* Nút Header lưu đề */
+.btn-save-header {
+    background-color: var(--theme-primary);
+    transition: all 0.2s ease;
+}
+.btn-save-header:hover {
+    background-color: var(--theme-primary-hover);
+    transform: translateY(-2px);
+}
+
+/* Nút AI Gradient dải băng */
+.btn-magic-gradient {
+    /* Ép mã màu cứng để chống lỗi background tàng hình */
+    background: linear-gradient(135deg, #7E22CE 0%, #C026D3 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-magic-gradient i {
+    color: #FFD700 !important; /* Đảm bảo tia sét luôn màu vàng */
+}
+.btn-magic-gradient:hover {
+    background: linear-gradient(135deg, #6B21A8 0%, #A21CAF 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(192, 38, 211, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Typography & Labels */
+.custom-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--theme-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Thu nhỏ lại font chữ của Input để form cân đối hơn */
+.custom-input, .form-control, .form-select {
+    font-size: 0.9rem !important;
+    padding: 0.5rem 0.8rem !important;
+}
+
+/* Inputs & Controls */
+.custom-input {
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.01);
+    transition: border-color 0.2s;
+}
+.custom-input:focus {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    outline: none;
+}
+
+/* Box số lượng câu */
+.quantity-input-box {
+    background-color: var(--bg-soft);
+    border: 1px solid var(--border-soft);
+}
+.quantity-input-box input[type="number"]::-webkit-inner-spin-button,
+.quantity-input-box input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Input group nhập tay */
+.custom-input-group {
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.custom-input-no-border { border: none !important; }
+.custom-input-no-border:focus { box-shadow: none !important; }
+
+.custom-radio { width: 1.1rem; height: 1.1rem; cursor: pointer; }
+.custom-radio:checked { background-color: var(--theme-primary); border-color: var(--theme-primary); }
+
+/* Icons Title */
+.icon-bg-purple {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background-color: var(--theme-light); color: var(--theme-primary);
+    border-radius: 6px; font-size: 14px;
+}
+.icon-bg-green {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background-color: var(--success-light); color: var(--success);
+    border-radius: 6px; font-size: 14px;
+}
+
+/* Empty State */
+.empty-state-box {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    background-color: #ffffff;
+}
+
+/* Tabs */
+.custom-tabs-container {
+    background-color: var(--border-soft);
+    padding: 6px;
+    border-radius: 50rem;
+}
+.custom-tabs-container .nav-link {
+    color: var(--theme-gray);
+    border-radius: 50rem;
+    padding: 8px 0;
+    transition: all 0.2s ease;
+}
+.custom-tabs-container .nav-link:hover { color: var(--theme-primary); }
+.custom-tabs-container .nav-link.active {
+    background-color: #ffffff;
+    color: var(--theme-primary);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.icon-wrapper-btn {
+    width: 32px; 
+    height: 32px; 
+    background-color: #f1f5f9; /* Fallback cho var(--bg-soft) */
+    background-color: var(--bg-soft, #f1f5f9); 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b; /* Fallback cho var(--theme-gray) */
+    color: var(--theme-gray, #64748b);
+    transition: all 0.2s;
+}
+.config-header:hover .icon-wrapper-btn {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    color: var(--theme-primary, #7E22CE);
+}
+
+/* ========================================================
+   JS RENDER KHU VỰC CÂU HỎI (Do JS tạo ra)
+======================================================== */
+.question-item { 
+    border-left: 4px solid var(--theme-primary) !important; 
+    background: #fff; 
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border-top: 1px solid var(--border-soft);
+    border-right: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+}
+.answer-option { 
+    padding: 10px 16px; 
+    border-radius: 8px; 
+    margin-bottom: 8px; 
+    background: var(--bg-soft); 
+    border: 1px solid var(--border-soft); 
+    color: #334155;
+}
+.answer-correct { 
+    background: var(--success-light) !important; 
+    border-color: var(--success) !important; 
+    color: var(--success) !important; 
+    font-weight: bold;
+}
+.badge-custom-tracnghiem {
+    background-color: var(--theme-light) !important;
+    color: var(--theme-primary) !important;
+    border: 1px solid var(--theme-subtle) !important;
+}
+
+/* ========================================================
+   ÉP KHUNG APP-LIKE (KHÓA CUỘN TRÌNH DUYỆT TRÊN DESKTOP)
+======================================================== */
+@media (min-width: 1200px) {
+    /* 1. Khóa cuộn toàn bộ trang web */
+    body, html {
+        overflow: hidden !important;
+        height: 100vh;
+    }
+
+    /* 2. Biến các lớp vỏ bọc thành Flexbox dạng cột để ép khuôn */
+    .main-wrapper {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-area {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* Cắt bỏ phần thừa, không cho đẩy trang xuống */
+        margin-bottom: 0 !important;
+    }
+
+    #studentExamForm {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    #studentExamForm > .row {
+        flex-grow: 1;
+        overflow: hidden;
+        margin-bottom: 0 !important;
+    }
+
+    /* --- 3. XỬ LÝ CỘT TRÁI (Cấu hình & Danh sách) --- */
+    .col-xl-8 {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    /* Ép Card Danh sách câu hỏi tự động dãn lấp đầy khoảng trống bên dưới */
+    .col-xl-8 > .card:nth-child(2) {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        margin-bottom: 0 !important;
+    }
+
+    .col-xl-8 > .card:nth-child(2) > .card-body {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding-bottom: 10px !important;
+    }
+
+    /* Vùng cuộn danh sách câu hỏi tự động chiếm hết chiều cao thẻ Card */
+    .question-scroll-area {
+        flex-grow: 1;
+        overflow-y: auto;
+        max-height: none !important; /* Xóa bỏ giới hạn cũ */
+        padding-right: 8px;
+    }
+
+    /* --- 4. XỬ LÝ CỘT PHẢI (Công cụ) --- */
+    .col-xl-4 {
+        height: 100%;
+    }
+
+    .tool-scroll-area {
+        height: 100%;
+        overflow-y: auto;
+        max-height: none !important;
+        margin-bottom: 0 !important;
+    }
+            /* Một vài CSS bổ sung giữ lại từ bản cũ của bác để tránh gãy Layout Modal */
+        .modal-edit-card { border-left: 5px solid var(--theme-primary) !important; }
+        .edit-ans-box { transition: all 0.2s ease; border: 1px solid var(--border-soft); }
+        .edit-ans-box:focus-within {
+            border-color: var(--theme-primary); background-color: #fff !important;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.08);
+        }
+        /* ================================
+   FIX CARD CAU HINH BAI THI BO GOC
+================================ */
+
+/* Card tong */
+.premium-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px !important;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+/* Rieng card cau hinh bai thi */
+.premium-card .card-header {
+    background: #ffffff !important;
+    border: none !important;
+    border-top-left-radius: 24px !important;
+    border-top-right-radius: 24px !important;
+}
+
+/* Phan noi dung ben trong */
+#configCollapse {
+    border-top: 1px solid #e2e8f0 !important;
+    overflow: hidden;
+}
+
+#configCollapse .card-body {
+    border-bottom-left-radius: 24px !important;
+    border-bottom-right-radius: 24px !important;
+}
+
+/* Khi collapse mo, giu goc duoi mem */
+.premium-card:has(#configCollapse) {
+    border-radius: 24px !important;
+    overflow: hidden;
+}
+
+/* Hover header cau hinh */
+#configHeader {
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#configHeader:hover {
+    background: #f8fafc !important;
+}
+
+/* Icon nut thu gon */
+#configHeader .toggle-icon {
+    transition: all 0.25s ease;
+}
+
+#configHeader:hover .toggle-icon {
+    color: #7e22ce;
+    border-color: #eadcff !important;
+    box-shadow: 0 4px 10px rgba(126, 34, 206, 0.12) !important;
+}
+
+/* Input cung bo tron dong bo */
+.custom-input,
+.custom-input-group,
+.form-control,
+.form-select {
+    border-radius: 12px !important;
+}
+
+/* Fix input-group bi vo goc */
+.custom-input-group {
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.custom-input-group .form-control,
+.custom-input-group .form-select,
+.custom-input-group .input-group-text {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Textarea khong bi canh vuong */
+textarea.form-control {
+    resize: vertical;
+    min-height: 42px;
+}
+
+/* Neu muon card cau hinh nhin nhu vien thuoc/card mem hon */
+.col-lg-7 .premium-card:first-child {
+    border-radius: 26px !important;
+}
+/* ========================================================
+   FIX MODAL SUA CAU HOI GIONG STYLE STUDENT
+======================================================== */
+
+.teacher-edit-modal {
+    border-radius: 24px !important;
+}
+
+.teacher-edit-modal .modal-header {
+    background: #ffffff;
+}
+
+.teacher-edit-modal .modal-body {
+    background: #ffffff;
+}
+
+.teacher-edit-modal .form-label-custom {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.35px;
+    margin-bottom: 7px;
+    display: block;
+}
+
+.teacher-edit-modal .custom-input-group,
+.teacher-edit-answer-group {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    overflow: hidden;
+    background: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.teacher-edit-modal .custom-input-group:focus-within,
+.teacher-edit-answer-group:focus-within {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12);
+}
+
+.teacher-edit-modal .custom-input-group .form-control,
+.teacher-edit-modal .custom-input-group .input-group-text,
+.teacher-edit-answer-group .form-control,
+.teacher-edit-answer-group .input-group-text {
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+}
+
+.teacher-edit-modal textarea.form-control,
+.teacher-edit-modal input.form-control {
+    font-size: 0.9rem !important;
+    color: #1e293b;
+}
+
+.teacher-edit-modal textarea.form-control {
+    resize: vertical;
+    min-height: 44px;
+}
+
+.teacher-edit-answer-group .input-group-text {
+    color: #7e22ce;
+    font-weight: 800;
+}
+
+.teacher-edit-answer-group .form-check-input {
+    cursor: pointer;
+}
+
+.teacher-edit-answer-group .form-check-input:checked,
+.teacher-edit-modal .custom-radio-edit:checked {
+    background-color: #7e22ce !important;
+    border-color: #7e22ce !important;
+}
+
+.teacher-edit-answer-group:hover {
+    border-color: #d8b4fe !important;
+    background: #faf5ff;
+}
+
+.teacher-edit-answer-group:hover .form-control,
+.teacher-edit-answer-group:hover .input-group-text {
+    background: #faf5ff !important;
+}
+
+/* Xoa style cu cua edit-ans-box neu con ton tai */
+.edit-ans-box {
+    border-radius: 14px !important;
+}
+
+/* Fix nut trong modal */
+.teacher-edit-modal .btn {
+    min-height: 40px;
+}
+
+.teacher-edit-modal .btn-close {
+    outline: none !important;
+    box-shadow: none !important;
+}
+/* ========================================================
+   FIX TEACHER CREATE - CARD CAU HOI KHONG TRONG SUOT + SCROLL
+======================================================== */
+
+/* Card tong ro nen, khong trong suot */
+.premium-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 26px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* Card danh sach cau hoi */
+.question-list-card {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    border-radius: 26px !important;
+}
+
+.question-list-card > .card-header {
+    flex-shrink: 0 !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    border-radius: 26px 26px 0 0 !important;
+}
+
+/* Vung scroll danh sach cau hoi */
+.question-scroll-area {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background: #ffffff !important;
+    padding-right: 12px !important;
+}
+
+/* Thanh scroll dep */
+.question-scroll-area::-webkit-scrollbar {
+    width: 7px;
+}
+
+.question-scroll-area::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 999px;
+}
+
+.question-scroll-area::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.question-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: #a855f7;
+}
+
+/* Card cau hoi do JS render */
+.premium-question-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-left: 4px solid #8b5cf6 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06) !important;
+    opacity: 1 !important;
+}
+
+/* Fix dap an khong bi nhin trong suot */
+.ans-box-neutral {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    opacity: 1 !important;
+}
+
+.ans-box-correct {
+    background: #f3e8ff !important;
+    border: 1px solid #c084fc !important;
+    border-radius: 12px !important;
+    opacity: 1 !important;
+}
+
+/* Box giai thich AI */
+.ai-explain-box {
+    background: #faf5ff !important;
+    border: 1px solid #eadcff !important;
+    border-radius: 14px !important;
+    opacity: 1 !important;
+}
+
+/* Fix layout de scroll hoat dong */
+.fixed-wrapper-teacher {
+    height: calc(100vh - 120px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+#studentExamForm {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+#studentExamForm > .row {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+#studentExamForm .col-lg-7,
+#studentExamForm .col-xl-8 {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+/* Dam bao nut sua xoa van click duoc */
+.btn-edit-q,
+.btn-remove-q {
+    position: relative !important;
+    z-index: 20 !important;
+    pointer-events: auto !important;
+}
+
+/* Cot phai giu nen trang ro rang */
+#studentExamForm .col-lg-5 .premium-card,
+#studentExamForm .col-xl-4 .premium-card {
+    background: #ffffff !important;
+}
+}

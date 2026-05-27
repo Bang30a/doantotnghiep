@@ -1,0 +1,49 @@
+/* ==========================================
+   CSS CHO TRANG BÁO CÁO (TEACHER REPORTS)
+   Chuẩn form EduQuiz AI - Design System
+========================================== */
+
+/* 1. Custom Dropdown Select (Bộ lọc Lớp học) */
+.custom-dropdown-select .btn {
+    border: 1px solid var(--border-soft);
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.custom-dropdown-select .btn:focus,
+.custom-dropdown-select .btn[aria-expanded="true"] {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.1);
+}
+
+.custom-dropdown-select .dropdown-menu {
+    animation: fadeInDown 0.2s ease-out;
+}
+
+.custom-dropdown-select .dropdown-item {
+    font-weight: 600;
+    color: var(--theme-gray);
+    transition: all 0.2s ease;
+}
+
+.custom-dropdown-select .dropdown-item:hover {
+    background-color: var(--bg-soft);
+    color: var(--theme-primary);
+}
+
+.custom-dropdown-select .dropdown-item.active {
+    background-color: var(--theme-light);
+    color: var(--theme-primary);
+    font-weight: 700;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. Icon box thu nhỏ cho bảng báo cáo */
+.icon-box-small {
+    width: 45px; height: 45px;
+    font-size: 1.2rem;
+}

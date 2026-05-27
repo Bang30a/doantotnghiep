@@ -1,0 +1,101 @@
+/* ========================================================
+   public/css/student_history.css
+   CSS DÀNH RIÊNG CHO LỊCH SỬ HỌC VIÊN
+======================================================== */
+
+/* 1. Thẻ Thống Kê Tổng Quan (Stat Cards) */
+.history-stat-card {
+    border: none;
+    border-radius: 1.25rem;
+    padding: 1.5rem 1.75rem;
+    background: #ffffff;
+    height: 100%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border-top: 4px solid var(--theme-primary); /* Đổi sang biến dùng chung */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.history-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.1);
+}
+
+.decoration-circle {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--theme-subtle);
+    top: -20px;
+    right: -20px;
+    pointer-events: none;
+}
+
+/* 2. Từng dòng chi tiết Lịch sử (List Item) */
+.history-list-item {
+    border: 1px solid var(--border-soft);
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--border-soft);
+}
+
+@media (min-width: 768px) {
+    .history-list-item {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.history-list-item:hover {
+    background-color: var(--bg-soft); 
+    border-color: var(--theme-subtle);
+    border-left-color: var(--theme-primary); 
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08);
+}
+
+/* 3. Thẻ Hiển Thị Điểm Số (Score Badges) */
+.score-badge {
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 0.4rem 1rem;
+    border-radius: 50rem;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.score-bad { background-color: var(--danger-light); color: var(--danger); border: 1px solid #fca5a5; }
+.score-avg { background-color: var(--warning-light); color: var(--warning); border: 1px solid #fcd34d; }
+.score-good { background-color: var(--success-light); color: var(--success); border: 1px solid #6ee7b7; }
+
+/* 4. Nút Bấm Tùy Chỉnh Riêng Của Lịch Sử */
+.btn-outline-purple {
+    border: 2px solid var(--theme-subtle);
+    color: var(--theme-primary);
+    background: white;
+    font-weight: 700;
+    border-radius: 50rem;
+    padding: 8px 20px;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-outline-purple:hover {
+    background: linear-gradient(135deg, var(--theme-primary-hover) 0%, var(--indigo) 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Giữ lại 2 class tiện ích nhỏ đề phòng blade cũ còn gọi */
+.text-purple { color: var(--theme-primary) !important; }
+.bg-purple-soft { background-color: var(--theme-light) !important; }

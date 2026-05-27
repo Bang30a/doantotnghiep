@@ -1,0 +1,78 @@
+/* ==========================================
+   TIỆN ÍCH MÀU SẮC ĐẶC THÙ (DÙNG BIẾN TOÀN CỤC)
+========================================== */
+.text-indigo { color: var(--indigo) !important; }
+.bg-indigo-light { background-color: var(--indigo-light) !important; }
+
+.text-fuchsia { color: var(--fuchsia) !important; }
+.bg-fuchsia-light { background-color: var(--fuchsia-light) !important; }
+
+.text-pink { color: var(--pink) !important; }
+.bg-pink-light { background-color: var(--pink-light) !important; }
+
+/* ==========================================
+   THẺ TỔNG QUAN & BIỂU ĐỒ
+========================================== */
+.stat-overview-card, .chart-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-overview-card:hover, .chart-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(124, 58, 237, 0.15) !important;
+}
+
+.icon-box {
+    transition: transform 0.3s ease;
+}
+
+.stat-overview-card:hover .icon-box {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* ==========================================
+   BẢNG LỊCH SỬ (Table)
+========================================== */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0 8px; /* Tạo khoảng cách giữa các hàng */
+}
+
+.custom-table thead th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    background-color: var(--theme-light);
+}
+
+.custom-table tbody tr.table-row-hover {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    border: 1px solid var(--border-soft); /* Cập nhật xíu cho mượt */
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.custom-table tbody tr.table-row-hover td {
+    border-top: 1px solid var(--bg-soft) !important;
+    border-bottom: 1px solid var(--bg-soft) !important;
+}
+
+.custom-table tbody tr.table-row-hover td:first-child {
+    border-left: 1px solid var(--bg-soft) !important;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.custom-table tbody tr.table-row-hover td:last-child {
+    border-right: 1px solid var(--bg-soft) !important;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.custom-table tbody tr.table-row-hover:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px -4px rgba(124, 58, 237, 0.1);
+    border-color: var(--theme-subtle);
+}

@@ -1,0 +1,135 @@
+/* ==========================================
+   CSS TINH CHỈNH GIAO DIỆN XEM TRƯỚC ĐỀ THI
+========================================== */
+
+/* Custom Bootstrap Switch (Công tắc gạt) sang màu Tím */
+.custom-switch:checked {
+    background-color: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(126, 34, 206, 0.25) !important;
+}
+
+/* ==========================================
+   LAYOUT THẺ (CARDS)
+========================================== */
+
+/* Header Card: Thêm nền Gradient tím siêu nhạt */
+.exam-header-card {
+    background: linear-gradient(180deg, #ffffff 0%, var(--bg-soft) 100%);
+    border-radius: 20px;
+    border: 1px solid var(--border-soft);
+    padding: 35px;
+}
+
+.icon-box {
+    width: 28px;
+    height: 28px;
+    background: var(--theme-light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Thẻ Câu Hỏi */
+.question-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 20px;
+    border: 1px solid var(--border-soft);
+}
+.question-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.04) !important;
+    border-color: var(--theme-subtle);
+}
+
+/* Số thứ tự câu hỏi (Đồng bộ Tím) */
+.q-number {
+    background-color: var(--theme-primary);
+    color: white;
+    width: 45px; 
+    height: 45px;
+    font-size: 1.15rem;
+    box-shadow: 0 4px 10px rgba(126, 34, 206, 0.2);
+}
+
+/* ==========================================
+   KHUNG ĐÁP ÁN (TRẮC NGHIỆM)
+========================================== */
+.answer-box {
+    transition: all 0.3s ease;
+    background-color: var(--bg-soft);
+    border-radius: 14px !important;
+    color: #475569;
+    border: 2px solid transparent; /* Chuẩn bị sẵn viền cho hiệu ứng */
+}
+.answer-box .ans-label {
+    color: #94A3B8;
+    background: white;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+/* KHUNG ĐÁP ÁN (Khi bật công tắc hiện đáp án đúng) */
+.show-answers .answer-box.is-correct-ans {
+    background-color: var(--success-light); 
+    border-color: var(--success); 
+    color: var(--success);
+    box-shadow: 0 8px 20px rgba(52, 211, 153, 0.15);
+}
+.show-answers .answer-box.is-correct-ans .ans-label {
+    background: var(--success);
+    color: white !important;
+}
+.show-answers .answer-box.is-correct-ans .correct-icon {
+    display: block !important;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* KHUNG TỰ LUẬN */
+.essay-answer-box {
+    background-color: #F8FAFC;
+    border-left: 4px solid var(--success) !important;
+}
+
+/* ==========================================
+   KHUNG AI GIẢI THÍCH 
+========================================== */
+.ai-explanation-box {
+    background-color: var(--theme-light) !important;
+    border: 1px solid var(--theme-subtle);
+    position: relative;
+}
+.ai-icon-wrapper {
+    background: var(--theme-primary);
+    color: white;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+.show-answers .ai-explanation-box {
+    display: block !important;
+    animation: fadeInDown 0.5s ease-out forwards;
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}

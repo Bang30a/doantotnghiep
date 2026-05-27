@@ -1,0 +1,116 @@
+/* public/css/show_exam.css */
+
+/* Nếu file này load độc lập, fallback các biến màu để đảm bảo luôn hiển thị đúng */
+:root {
+    --theme-primary: #7C3AED;      
+    --theme-primary-hover: #6D28D9; 
+    --theme-light: #F5F3FF;         
+    --theme-subtle: #EDE9FE;        
+    --theme-dark: #2E1065;          
+    --theme-gray: #64748B;
+    --success-dark: #065F46;
+}
+
+.theme-text-primary { color: var(--theme-primary) !important; }
+.theme-text-dark { color: var(--theme-dark) !important; }
+.bg-purple-light { background-color: var(--theme-light) !important; }
+.text-purple-dark { color: var(--theme-primary-hover) !important; }
+.border-purple-subtle { border-color: var(--theme-subtle) !important; }
+.letter-spacing-1 { letter-spacing: 0.5px; }
+
+/* --------------------------------------
+   Header Thông tin đề thi
+--------------------------------------- */
+.exam-detail-header {
+    border: 1px solid #E2E8F0;
+    border-left: 6px solid var(--theme-primary) !important;
+}
+
+.min-w-200 {
+    min-width: 200px;
+}
+
+/* --------------------------------------
+   Nút Bấm
+--------------------------------------- */
+.btn-theme-primary {
+    background-color: var(--theme-primary);
+    color: white;
+    border: none;
+    transition: all 0.3s;
+}
+.btn-theme-primary:hover {
+    background-color: var(--theme-primary-hover);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(124, 58, 237, 0.3) !important;
+}
+
+.btn-outline-theme {
+    color: var(--theme-primary);
+    background-color: white;
+    border: 2px solid var(--theme-subtle);
+    transition: all 0.3s;
+}
+.btn-outline-theme:hover {
+    background-color: var(--theme-light);
+    border-color: var(--theme-primary);
+    color: var(--theme-primary);
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------
+   Khung từng Câu hỏi
+--------------------------------------- */
+.question-detail-card {
+    border: 1px solid #E2E8F0 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.question-detail-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(124, 58, 237, 0.15) !important;
+    border-color: var(--theme-subtle) !important;
+}
+
+/* --------------------------------------
+   Các hộp đáp án
+--------------------------------------- */
+.answer-box {
+    height: 100%; /* Giúp các hộp đáp án bằng nhau dù chữ dài hay ngắn */
+    transition: all 0.2s ease;
+}
+
+.answer-box:hover {
+    background-color: #F8FAFC !important;
+    border-color: #CBD5E1 !important;
+}
+
+/* Đáp án Đúng (Correct) */
+.is-correct-box {
+    background-color: #F0FDF4 !important; /* Xanh lá siêu nhạt */
+    border-color: #34D399 !important;     /* Viền xanh ngọc */
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1) !important;
+}
+.is-correct-box:hover {
+    background-color: #DCFCE7 !important;
+    border-color: #10B981 !important;
+}
+
+.text-success-dark {
+    color: var(--success-dark) !important;
+}
+
+/* --------------------------------------
+   Khung AI Giải thích
+--------------------------------------- */
+.ai-explanation-box {
+    background-color: #F8FAFC;
+    border: 1px solid var(--theme-subtle);
+    border-left: 4px solid var(--theme-primary) !important;
+    transition: all 0.3s ease;
+}
+
+.ai-explanation-box:hover {
+    background-color: var(--theme-light);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08) !important;
+}

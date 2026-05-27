@@ -1,0 +1,87 @@
+/* ==========================================
+   APP WINDOW LAYOUT (Siêu chống trượt)
+========================================== */
+
+/* 1. Ép chết Scroll ở mọi cấp độ cao nhất */
+html, body {
+    overflow: hidden !important; 
+    height: 100vh !important;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ép luôn thẻ main của template nếu có */
+main, .main-content, .wrapper {
+    overflow: hidden !important;
+}
+
+/* 2. Container giao diện (Tự động chiếm vừa đủ màn hình thừa) */
+.admin-app-window {
+    height: calc(100vh - 80px); /* 80px là dự tính cho Topbar của hệ thống */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 3. Thanh cuộn mượt mà chỉ nằm TRONG thẻ Card trắng */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* 4. Nút bấm Premium */
+.btn-purple-gradient {
+    background: linear-gradient(135deg, #7C3AED 0%, #DB2777 100%);
+    border: none;
+}
+.btn-purple-gradient:hover {
+    box-shadow: 0 4px 12px rgba(219, 39, 119, 0.3) !important;
+}
+
+/* 5. TABS BOOTSTRAP GỌN GÀNG */
+.custom-pills {
+    background: transparent;
+    padding-bottom: 0;
+}
+.custom-pills .nav-link {
+    color: #64748B !important;
+    background-color: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    transition: all 0.2s ease;
+}
+.custom-pills .nav-link:hover {
+    background-color: #F1F5F9 !important;
+}
+.custom-pills .nav-link.active {
+    background: #7C3AED !important;
+    color: white !important;
+    border-color: #7C3AED !important;
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2) !important;
+}
+
+/* 6. SWITCH & INPUTS COMPACT */
+.custom-switch {
+    width: 2.5rem !important;
+    height: 1.25rem !important;
+    background-color: #CBD5E1;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.custom-switch:focus { box-shadow: none; border: none; }
+.custom-switch:checked {
+    background-color: #7C3AED !important;
+}
+
+.custom-input {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+.custom-input:focus {
+    border-color: #A78BFA;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+.form-label { font-size: 0.7rem; font-weight: 800; color: #64748B; margin-bottom: 0.2rem; }
