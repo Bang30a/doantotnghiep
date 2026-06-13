@@ -20,6 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    const settingsForm = document.getElementById('settingsForm');
+    const btnResetSettings = document.getElementById('btn-reset-settings');
+    if (settingsForm && btnResetSettings) {
+        btnResetSettings.addEventListener('click', function() {
+            settingsForm.reset();
+        });
+    }
+
     // ========================================================
     // PHẦN 2: LOGIC GỬI EMAIL TEST (AJAX)
     // ========================================================

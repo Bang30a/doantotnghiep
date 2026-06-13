@@ -5,7 +5,7 @@
 @section('content')
 
     <!-- Tiêu đề trang & Nút quay lại -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 mt-2 border-bottom border-light-subtle pb-3">
+    <div class="admin-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 mt-2 pb-3">
         <div>
             <h3 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Toàn bộ Hoạt động hệ thống <i class="bi bi-clock-history theme-text-primary"></i>

@@ -1,12 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
     const refreshCsrfUrl = window.refreshCsrfUrl || "/refresh-csrf";
+    let csrfRefreshPromise = null;
 
     async function refreshCsrfToken() {
+        if (csrfRefreshPromise) {
+            return csrfRefreshPromise;
+        }
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(function () {
+            controller.abort();
+        }, 2500);
+
+        csrfRefreshPromise = (async function () {
         try {
             const response = await fetch(refreshCsrfUrl, {
                 method: "GET",
                 credentials: "same-origin",
                 cache: "no-store",
+                signal: controller.signal,
                 headers: {
                     "Accept": "application/json",
                     "X-Requested-With": "XMLHttpRequest"
@@ -34,34 +46,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
             return true;
         } catch (error) {
-            console.error("Khong the refresh CSRF token:", error);
+            if (error.name !== "AbortError") {
+                console.error("Không thể refresh CSRF token:", error);
+            }
             return false;
+        } finally {
+            clearTimeout(timeoutId);
+            csrfRefreshPromise = null;
         }
+        })();
+
+        return csrfRefreshPromise;
     }
 
-    // Refresh token ngay khi mo trang login/register
-    refreshCsrfToken();
+    // Refresh token định kỳ trong nền, không chặn thao tác đăng nhập/đăng ký.
+    setInterval(refreshCsrfToken, 2 * 60 * 1000);
 
-    // Cu 1 phut refresh token 1 lan khi dang o trang login/register
-    setInterval(refreshCsrfToken, 60 * 1000);
+    function getSubmitText(form) {
+        const action = (form.getAttribute("action") || "").toLowerCase();
 
-    // Truoc khi submit form login/register, refresh token lan cuoi
+        if (action.includes("register")) {
+            return "Đang đăng ký...";
+        }
+
+        if (action.includes("forgot-password")) {
+            return "Đang gửi...";
+        }
+
+        if (action.includes("reset-password")) {
+            return "Đang cập nhật...";
+        }
+
+        return "Đang đăng nhập...";
+    }
+
+    // Submit ngay để tránh cảm giác nút bị trễ khi refresh CSRF chậm.
     document.querySelectorAll("form").forEach(function (form) {
-        form.addEventListener("submit", async function (e) {
-            if (form.dataset.csrfRefreshed === "1") {
-                return true;
-            }
+        form.addEventListener("submit", function () {
+            if (form.dataset.submitting === "1") return;
 
-            e.preventDefault();
+            form.dataset.submitting = "1";
 
-            const ok = await refreshCsrfToken();
-
-            if (ok) {
-                form.dataset.csrfRefreshed = "1";
-                form.submit();
-            } else {
-                window.location.reload();
-            }
+            form.querySelectorAll('button[type="submit"]').forEach(function (button) {
+                button.disabled = true;
+                button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> ' + getSubmitText(form);
+            });
         });
     });
 
@@ -86,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Chuyen login/register neu co nut switch
+    // Chuyển login/register nếu có nút switch.
     document.querySelectorAll(".switch-form-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
             refreshCsrfToken();

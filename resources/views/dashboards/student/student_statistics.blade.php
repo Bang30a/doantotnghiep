@@ -3,11 +3,11 @@
 @section('title', 'Thống kê học tập')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/student/student_statistics.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_statistics.css') }}">
 @endpush
 
 @section('content')
-    <div class="mb-4">
+    <div class="student-page-heading mb-4">
         <h3 class="fw-bold mb-2 theme-text-dark">Phân tích học tập</h3>
         <p class="text-muted fs-6 mb-0">Theo dõi tiến độ, điểm số và điểm mạnh yếu của bạn</p>
     </div>
@@ -152,5 +152,5 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <script src="{{ asset('js/student/student_statistics.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_statistics.js') }}"></script>
 @endpush

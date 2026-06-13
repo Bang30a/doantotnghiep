@@ -41,17 +41,27 @@ class ExamController extends Controller
         $exam = Exam::with('questions')->findOrFail($id);
         
         try {
-            $this->submissionService->submitExam($exam, $request->all(), Auth::id());
-            return redirect()->route('exams.result', $exam->id)->with('success', 'Nộp bài thành công!');
+            $result = $this->submissionService->submitExam($exam, $request->all(), Auth::id());
+            return redirect()
+                ->route('exams.result', ['id' => $exam->id, 'result_id' => $result->id])
+                ->with('success', 'Nộp bài thành công!');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Lỗi nộp bài: ' . $e->getMessage()]);
         }
     }
 
-    public function result($id)
+    public function result($id, $result_id = null)
     {
-        $exam = Exam::findOrFail($id);
-        $result = Result::where('user_id', Auth::id())->where('exam_id', $id)->latest()->firstOrFail();
+        $exam = Exam::with(['questions.answers', 'classroom'])->findOrFail($id);
+        $resultQuery = Result::where('user_id', Auth::id())->where('exam_id', $id);
+
+        if ($result_id) {
+            $resultQuery->where('id', $result_id);
+        } else {
+            $resultQuery->latest();
+        }
+
+        $result = $resultQuery->firstOrFail();
         
         return view('exams.result', compact('exam', 'result'));
     }

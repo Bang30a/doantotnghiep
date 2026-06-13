@@ -7,6 +7,7 @@ use PhpOffice\PhpWord\IOFactory;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\Schema;
 
 class AiExamService
 {
@@ -87,20 +88,21 @@ class AiExamService
    /**
  * Hàm 2: Gửi văn bản lên Gemini AI và yêu cầu trả về JSON
  */
-public function generateQuestionsFromText($text, $questionCount = 5, $difficulty = 'medium', $examType = 'multiple_choice')
+public function generateQuestionsFromText($text, $questionCount = 5, $difficulty = 'medium', $examType = 'multiple_choice', array $excludedQuestions = [])
 {
-    $apiKey = env('GEMINI_API_KEY');
+    $apiKey = config('services.gemini.api_key');
 
     if (!$apiKey) {
-        throw new \Exception('Chua cau hinh GEMINI_API_KEY trong file .env.');
+        throw new \Exception('Chưa cấu hình GEMINI_API_KEY trong file .env.');
     }
 
     $shortText = mb_substr($text, 0, 15000);
+    $duplicateAvoidanceRule = $this->buildDuplicateAvoidanceRule($excludedQuestions);
 
    // ==========================================
-// BUOC 1: LAY PROMPT TU DATABASE
+// BƯỚC 1: LẤY PROMPT TỪ DATABASE
 // ==========================================
-$activePrompt = DB::table('prompts')->where('status', 1)->latest()->first();
+$activePrompt = $this->getActivePromptForExamType($examType);
 
 if ($activePrompt) {
     $customPrompt = $activePrompt->prompt_text;
@@ -108,7 +110,7 @@ if ($activePrompt) {
     $customPrompt = str_replace('[TOTAL_QUESTIONS]', $questionCount, $customPrompt);
     $customPrompt = str_replace('[TOPIC]', 'Nội dung tài liệu đính kèm', $customPrompt);
 
-    // Them luat viet cau hoi tu nhien, tranh cau "Trong tai lieu..."
+    // Thêm luật viết câu hỏi tự nhiên, tránh câu "Trong tài liệu..."
     $naturalQuestionRule = "
 
 QUY TẮC VIẾT CÂU HỎI TỰ NHIÊN BẮT BUỘC:
@@ -124,11 +126,14 @@ QUY TẮC VIẾT CÂU HỎI TỰ NHIÊN BẮT BUỘC:
         $jsonRule = "\n\nBẮT BUỘC TRẢ VỀ DUY NHẤT MỘT MẢNG JSON.
 BẮT BUỘC tạo đúng {$questionCount} câu hỏi TỰ LUẬN.
 KHÔNG markdown, KHÔNG ```json, KHÔNG chữ ngoài JSON.
+CÁC QUY TẮC DƯỚI ĐÂY ƯU TIÊN CAO NHẤT. Nếu prompt trong database yêu cầu bareme dài, bài mẫu hoặc nhiều dòng thì bỏ qua phần đó.
 
 QUY TẮC RIÊNG CHO CÂU HỎI TỰ LUẬN:
 - Câu hỏi phải tự nhiên, rõ yêu cầu trả lời.
 - Không bắt đầu bằng \"Trong tài liệu\", \"Theo tài liệu\", \"Dựa vào tài liệu\".
-- Gợi ý đáp án phải có các ý chính để chấm điểm.
+- Gợi ý đáp án chỉ được là 3 - 5 từ khóa/ý chính ngắn gọn để định hướng.
+- Không viết bài mẫu, không chia thang điểm, không giải thích dài trong gợi ý.
+- Mỗi ý tối đa 8 - 12 từ, các ý cách nhau bằng dấu chấm phẩy.
 
 Cấu trúc JSON:
 [
@@ -136,7 +141,7 @@ Cấu trúc JSON:
     \"content\": \"Nội dung câu hỏi tự luận tự nhiên?\",
     \"answers\": [
       {
-        \"content\": \"Gợi ý đáp án / bareme chấm điểm\",
+        \"content\": \"Từ khóa/ý chính: ý chính 1; ý chính 2; ý chính 3.\",
         \"is_correct\": true
       }
     ],
@@ -191,10 +196,12 @@ YÊU CẦU:
 - Không ```json.
 - Không thêm chữ nào ngoài JSON.
 - Mỗi câu hỏi phải có content, answers, ai_explanation.
-- answers chỉ cần 1 phần tử chứa gợi ý đáp án / bareme.
+- answers chỉ cần 1 phần tử chứa gợi ý đáp án ngắn.
 - Câu hỏi phải tự nhiên, rõ ý, giống câu hỏi trong đề kiểm tra thật.
 - KHÔNG mở đầu câu hỏi bằng: \"Trong tài liệu\", \"Theo tài liệu\", \"Dựa vào tài liệu\", \"Văn bản cho biết\", \"Tài liệu đề cập\".
-- Gợi ý đáp án phải có các ý chính để chấm điểm.
+- Gợi ý đáp án chỉ được là 3 - 5 từ khóa/ý chính ngắn gọn để định hướng.
+- Không viết bài mẫu, không chia thang điểm, không giải thích dài trong gợi ý.
+- Mỗi ý tối đa 8 - 12 từ, các ý cách nhau bằng dấu chấm phẩy.
 - Giải thích AI ngắn gọn, không nhắc \"trong tài liệu\".
 
 Cấu trúc JSON:
@@ -203,7 +210,7 @@ Cấu trúc JSON:
     \"content\": \"Nội dung câu hỏi tự luận tự nhiên?\",
     \"answers\": [
       {
-        \"content\": \"Gợi ý đáp án hoặc bareme chấm điểm\",
+        \"content\": \"Từ khóa/ý chính: ý chính 1; ý chính 2; ý chính 3.\",
         \"is_correct\": true
       }
     ],
@@ -257,8 +264,16 @@ Cấu trúc JSON:
     }
 }
 
+if ($duplicateAvoidanceRule !== '') {
+    $prompt = str_replace(
+        '--- NỘI DUNG THAM KHẢO ---',
+        $duplicateAvoidanceRule . "\n\n--- NỘI DUNG THAM KHẢO ---",
+        $prompt
+    );
+}
+
     // ==========================================
-    // BUOC 2: GOI GEMINI CO RETRY + FALLBACK MODEL
+    // BƯỚC 2: GỌI GEMINI CÓ RETRY VÀ FALLBACK MODEL
     // ==========================================
     $models = [
         'gemini-2.5-flash',
@@ -299,7 +314,7 @@ Cấu trúc JSON:
                     break 2;
                 }
 
-                $lastError = 'Model ' . $model . ' loi HTTP ' . $response->status() . ': ' . $response->body();
+                $lastError = 'Model ' . $model . ' lỗi HTTP ' . $response->status() . ': ' . $response->body();
 
                 Log::warning('Gemini generate failed', [
                     'model' => $model,
@@ -308,7 +323,7 @@ Cấu trúc JSON:
                     'body' => $response->body(),
                 ]);
 
-                // Loi tam thoi thi thu lai cung model
+                // Lỗi tạm thời thì thử lại cùng model
                 if (in_array($response->status(), [429, 500, 502, 503, 504])) {
                     sleep($attempt * 2);
                     continue;
@@ -330,7 +345,7 @@ Cấu trúc JSON:
     }
 
     // ==========================================
-    // BUOC 3: XU LY NEU TAT CA MODEL DEU LOI
+    // BƯỚC 3: XỬ LÝ NẾU TẤT CẢ MODEL ĐỀU LỖI
     // ==========================================
     if (!$response || !$response->successful()) {
         if (
@@ -338,22 +353,22 @@ Cấu trúc JSON:
             str_contains($lastError ?? '', 'UNAVAILABLE') ||
             str_contains($lastError ?? '', 'high demand')
         ) {
-            throw new \Exception('Gemini dang qua tai, vui long thu lai sau vai giay.');
+            throw new \Exception('Gemini đang quá tải, vui lòng thử lại sau vài giây.');
         }
 
         if (
             str_contains($lastError ?? '', '429') ||
             str_contains($lastError ?? '', 'quota')
         ) {
-            throw new \Exception('Ban da vuot gioi han goi AI, vui long thu lai sau it phut.');
+            throw new \Exception('Bạn đã vượt giới hạn gọi AI, vui lòng thử lại sau ít phút.');
         }
 
-        throw new \Exception($lastError ?: 'Khong the goi Gemini API.');
+        throw new \Exception($lastError ?: 'Không thể gọi Gemini API.');
     }
 
     // ==========================================
-    // BUOC 4: LAY NOI DUNG AI TRA VE
-    // DAY LA DOAN BAC DANG BI THIEU
+    // BƯỚC 4: LẤY NỘI DUNG AI TRẢ VỀ
+    // Đây là đoạn đang xử lý phần nội dung trả về từ Gemini
     // ==========================================
     $result = $response->json();
 
@@ -365,7 +380,7 @@ Cấu trúc JSON:
             'response' => $result,
         ]);
 
-        throw new \Exception('AI khong tra ve noi dung cau hoi.');
+        throw new \Exception('AI không trả về nội dung câu hỏi.');
     }
 
     $jsonString = trim($jsonString);
@@ -373,25 +388,25 @@ Cấu trúc JSON:
     $jsonString = trim($jsonString);
 
     // ==========================================
-    // BUOC 5: CAT LAY MANG JSON
+    // BƯỚC 5: CẮT LẤY MẢNG JSON
     // ==========================================
     $start = strpos($jsonString, '[');
     $end = strrpos($jsonString, ']');
 
     if ($start === false || $end === false) {
-        throw new \Exception("AI khong tra ve mang JSON. Ket qua: " . $jsonString);
+        throw new \Exception("AI không trả về mảng JSON. Kết quả: " . $jsonString);
     }
 
     $cleanJson = substr($jsonString, $start, $end - $start + 1);
     $data = json_decode($cleanJson, true);
 
     // ==========================================
-    // BUOC 6: KIEM TRA JSON
+    // BƯỚC 6: KIỂM TRA JSON
     // ==========================================
     if (json_last_error() !== JSON_ERROR_NONE) {
         throw new \Exception(
-            "Loi giai ma JSON: " . json_last_error_msg()
-            . "<br><br><b>DU LIEU LOI TU AI:</b><br>"
+            "Lỗi giải mã JSON: " . json_last_error_msg()
+            . "<br><br><b>DỮ LIỆU LỖI TỪ AI:</b><br>"
             . "<div style='text-align:left; background:#fff; padding:10px; border:1px solid #ccc; font-size:12px; font-family:monospace;'>"
             . htmlspecialchars($cleanJson)
             . "</div>"
@@ -399,11 +414,11 @@ Cấu trúc JSON:
     }
 
     if (!is_array($data)) {
-        throw new \Exception('Du lieu AI tra ve khong phai mang cau hoi.');
+        throw new \Exception('Dữ liệu AI trả về không phải mảng câu hỏi.');
     }
 
     // ==========================================
-    // BUOC 7: CHUAN HOA DU LIEU DE KHONG SAP VIEW
+    // BƯỚC 7: CHUẨN HÓA DỮ LIỆU ĐỂ KHÔNG SẬP VIEW
     // ==========================================
     $data = array_values(array_filter($data, function ($q) {
         return is_array($q) && !empty($q['content']);
@@ -421,17 +436,19 @@ Cấu trúc JSON:
         if ($examType === 'essay') {
             if (count($q['answers']) === 0) {
                 $q['answers'][] = [
-                    'content' => 'Goi y dap an dang trong.',
+                    'content' => 'Gợi ý đáp án đang trống.',
                     'is_correct' => true,
                 ];
             }
 
             $q['answers'][0]['is_correct'] = true;
+            $q['answers'][0]['content'] = $this->normalizeEssayHint($q['answers'][0]['content'] ?? '');
+            $q['ai_explanation'] = $this->normalizeShortPlainText($q['ai_explanation'], 180);
         } else {
-            // Trac nghiem: dam bao co 4 dap an
+            // Trắc nghiệm: đảm bảo có 4 đáp án
             for ($i = count($q['answers']); $i < 4; $i++) {
                 $q['answers'][] = [
-                    'content' => 'Dap an ' . chr(65 + $i),
+                    'content' => 'Đáp án ' . chr(65 + $i),
                     'is_correct' => false,
                 ];
             }
@@ -458,11 +475,11 @@ Cấu trúc JSON:
     unset($q);
 
     if (count($data) === 0) {
-        throw new \Exception('AI khong tao duoc cau hoi hop le.');
+        throw new \Exception('AI không tạo được câu hỏi hợp lệ.');
     }
 
     // ==========================================
-    // BUOC 8: TOKEN
+    // BƯỚC 8: TOKEN
     // ==========================================
     $tokens = $result['usageMetadata']['totalTokenCount'] ?? (strlen($prompt . $cleanJson) / 3.5);
 
@@ -470,5 +487,310 @@ Cấu trúc JSON:
         'questions' => $data,
         'tokens' => (int) $tokens
     ];
+}
+
+public function gradeEssayAnswer($questionContent, $bareme, $studentAnswer)
+{
+    $questionContent = trim((string) $questionContent);
+    $bareme = trim((string) $bareme);
+    $studentAnswer = trim((string) $studentAnswer);
+
+    if ($studentAnswer === '') {
+        return [
+            'score' => null,
+            'feedback' => 'Học viên chưa có bài làm nên AI chưa thể chấm.',
+        ];
+    }
+
+    $apiKey = config('services.gemini.api_key');
+
+    if (!$apiKey) {
+        Log::warning('Gemini essay grading skipped because GEMINI_API_KEY is missing.');
+
+        return [
+            'score' => null,
+            'feedback' => 'Chưa cấu hình GEMINI_API_KEY nên AI chưa thể gợi ý điểm. Giảng viên có thể chấm thủ công.',
+        ];
+    }
+
+    $prompt = "Bạn là giảng viên chấm bài tự luận nghiêm túc và công bằng.
+Hãy chấm bài dựa trên câu hỏi, bareme/gợi ý đáp án và bài làm của học viên.
+
+QUY TẮC CHẤM:
+- Điểm tối đa là 10, điểm tối thiểu là 0.
+- Bareme/gợi ý đáp án có thể chỉ là các từ khóa hoặc ý chính ngắn, hãy chấm theo ý tương đương về mặt kiến thức.
+- Chỉ cho điểm theo các ý đúng có trong câu hỏi, bareme hoặc nội dung tương đương.
+- Nếu bài làm thiếu ý, sai trọng tâm hoặc trả lời lan man, hãy trừ điểm rõ ràng.
+- Nhận xét ngắn gọn, chỉ ra ý đúng, ý thiếu và cách cải thiện.
+- Không tự bịa kiến thức ngoài câu hỏi và bareme.
+
+CHỈ TRẢ VỀ JSON OBJECT HỢP LỆ, KHÔNG markdown, KHÔNG giải thích ngoài JSON:
+{
+  \"score\": 7.5,
+  \"feedback\": \"Nhận xét ngắn gọn cho giảng viên tham khảo.\"
+}
+
+CÂU HỎI:
+" . mb_substr($questionContent, 0, 3000) . "
+
+BAREME / GỢI Ý ĐÁP ÁN:
+" . mb_substr($bareme, 0, 6000) . "
+
+BÀI LÀM CỦA HỌC VIÊN:
+" . mb_substr($studentAnswer, 0, 6000);
+
+    $models = [
+        'gemini-2.5-flash',
+        'gemini-2.5-flash-lite',
+        'gemini-2.0-flash',
+        'gemini-2.0-flash-lite',
+        'gemini-flash-latest',
+        'gemini-flash-lite-latest',
+    ];
+
+    $lastError = null;
+
+    foreach ($models as $model) {
+        for ($attempt = 1; $attempt <= 2; $attempt++) {
+            try {
+                $response = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                ])
+                    ->timeout(60)
+                    ->post('https://generativelanguage.googleapis.com/v1beta/models/' . $model . ':generateContent?key=' . $apiKey, [
+                        'contents' => [
+                            [
+                                'parts' => [
+                                    ['text' => $prompt],
+                                ],
+                            ],
+                        ],
+                        'generationConfig' => [
+                            'temperature' => 0.2,
+                            'response_mime_type' => 'application/json',
+                        ],
+                    ]);
+
+                if (!$response->successful()) {
+                    $lastError = 'Model ' . $model . ' HTTP ' . $response->status() . ': ' . $response->body();
+
+                    Log::warning('Gemini essay grading failed', [
+                        'model' => $model,
+                        'attempt' => $attempt,
+                        'status' => $response->status(),
+                        'body' => $response->body(),
+                    ]);
+
+                    if (in_array($response->status(), [429, 500, 502, 503, 504], true)) {
+                        sleep($attempt);
+                        continue;
+                    }
+
+                    break;
+                }
+
+                $jsonString = trim((string) ($response->json('candidates.0.content.parts.0.text') ?? ''));
+                $jsonString = trim(str_replace(['```json', '```'], '', $jsonString));
+
+                $start = strpos($jsonString, '{');
+                $end = strrpos($jsonString, '}');
+
+                if ($start === false || $end === false) {
+                    $lastError = 'Gemini essay grading returned non JSON content: ' . $jsonString;
+                    break;
+                }
+
+                $data = json_decode(substr($jsonString, $start, $end - $start + 1), true);
+
+                if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+                    $lastError = 'Gemini essay grading JSON decode error: ' . json_last_error_msg();
+                    break;
+                }
+
+                $score = $data['score'] ?? null;
+
+                if (is_string($score) && preg_match('/-?\d+(?:[\\.,]\d+)?/', $score, $matches)) {
+                    $score = str_replace(',', '.', $matches[0]);
+                }
+
+                $score = is_numeric($score)
+                    ? round(max(0, min(10, (float) $score)), 1)
+                    : null;
+
+                $feedback = $data['feedback'] ?? '';
+
+                if (is_array($feedback)) {
+                    $feedback = implode(' ', array_filter(array_map('strval', $feedback)));
+                }
+
+                $feedback = trim((string) $feedback);
+
+                if ($feedback === '') {
+                    $feedback = $score === null
+                        ? 'AI chưa đưa ra nhận xét rõ ràng. Giảng viên vui lòng chấm thủ công.'
+                        : 'AI đã gợi ý điểm dựa trên bareme. Giảng viên nên rà soát lại trước khi lưu.';
+                }
+
+                return [
+                    'score' => $score,
+                    'feedback' => $feedback,
+                ];
+            } catch (\Throwable $e) {
+                $lastError = 'Model ' . $model . ' exception: ' . $e->getMessage();
+
+                Log::warning('Gemini essay grading exception', [
+                    'model' => $model,
+                    'attempt' => $attempt,
+                    'error' => $e->getMessage(),
+                ]);
+
+                sleep($attempt);
+            }
+        }
+    }
+
+    Log::error('Gemini essay grading unavailable', [
+        'error' => $lastError,
+    ]);
+
+    return [
+        'score' => null,
+        'feedback' => 'AI chưa thể phân tích bài làm lúc này. Giảng viên có thể chấm thủ công hoặc thử lại sau.',
+    ];
+}
+
+private function normalizeEssayHint($content): string
+{
+    $content = trim((string) $content);
+
+    if ($content === '') {
+        return 'Từ khóa/ý chính: chưa có gợi ý.';
+    }
+
+    $content = html_entity_decode(strip_tags($content), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $content = str_replace(['•', '–', '—'], '-', $content);
+    $content = preg_replace('/(?:^|\s)[\-+]\s+/u', '; ', $content);
+    $content = preg_replace('/\b\d+(?:[\.,]\d+)?\s*(?:điểm|đ)\b/iu', '', $content);
+    $content = preg_replace('/\r\n|\r|\n/u', '; ', $content);
+    $content = preg_replace('/\s+/u', ' ', $content);
+
+    $rawParts = preg_split('/\s*(?:;|\.\s+)\s*/u', $content, -1, PREG_SPLIT_NO_EMPTY);
+
+    if (count($rawParts) < 3) {
+        $commaParts = preg_split('/\s*,\s*/u', $content, -1, PREG_SPLIT_NO_EMPTY);
+
+        if (count($commaParts) > count($rawParts)) {
+            $rawParts = $commaParts;
+        }
+    }
+
+    $items = [];
+    $seen = [];
+
+    foreach ($rawParts as $part) {
+        $part = trim($part);
+        $part = preg_replace('/^(?:gợi ý đáp án|bareme|đáp án|ý chính|từ khóa\/?ý chính|từ khóa|nội dung cần đạt)\s*[:\-]\s*/iu', '', $part);
+        $part = preg_replace('/^\(?[0-9ivx]+\)?[\.\)]\s*/iu', '', $part);
+        $part = trim($part, " \t\n\r\0\x0B.,;:-");
+
+        if ($part === '') {
+            continue;
+        }
+
+        $part = $this->normalizeShortPlainText($part, 60);
+        $key = mb_strtolower(preg_replace('/[^\p{L}\p{N}]+/u', ' ', $part));
+
+        if ($key === '' || isset($seen[$key])) {
+            continue;
+        }
+
+        $seen[$key] = true;
+        $items[] = $part;
+
+        if (count($items) >= 5) {
+            break;
+        }
+    }
+
+    if (count($items) === 0) {
+        $items[] = $this->normalizeShortPlainText($content, 60);
+    }
+
+    return 'Từ khóa/ý chính: ' . implode('; ', $items) . '.';
+}
+
+private function normalizeShortPlainText($content, int $limit): string
+{
+    $content = html_entity_decode(strip_tags((string) $content), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $content = trim(preg_replace('/\s+/u', ' ', $content));
+
+    if ($content === '' || mb_strlen($content) <= $limit) {
+        return $content;
+    }
+
+    $cut = mb_substr($content, 0, $limit);
+    $lastSpace = mb_strrpos($cut, ' ');
+
+    if ($lastSpace !== false && $lastSpace > (int) ($limit * 0.55)) {
+        $cut = mb_substr($cut, 0, $lastSpace);
+    }
+
+    return rtrim($cut, " \t\n\r\0\x0B.,;:-") . '...';
+}
+
+private function buildDuplicateAvoidanceRule(array $excludedQuestions): string
+{
+    $excludedQuestions = array_values(array_filter(array_map(function ($content) {
+        $content = trim(preg_replace('/\s+/u', ' ', strip_tags((string) $content)));
+        return mb_substr($content, 0, 220);
+    }, $excludedQuestions)));
+
+    if (count($excludedQuestions) === 0) {
+        return '';
+    }
+
+    $excludedQuestions = array_slice($excludedQuestions, -80);
+
+    $lines = array_map(function ($content, $index) {
+        return ($index + 1) . '. ' . $content;
+    }, $excludedQuestions, array_keys($excludedQuestions));
+
+    return "QUY TẮC CHỐNG TRÙNG LẶP BẮT BUỘC:
+- Tuyệt đối không tạo câu hỏi trùng hoặc gần trùng ý với các câu đã có bên dưới.
+- Không chỉ đổi từ ngữ để hỏi lại cùng một kiến thức, sự kiện, nguyên nhân, kết quả hoặc đáp án.
+- Nếu tài liệu không đủ ý mới, hãy khai thác góc hỏi khác thay vì lặp lại câu cũ.
+
+DANH SÁCH CÂU HỎI ĐÃ CÓ, KHÔNG ĐƯỢC TẠO LẠI:
+" . implode("\n", $lines);
+}
+
+private function getActivePromptForExamType(string $examType)
+{
+    if (!Schema::hasTable('prompts')) {
+        return null;
+    }
+
+    $query = DB::table('prompts')
+        ->where(function ($query) {
+            $query->where('status', 1)
+                ->orWhere('status', 'active');
+        });
+
+    if (Schema::hasColumn('prompts', 'exam_type')) {
+        return $query
+            ->whereIn('exam_type', [$examType, 'both'])
+            ->orderByRaw(
+                "CASE
+                    WHEN exam_type = ? THEN 0
+                    WHEN exam_type = 'both' THEN 1
+                    ELSE 2
+                END",
+                [$examType]
+            )
+            ->latest()
+            ->first();
+    }
+
+    return $query->latest()->first();
 }
 }

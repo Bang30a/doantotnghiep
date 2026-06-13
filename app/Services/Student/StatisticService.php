@@ -8,20 +8,22 @@ class StatisticService
 {
     public function getHistoryStats($userId)
     {
-        $results = Result::where('user_id', $userId)->with('exam')->latest()->get();
+        $results = Result::where('user_id', $userId)
+            ->with(['exam.questions', 'exam.classroom', 'studentAnswers'])
+            ->latest()
+            ->get();
 
         $totalExams = $results->count();
         $averageScore = 0;
         $highestScore = 0;
 
         if ($totalExams > 0) {
-            // Đã thêm max(1, $r->total_questions) để chống lỗi chia cho 0
             $averageScore = $results->sum(function($r) { 
-                return ($r->score / max(1, $r->total_questions)) * 10; 
+                return $this->score10($r);
             }) / $totalExams;
             
             $highestScore = $results->max(function($r) { 
-                return ($r->score / max(1, $r->total_questions)) * 10; 
+                return $this->score10($r);
             });
         }
 
@@ -30,7 +32,7 @@ class StatisticService
 
     public function getDashboardStats($userId)
     {
-        $results = Result::with('exam')->where('user_id', $userId)->get();
+        $results = Result::with(['exam.questions', 'studentAnswers'])->where('user_id', $userId)->get();
         
         $totalCompleted = $results->count();
         $averageScore = 0; 
@@ -39,7 +41,7 @@ class StatisticService
         
         if ($totalCompleted > 0) {
             $averageScore = $results->sum(function($r) { 
-                return ($r->score / max(1, $r->total_questions)) * 10; 
+                return $this->score10($r);
             }) / $totalCompleted;
             
             $accuracyRate = ($results->sum('score') / max(1, $results->sum('total_questions'))) * 100;
@@ -53,7 +55,7 @@ class StatisticService
         $minutes = $totalTime % 60;
 
         $chartData = $this->prepareChartData($results);
-        $recentResults = Result::with('exam')->where('user_id', $userId)->latest()->take(5)->get();
+        $recentResults = Result::with(['exam.questions', 'studentAnswers'])->where('user_id', $userId)->latest()->take(5)->get();
 
         return compact('totalCompleted', 'averageScore', 'accuracyRate', 'hours', 'minutes', 'chartData', 'recentResults');
     }
@@ -74,7 +76,7 @@ class StatisticService
             
             if ($monthlyResults->count() > 0) {
                 $avg = $monthlyResults->sum(function($r) { 
-                    return ($r->score / max(1, $r->total_questions)) * 10; 
+                    return $this->score10($r);
                 }) / $monthlyResults->count();
                 $scoreData[] = round($avg, 1);
             } else {
@@ -93,5 +95,22 @@ class StatisticService
             'line' => ['labels' => $months, 'data' => $scoreData],
             'pie' => ['labels' => array_keys($subjectCounts), 'data' => array_values($subjectCounts)]
         ];
+    }
+
+    private function score10(Result $result): float
+    {
+        $result->loadMissing('exam.questions');
+
+        $questions = $result->exam && $result->exam->questions
+            ? $result->exam->questions
+            : collect();
+        $hasEssay = $questions->where('type', 'essay')->count() > 0;
+        $score = floatval($result->score ?? 0);
+
+        if ($hasEssay) {
+            return max(0, min(10, $score));
+        }
+
+        return max(0, min(10, ($score / max(1, intval($result->total_questions))) * 10));
     }
 }

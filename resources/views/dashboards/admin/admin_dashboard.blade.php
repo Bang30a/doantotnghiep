@@ -3,13 +3,13 @@
 @section('title', 'Thống kê tổng quan')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_dashboard2.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_dashboard2.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Tiêu đề trang -->
-    <div class="d-flex align-items-center gap-2 mb-4 mt-2 border-bottom border-light-subtle pb-3">
+    <div class="admin-page-heading d-flex align-items-center gap-2 mb-4 mt-2 pb-3">
         <h3 class="fw-800 text-dark mb-0 d-flex align-items-center gap-2">
             Thống kê tổng quan <i class="bi bi-bar-chart-line-fill theme-text-primary"></i>
         </h3>

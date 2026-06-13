@@ -3,13 +3,13 @@
 @section('title', 'Danh sách Đề thi')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_list_exams.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_list_exams.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Tiêu đề trang -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 mt-2 border-bottom border-light-subtle gap-3">
+    <div class="teacher-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 mt-2 gap-3">
         <div>
             <h3 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Ngân hàng Đề thi <i class="bi bi-journal-text theme-text-primary"></i>
@@ -186,5 +186,5 @@
 @push('scripts')
     {{-- Giữ lại thư viện jQuery và file JS gốc để xử lý các hiệu ứng Dropdown hoặc Validate nếu có --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/teacher/teacher_exams.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_exams.js') }}"></script>
 @endpush

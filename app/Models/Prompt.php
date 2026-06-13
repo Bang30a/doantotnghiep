@@ -8,6 +8,6 @@ class Prompt extends Model
 {
     protected $table = 'prompts';
     protected $fillable = [
-        'name', 'description', 'prompt_text', 'model_type', 'status'
+        'name', 'description', 'prompt_text', 'model_type', 'exam_type', 'status'
     ];
 }

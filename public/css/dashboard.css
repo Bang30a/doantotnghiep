@@ -96,6 +96,24 @@ body {
 .btn-theme-primary:hover, .btn-purple-main:hover {
     background-color: var(--theme-primary-hover); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(126, 34, 206, 0.3) !important;
 }
+.btn-theme-primary:disabled,
+.btn-theme-primary.disabled,
+.btn-purple-main:disabled,
+.btn-purple-main.disabled {
+    background-color: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
+    color: #ffffff !important;
+    opacity: 0.92 !important;
+    transform: none !important;
+    box-shadow: 0 6px 15px rgba(126, 34, 206, 0.22) !important;
+}
+
+.btn-theme-primary:disabled .spinner-border,
+.btn-purple-main:disabled .spinner-border {
+    color: #ffffff !important;
+    border-color: currentColor;
+    border-right-color: transparent;
+}
 
 .btn-purple-gradient { 
     background: linear-gradient(135deg, #9333EA 0%, var(--theme-primary) 100%);
@@ -282,5 +300,243 @@ body {
     .content-area {
         padding: 16px;
         border-radius: 16px;
+    }
+}
+
+/* =========================================================
+   PREMIUM UI REFRESH - EDUQUIZ AI
+   Lop polish dung chung cho dashboard student / teacher / admin.
+========================================================= */
+:root {
+    --theme-primary: #6D28D9;
+    --theme-primary-hover: #4C1D95;
+    --theme-light: #F5F3FF;
+    --theme-subtle: #DDD6FE;
+    --theme-dark: #111827;
+    --theme-gray: #64748B;
+    --accent-teal: #0F766E;
+    --accent-blue: #2563EB;
+    --accent-amber: #D97706;
+    --surface: #FFFFFF;
+    --surface-soft: #F8FAFC;
+    --surface-muted: #EEF2F7;
+    --bg-soft: #F4F7FB;
+    --border-soft: #D9E2EF;
+    --shadow-soft: 0 16px 40px -30px rgba(15, 23, 42, 0.45);
+    --shadow-card: 0 14px 36px -28px rgba(15, 23, 42, 0.42);
+    --radius-card: 8px;
+    --radius-control: 8px;
+}
+
+html {
+    background: #EEF3F8;
+}
+
+body {
+    color: var(--theme-dark);
+    background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.98) 0%, rgba(238, 243, 248, 0.98) 100%) !important;
+    line-height: 1.55;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(109, 40, 217, 0.055), transparent 34%, rgba(15, 118, 110, 0.05)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 38%);
+}
+
+.main-wrapper {
+    padding: 16px 24px 28px 8px;
+}
+
+.content-area {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 8px 0 24px;
+    min-height: calc(100vh - 128px);
+}
+
+.theme-text-primary,
+.text-purple {
+    color: var(--theme-primary) !important;
+}
+
+.theme-text-dark,
+.text-dark {
+    color: var(--theme-dark) !important;
+}
+
+.bg-purple-gradient {
+    background: linear-gradient(135deg, var(--theme-primary) 0%, var(--accent-teal) 100%) !important;
+}
+
+.bg-purple-light,
+.bg-purple-soft {
+    background-color: var(--theme-light) !important;
+}
+
+.btn:not(.rounded-pill),
+.form-control,
+.form-select,
+.input-group-text,
+.dropdown-menu,
+.alert,
+.badge:not(.rounded-pill),
+.custom-input {
+    border-radius: var(--radius-control) !important;
+}
+
+.btn {
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.btn-theme-primary,
+.btn-purple-main,
+.btn-purple-gradient {
+    background: var(--theme-primary) !important;
+    border: 1px solid var(--theme-primary) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 12px 24px -18px rgba(109, 40, 217, 0.75) !important;
+}
+
+.btn-theme-primary:hover,
+.btn-purple-main:hover,
+.btn-purple-gradient:hover {
+    background: var(--theme-primary-hover) !important;
+    border-color: var(--theme-primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 18px 30px -22px rgba(76, 29, 149, 0.75) !important;
+}
+
+.btn-outline-theme,
+.btn-outline-purple,
+.btn-purple-soft {
+    border-color: rgba(109, 40, 217, 0.24) !important;
+    color: var(--theme-primary) !important;
+    background: rgba(255, 255, 255, 0.88) !important;
+}
+
+.btn-outline-theme:hover,
+.btn-outline-purple:hover,
+.btn-purple-soft:hover {
+    background: var(--theme-light) !important;
+    color: var(--theme-primary-hover) !important;
+    border-color: var(--theme-subtle) !important;
+    box-shadow: 0 12px 26px -24px rgba(109, 40, 217, 0.7) !important;
+}
+
+.dash-card,
+.stat-card,
+.stat-card-mini,
+.section-card,
+.admin-kpi-card,
+.tip-card-modern,
+.action-card,
+.classroom-card,
+.exam-card,
+.document-card,
+.question-card {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid rgba(217, 226, 239, 0.9) !important;
+    border-radius: var(--radius-card) !important;
+    box-shadow: var(--shadow-card) !important;
+}
+
+.dash-card:hover,
+.stat-card:hover,
+.stat-card-mini:hover,
+.section-card:hover,
+.admin-kpi-card:hover,
+.tip-card-modern:hover,
+.action-card:hover,
+.classroom-card:hover,
+.exam-card:hover,
+.document-card:hover,
+.question-card:hover {
+    border-color: rgba(109, 40, 217, 0.22) !important;
+    box-shadow: 0 18px 42px -30px rgba(15, 23, 42, 0.55) !important;
+    transform: translateY(-2px);
+}
+
+.icon-wrapper,
+.icon-wrapper-md,
+.stat-icon-wrapper,
+.empty-icon-wrapper,
+.avatar-sm {
+    border-radius: var(--radius-card) !important;
+}
+
+.icon-wrapper.purple,
+.icon-wrapper-md.purple,
+.stat-icon-wrapper.purple {
+    background: var(--theme-light) !important;
+    color: var(--theme-primary) !important;
+}
+
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.custom-table thead th {
+    background: #F8FAFC !important;
+    color: #475569 !important;
+    letter-spacing: 0;
+}
+
+.custom-table tbody td {
+    background: rgba(255, 255, 255, 0.96) !important;
+}
+
+.hover-row:hover td,
+.student-row:hover td {
+    background: #F8FAFC !important;
+}
+
+.custom-input,
+.form-control,
+.form-select {
+    background-color: #FFFFFF !important;
+    border-color: #D9E2EF !important;
+    color: var(--theme-dark);
+    min-height: 42px;
+}
+
+.custom-input:focus,
+.form-control:focus,
+.form-select:focus,
+.input-group-custom:focus-within,
+.custom-input-group:focus-within {
+    border-color: rgba(109, 40, 217, 0.55) !important;
+    box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.1) !important;
+}
+
+.dropdown-menu {
+    border: 1px solid rgba(217, 226, 239, 0.9) !important;
+    box-shadow: 0 18px 45px -28px rgba(15, 23, 42, 0.55) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background: var(--surface-soft);
+    color: var(--theme-primary);
+}
+
+@media (max-width: 768px) {
+    .main-wrapper {
+        padding: 12px 14px 20px;
+    }
+
+    .content-area {
+        padding: 0;
+        min-height: auto;
     }
 }

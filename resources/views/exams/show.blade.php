@@ -1,11 +1,12 @@
 @extends('layouts.app') @section('title', 'Chi tiết đề thi: ' . $exam->title)
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/show_exam.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/show_exam.css') }}">
 @endpush
 
 @section('content')
-<div class="container py-4" style="max-width: 1000px;">
+<div class="exam-show-page">
+<div class="container py-4" style="max-width: 1120px;">
     
     <div class="exam-detail-header shadow-sm mb-5 position-relative overflow-hidden bg-white rounded-4">
         <div class="position-absolute top-0 end-0 h-100 opacity-10 pointer-events-none" style="width: 300px; background: radial-gradient(circle at top right, var(--theme-primary), transparent 70%);"></div>
@@ -148,5 +149,6 @@
         @endforelse
     </div>
 
+</div>
 </div>
 @endsection

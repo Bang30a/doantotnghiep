@@ -31,7 +31,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if(targetElement && sourceElement) {
                 // Copy text từ AI dán xuống ô của Giảng viên
-                targetElement.value = sourceElement.innerText;
+                const sourceText = sourceElement.innerText;
+                const richApplied = window.EduQuizRichText
+                    && typeof window.EduQuizRichText.setText === 'function'
+                    && window.EduQuizRichText.setText(targetId, sourceText);
+
+                if (!richApplied) {
+                    targetElement.value = sourceText;
+                }
                 
                 // Đổi nút thành "Đã áp dụng" màu xanh trong 2 giây để báo hiệu
                 const originalHtml = this.innerHTML;

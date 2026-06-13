@@ -1,0 +1,544 @@
+/* Student shared visual system */
+:root {
+    --student-primary: #6D28D9;
+    --student-primary-dark: #4C1D95;
+    --student-teal: #0F766E;
+    --student-blue: #2563EB;
+    --student-amber: #D97706;
+    --student-rose: #E11D48;
+    --student-ink: #111827;
+    --student-muted: #64748B;
+    --student-bg: #EAF1F6;
+    --student-surface: #FFFFFF;
+    --student-border: #CCD8E7;
+    --student-border-soft: #E2E8F0;
+    --student-shadow: 0 20px 45px -36px rgba(15, 23, 42, 0.64);
+    --student-shadow-hover: 0 26px 52px -38px rgba(15, 23, 42, 0.74);
+    --student-radius: 8px;
+}
+
+body.student-shell {
+    background:
+        linear-gradient(135deg, #F8FBFF 0%, #EEF5F8 44%, #EAF1F6 100%) !important;
+    color: var(--student-ink);
+}
+
+body.student-shell .main-wrapper {
+    background:
+        linear-gradient(90deg, rgba(15, 23, 42, 0.024) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.84) 0%, rgba(238, 245, 248, 0.94) 34%, #EAF1F6 100%),
+        linear-gradient(135deg, rgba(109, 40, 217, 0.075) 0%, rgba(15, 118, 110, 0.07) 58%, rgba(217, 119, 6, 0.045) 100%) !important;
+    background-size: 64px 64px, auto, auto;
+}
+
+body.student-shell .content-area {
+    padding-top: 18px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0) 260px);
+}
+
+body.student-shell .student-page-heading {
+    position: relative;
+    overflow: hidden;
+    padding: 22px 26px !important;
+    border: 1px solid var(--student-border) !important;
+    border-radius: var(--student-radius);
+    background:
+        linear-gradient(90deg, rgba(109, 40, 217, 0.05) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(248, 250, 252, 0.94) 58%, rgba(236, 253, 245, 0.76) 100%);
+    background-size: 42px 42px, auto;
+    box-shadow: var(--student-shadow);
+}
+
+body.student-shell .student-page-heading::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--student-primary) 0%, var(--student-teal) 100%);
+}
+
+body.student-shell .student-page-heading > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.student-shell .student-page-heading h1,
+body.student-shell .student-page-heading h2,
+body.student-shell .student-page-heading h3,
+body.student-shell .student-page-heading h4 {
+    color: var(--student-ink) !important;
+    letter-spacing: 0;
+}
+
+body.student-shell .student-page-heading p {
+    color: var(--student-muted) !important;
+}
+
+body.student-shell .btn-theme-primary,
+body.student-shell .btn-purple-main,
+body.student-shell .btn-purple-gradient {
+    background: var(--student-primary) !important;
+    border: 1px solid var(--student-primary) !important;
+    color: #FFFFFF !important;
+    border-radius: var(--student-radius) !important;
+    box-shadow: 0 16px 30px -22px rgba(109, 40, 217, 0.88) !important;
+}
+
+body.student-shell .btn-theme-primary:hover,
+body.student-shell .btn-purple-main:hover,
+body.student-shell .btn-purple-gradient:hover {
+    background: var(--student-primary-dark) !important;
+    border-color: var(--student-primary-dark) !important;
+    transform: translateY(-1px);
+}
+
+body.student-shell .btn-outline-theme,
+body.student-shell .btn-outline-purple,
+body.student-shell .btn-purple-soft {
+    color: var(--student-primary) !important;
+    background: #FFFFFF !important;
+    border: 1px solid #DDD6FE !important;
+    border-radius: var(--student-radius) !important;
+}
+
+body.student-shell .btn-outline-theme:hover,
+body.student-shell .btn-outline-purple:hover,
+body.student-shell .btn-purple-soft:hover {
+    background: #F5F3FF !important;
+    border-color: rgba(109, 40, 217, 0.34) !important;
+}
+
+body.student-shell .bg-purple-gradient {
+    background: linear-gradient(135deg, var(--student-primary) 0%, var(--student-blue) 48%, var(--student-teal) 100%) !important;
+}
+
+body.student-shell .theme-text-primary,
+body.student-shell .text-purple,
+body.student-shell .text-purple-dark {
+    color: var(--student-primary) !important;
+}
+
+body.student-shell .bg-purple-light {
+    background: #F5F3FF !important;
+}
+
+body.student-shell .border-purple-subtle {
+    border-color: #DDD6FE !important;
+}
+
+body.student-shell .filter-card,
+body.student-shell .settings-card,
+body.student-shell .bank-card,
+body.student-shell .stat-box,
+body.student-shell .stat-overview-card,
+body.student-shell .chart-card,
+body.student-shell .task-item,
+body.student-shell .class-card,
+body.student-shell .guide-section,
+body.student-shell .premium-card,
+body.student-shell .question-list-card,
+body.student-shell .config-card,
+body.student-shell .card:not(.modal-content) {
+    border: 1px solid var(--student-border) !important;
+    border-radius: var(--student-radius) !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    box-shadow: var(--student-shadow) !important;
+}
+
+body.student-shell .filter-card:hover,
+body.student-shell .settings-card:hover,
+body.student-shell .bank-card:hover,
+body.student-shell .stat-box:hover,
+body.student-shell .stat-overview-card:hover,
+body.student-shell .chart-card:hover,
+body.student-shell .task-item:hover,
+body.student-shell .class-card:hover,
+body.student-shell .guide-section:hover {
+    border-color: rgba(109, 40, 217, 0.22) !important;
+    box-shadow: var(--student-shadow-hover) !important;
+}
+
+body.student-shell .form-control,
+body.student-shell .form-select,
+body.student-shell .input-group-text,
+body.student-shell .custom-input,
+body.student-shell .form-control-custom {
+    border-color: #D9E2EF !important;
+    border-radius: var(--student-radius) !important;
+    background-color: #FFFFFF !important;
+}
+
+body.student-shell .input-group .input-group-text {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+body.student-shell .input-group .form-control {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+body.student-shell .form-control:focus,
+body.student-shell .form-select:focus,
+body.student-shell .custom-input:focus,
+body.student-shell .input-group-custom:focus-within {
+    border-color: rgba(109, 40, 217, 0.56) !important;
+    box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.1) !important;
+}
+
+body.student-shell .bank-card .bank-icon,
+body.student-shell .empty-icon-circle,
+body.student-shell .empty-state-icon,
+body.student-shell .avatar-upload-btn,
+body.student-shell .settings-tab-btn.active i {
+    border-radius: var(--student-radius) !important;
+}
+
+body.student-shell .bank-item:nth-child(3n + 1) .bank-icon,
+body.student-shell .stat-overview-card .icon-box,
+body.student-shell .stat-box .icon-box {
+    background: #F5F3FF !important;
+    color: var(--student-primary) !important;
+}
+
+body.student-shell .bank-item:nth-child(3n + 2) .bank-icon,
+body.student-shell .row > [class*="col"]:nth-child(2) .stat-overview-card .icon-box,
+body.student-shell .row > [class*="col"]:nth-child(2) .stat-box .icon-box {
+    background: #ECFDF5 !important;
+    color: var(--student-teal) !important;
+}
+
+body.student-shell .bank-item:nth-child(3n) .bank-icon,
+body.student-shell .row > [class*="col"]:nth-child(3) .stat-overview-card .icon-box,
+body.student-shell .row > [class*="col"]:nth-child(3) .stat-box .icon-box {
+    background: #EFF6FF !important;
+    color: var(--student-blue) !important;
+}
+
+body.student-shell .row > [class*="col"]:nth-child(4) .stat-overview-card .icon-box,
+body.student-shell .row > [class*="col"]:nth-child(4) .stat-box .icon-box {
+    background: #FFFBEB !important;
+    color: var(--student-amber) !important;
+}
+
+body.student-shell .bank-card-footer,
+body.student-shell .card-footer {
+    border-color: #E2E8F0 !important;
+    background: #FFFFFF !important;
+    border-bottom-left-radius: var(--student-radius) !important;
+    border-bottom-right-radius: var(--student-radius) !important;
+}
+
+body.student-shell .bank-card .bg-light,
+body.student-shell .task-item .bg-light,
+body.student-shell .class-card .bg-light {
+    background: #F8FAFC !important;
+}
+
+body.student-shell .upload-drop-zone {
+    border-radius: var(--student-radius) !important;
+    border-color: #BFD0E4 !important;
+    background: #F8FAFC !important;
+}
+
+body.student-shell .upload-drop-zone:hover,
+body.student-shell .upload-drop-zone.dragover {
+    border-color: var(--student-teal) !important;
+    background: #ECFDF5 !important;
+}
+
+body.student-shell .document-item {
+    border-radius: var(--student-radius) !important;
+    border-color: #D9E2EF !important;
+    box-shadow: none !important;
+}
+
+body.student-shell .document-item:hover {
+    border-color: rgba(15, 118, 110, 0.3) !important;
+    box-shadow: 0 14px 30px -26px rgba(15, 118, 110, 0.72) !important;
+}
+
+body.student-shell .doc-icon,
+body.student-shell .guide-icon,
+body.student-shell .task-icon,
+body.student-shell .icon-box {
+    border-radius: var(--student-radius) !important;
+}
+
+body.student-shell .class-card-header,
+body.student-shell .class-banner {
+    background: linear-gradient(135deg, var(--student-primary) 0%, var(--student-blue) 48%, var(--student-teal) 100%) !important;
+}
+
+body.student-shell .class-card-header::after,
+body.student-shell .class-banner-bg-shape,
+body.student-shell .class-banner-icon {
+    display: none !important;
+}
+
+body.student-shell .class-card-body {
+    background: #FFFFFF;
+}
+
+body.student-shell .class-banner {
+    border-radius: var(--student-radius) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: var(--student-shadow) !important;
+}
+
+body.student-shell .settings-tab-btn {
+    border-left-width: 3px;
+}
+
+body.student-shell .settings-tab-btn.active {
+    background: #F5F3FF !important;
+    color: var(--student-primary) !important;
+}
+
+body.student-shell .avatar-preview-container {
+    border-radius: var(--student-radius) !important;
+}
+
+body.student-shell .chart-card canvas {
+    max-width: 100%;
+}
+
+body.student-shell .custom-table thead th {
+    background: #F8FAFC !important;
+    color: #334155 !important;
+}
+
+body.student-shell .custom-table tbody tr.table-row-hover:hover {
+    transform: none !important;
+}
+
+body.student-shell .student-page-heading::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(360px, 42%);
+    z-index: 0;
+    background:
+        linear-gradient(135deg, transparent 0 28%, rgba(109, 40, 217, 0.08) 28% 58%, rgba(15, 118, 110, 0.08) 58% 100%);
+    pointer-events: none;
+}
+
+body.student-shell .student-hero-band,
+body.student-shell .exam-header-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--student-radius) !important;
+    border: 1px solid rgba(109, 40, 217, 0.16) !important;
+    background:
+        linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 50%, rgba(236, 253, 245, 0.74) 100%) !important;
+    background-size: 42px 42px, auto !important;
+    box-shadow: var(--student-shadow) !important;
+}
+
+body.student-shell .class-banner {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--student-radius) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    color: #FFFFFF !important;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 48%),
+        linear-gradient(135deg, var(--student-primary) 0%, var(--student-blue) 48%, var(--student-teal) 100%) !important;
+    background-size: 42px 42px, auto, auto !important;
+    box-shadow: var(--student-shadow-lg) !important;
+}
+
+body.student-shell .class-banner h1,
+body.student-shell .class-banner h2,
+body.student-shell .class-banner h3,
+body.student-shell .class-banner h4,
+body.student-shell .class-banner h5,
+body.student-shell .class-banner h6,
+body.student-shell .class-banner p,
+body.student-shell .class-banner span,
+body.student-shell .class-banner strong,
+body.student-shell .class-banner i {
+    color: #FFFFFF !important;
+}
+
+body.student-shell .class-banner .bg-white,
+body.student-shell .class-banner .bg-black {
+    background-color: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+body.student-shell .student-dashboard-page .student-hero-band {
+    min-height: 138px;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.32) !important;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 48%),
+        linear-gradient(135deg, #4C1D95 0%, #2563EB 48%, #0F766E 100%) !important;
+    background-size: 42px 42px, auto, auto !important;
+}
+
+body.student-shell .student-dashboard-page .student-hero-band::before {
+    width: 6px;
+    background: linear-gradient(180deg, #F59E0B 0%, #22C55E 48%, #60A5FA 100%);
+}
+
+body.student-shell .student-dashboard-page .student-hero-band::after {
+    background: linear-gradient(135deg, transparent 0 30%, rgba(255, 255, 255, 0.09) 30% 58%, rgba(255, 255, 255, 0.05) 58% 100%) !important;
+}
+
+body.student-shell .student-dashboard-page .student-hero-band h2,
+body.student-shell .student-dashboard-page .student-hero-band p {
+    color: #FFFFFF !important;
+}
+
+body.student-shell .student-dashboard-page .student-hero-band p {
+    opacity: 0.84;
+}
+
+body.student-shell .stat-card,
+body.student-shell .stat-box,
+body.student-shell .stat-overview-card,
+body.student-shell .action-card,
+body.student-shell .tip-card-modern {
+    position: relative;
+    overflow: hidden;
+}
+
+body.student-shell .stat-card::before,
+body.student-shell .stat-box::before,
+body.student-shell .stat-overview-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--stat-accent, var(--student-primary));
+}
+
+body.student-shell .stat-card::after,
+body.student-shell .stat-box::after,
+body.student-shell .stat-overview-card::after {
+    content: "";
+    position: absolute;
+    inset: auto -1px -1px auto;
+    width: 104px;
+    height: 104px;
+    opacity: 0.25;
+    background: linear-gradient(135deg, transparent 0 43%, var(--stat-soft, #F5F3FF) 43% 100%);
+    pointer-events: none;
+}
+
+body.student-shell .stat-card > *,
+body.student-shell .stat-box > *,
+body.student-shell .stat-overview-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.student-shell .row > [class*="col"]:nth-child(4n + 1) .stat-card,
+body.student-shell .row > [class*="col"]:nth-child(4n + 1) .stat-box,
+body.student-shell .row > [class*="col"]:nth-child(4n + 1) .stat-overview-card {
+    --stat-accent: var(--student-primary);
+    --stat-soft: #F5F3FF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9F7FF 58%, #F5F3FF 100%) !important;
+}
+
+body.student-shell .row > [class*="col"]:nth-child(4n + 2) .stat-card,
+body.student-shell .row > [class*="col"]:nth-child(4n + 2) .stat-box,
+body.student-shell .row > [class*="col"]:nth-child(4n + 2) .stat-overview-card {
+    --stat-accent: var(--student-teal);
+    --stat-soft: #ECFDF5;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F7FEFB 58%, #ECFDF5 100%) !important;
+}
+
+body.student-shell .row > [class*="col"]:nth-child(4n + 3) .stat-card,
+body.student-shell .row > [class*="col"]:nth-child(4n + 3) .stat-box,
+body.student-shell .row > [class*="col"]:nth-child(4n + 3) .stat-overview-card {
+    --stat-accent: var(--student-blue);
+    --stat-soft: #EFF6FF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FBFF 58%, #EFF6FF 100%) !important;
+}
+
+body.student-shell .row > [class*="col"]:nth-child(4n) .stat-card,
+body.student-shell .row > [class*="col"]:nth-child(4n) .stat-box,
+body.student-shell .row > [class*="col"]:nth-child(4n) .stat-overview-card {
+    --stat-accent: var(--student-amber);
+    --stat-soft: #FFFBEB;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 58%, #FFFBEB 100%) !important;
+}
+
+body.student-shell .section-card,
+body.student-shell .chart-card,
+body.student-shell .guide-section,
+body.student-shell .settings-card {
+    background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.88) 0%, rgba(255, 255, 255, 0.98) 74%) !important;
+}
+
+body.student-shell .bank-card,
+body.student-shell .class-card,
+body.student-shell .document-item,
+body.student-shell .task-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+body.student-shell .bank-card:hover,
+body.student-shell .class-card:hover,
+body.student-shell .document-item:hover,
+body.student-shell .task-item:hover {
+    transform: translateY(-2px);
+}
+
+body.student-shell .fixed-wrapper-teacher {
+    width: 100%;
+    max-width: 1580px;
+    margin: 0 auto;
+}
+
+body.student-shell .fixed-wrapper-teacher .student-page-heading {
+    flex-shrink: 0;
+}
+
+body.student-shell .premium-card,
+body.student-shell .premium-card:has(#configCollapse),
+body.student-shell .config-card,
+body.student-shell .question-list-card,
+body.student-shell .premium-card:has(#preview-questions-area) {
+    border-radius: var(--student-radius) !important;
+}
+
+body.student-shell #configHeader,
+body.student-shell .premium-card > .card-header,
+body.student-shell .question-list-card > .card-header {
+    border-radius: 0 !important;
+    background: #FFFFFF !important;
+}
+
+body.student-shell #preview-questions-area::-webkit-scrollbar-thumb,
+body.student-shell .question-scroll-area::-webkit-scrollbar-thumb,
+body.student-shell .document-list::-webkit-scrollbar-thumb {
+    background: #94A3B8;
+}
+
+@media (max-width: 768px) {
+    body.student-shell .student-page-heading {
+        padding: 20px 18px 20px 22px !important;
+    }
+
+    body.student-shell .student-page-heading .btn,
+    body.student-shell .student-page-heading a.btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    body.student-shell .bank-card-footer {
+        flex-direction: column;
+    }
+
+    body.student-shell .bank-card-footer .btn {
+        width: 100% !important;
+    }
+}

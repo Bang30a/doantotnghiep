@@ -3,12 +3,12 @@
 @section('title', 'Lịch sử dùng AI')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_ai_history.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_ai_history.css') }}">
 @endpush
 
 @section('content')
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-3 gap-3 mt-1 border-bottom border-light-subtle pb-2">
+    <div class="admin-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-3 gap-3 mt-1 pb-2">
         <div>
             <h4 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Lịch sử dùng AI (API Logs) <i class="bi bi-activity theme-text-primary"></i>
@@ -169,5 +169,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/admin/admin_ai_history.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/admin/admin_ai_history.js') }}"></script>
 @endpush

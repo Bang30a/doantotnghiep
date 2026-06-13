@@ -3,13 +3,13 @@
 @section('title', 'Chi tiết Đề thi: ' . ($exam->title ?? ''))
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_exam_detail.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_exam_detail.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Tiêu đề trang & Nút quay lại -->
-    <div class="d-flex align-items-center justify-content-between mb-4 mt-2 border-bottom border-light-subtle pb-3">
+    <div class="admin-page-heading d-flex align-items-center justify-content-between mb-4 mt-2 pb-3">
         <div class="d-flex align-items-center gap-3">
             <a href="{{ route('admin.exams') ?? url()->previous() }}" class="btn-back">
                 <i class="bi bi-arrow-left"></i>
@@ -68,7 +68,7 @@
                             CÂU {{ $index + 1 }}
                         </span>
                         <div class="d-flex align-items-center gap-2">
-                            <button class="btn-tool copy-question-btn" data-content="{{ $question->content }}">
+                            <button type="button" class="btn-tool copy-question-btn" data-content="{{ $question->content }}">
                                 <i class="bi bi-copy me-1"></i> Sao chép
                             </button>
                             <span class="badge bg-info-soft text-info border border-info-subtle px-3 py-2 rounded-pill fw-bold text-uppercase letter-spacing-1">
@@ -81,7 +81,7 @@
                     <h5 class="fw-bold text-dark mb-4 lh-base" style="font-size: 1.15rem;">{{ $question->content }}</h5>
 
                     <div class="d-flex justify-content-end mb-3">
-                        <button class="btn-tool toggle-answer-btn theme-text-primary border-purple-subtle bg-purple-light" data-target="answer-content-{{ $question->id }}">
+                        <button type="button" class="btn-tool toggle-answer-btn theme-text-primary border-purple-subtle bg-purple-light" data-target="answer-content-{{ $question->id }}">
                             <i class="bi bi-eye-slash me-1"></i> Ẩn đáp án
                         </button>
                     </div>
@@ -153,5 +153,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/admin_exam_detail.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/admin/admin_exam_detail.js') }}"></script>
 @endpush

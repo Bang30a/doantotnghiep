@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 // ==========================================
-// KHO KHAI BÁO CONTROLLERS (ĐÃ SỬ DỤNG ALIAS ĐỂ TRÁNH TRÙNG LẶP)
+// KHAI BÁO CONTROLLERS (DÙNG ALIAS ĐỂ TRÁNH TRÙNG TÊN)
 // ==========================================
 
-// 1. Nhóm Core (Dùng chung)
+// 1. Nhóm Core (dùng chung)
 use App\Http\Controllers\Core\AuthController;
 use App\Http\Controllers\Core\ClassroomController;
 use App\Http\Controllers\Core\DocumentController;
@@ -15,18 +15,18 @@ use App\Http\Controllers\Core\ProfileController;
 use App\Http\Controllers\Core\ReportController;
 use App\Http\Controllers\Core\BackupController;
 
-// 2. Nhóm Teacher
+// 2. Nhóm giảng viên
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 use App\Http\Controllers\Teacher\ExamController as TeacherExamController;
 
-// 3. Nhóm Student
+// 3. Nhóm học viên
 use App\Http\Controllers\Student\ExamController as StudentExamController;
 use App\Http\Controllers\Student\StatisticController as StudentStatisticController;
 
 // 4. Nhóm API
 use App\Http\Controllers\Api\AiApiController;
 
-// 5. Nhóm Admin
+// 5. Nhóm quản trị
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ClassroomController as AdminClassroomController;
@@ -69,10 +69,10 @@ Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
-// Social Login
+// Đăng nhập mạng xã hội
 Route::get('/auth/{provider}/redirect', [AuthController::class, 'redirectToProvider'])->name('social.redirect');
 Route::get('/auth/{provider}/callback', [AuthController::class, 'handleProviderCallback'])->name('social.callback');
-// Route xử lý đăng xuất tự động khi hết giờ (Dùng GET để không bị lỗi 419 CSRF)
+// Xử lý đăng xuất tự động khi hết phiên (dùng GET để tránh lỗi 419 CSRF)
 Route::get('/auto-logout', function (\Illuminate\Http\Request $request) {
     Auth::logout();
     $request->session()->invalidate();
@@ -85,14 +85,14 @@ Route::get('/auto-logout', function (\Illuminate\Http\Request $request) {
 // ==========================================
 Route::middleware('auth')->group(function () {
     
-    // --- AUTHENTICATION ---
+    // --- XÁC THỰC ---
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // --- DASHBOARD CHUNG (DIEU HUONG TUY VAI TRO) ---
+    // --- DASHBOARD CHUNG (ĐIỀU HƯỚNG THEO VAI TRÒ) ---
 Route::get('/dashboard', function () {
     $user = Auth::user();
 
-    // Ham quy doi diem ve he 10 dung cho ca trac nghiem va tu luan
+    // Hàm quy đổi điểm về thang 10 cho cả trắc nghiệm và tự luận
     $score10 = function ($result) {
         $result->loadMissing('exam.questions');
 
@@ -101,11 +101,11 @@ Route::get('/dashboard', function () {
             && $result->exam->questions->where('type', 'essay')->count() > 0;
 
         if ($hasEssay) {
-            // Tu luan: score da la diem he 10
+            // Tự luận: score đã là điểm thang 10
             return max(0, min(10, floatval($result->score)));
         }
 
-        // Trac nghiem: score la so cau dung
+        // Trắc nghiệm: score là số câu đúng
         return max(0, min(10, (floatval($result->score) / max(1, intval($result->total_questions))) * 10));
     };
 
@@ -185,6 +185,8 @@ Route::get('/dashboard', function () {
             ->pluck('classroom_id');
 
         $classroomsCount = $joinedClassroomIds->count();
+        $documentsCount = \App\Models\Document::where('user_id', $user->id)->count();
+        $questionBanksCount = \App\Models\Exam::where('teacher_id', $user->id)->count();
 
         $recentResults = $results->take(3);
 
@@ -199,6 +201,8 @@ Route::get('/dashboard', function () {
             'completedExamsCount',
             'averageScore',
             'classroomsCount',
+            'documentsCount',
+            'questionBanksCount',
             'recentResults',
             'upcomingExams'
         ));
@@ -250,20 +254,22 @@ Route::get('/dashboard', function () {
     // --- LỚP HỌC (DÙNG CHUNG) ---
     Route::post('/classrooms', [ClassroomController::class, 'store'])->name('classrooms.store');
     Route::post('/classrooms/join', [ClassroomController::class, 'join'])->name('classrooms.join');
+    Route::put('/classrooms/{id}', [ClassroomController::class, 'update'])->name('classrooms.update');
+    Route::delete('/classrooms/{id}', [ClassroomController::class, 'destroy'])->name('classrooms.destroy');
     Route::get('/classrooms/{id}', [ClassroomController::class, 'show'])->name('classrooms.show');
     
-    // --- THI CỬ VÀ ĐIỂM (DÙNG CHUNG) ---
+    // --- ĐỀ THI VÀ ĐIỂM (DÙNG CHUNG) ---
     Route::get('/exams/{id}/details', [TeacherExamController::class, 'show'])->name('exams.show');
     Route::get('/exams/{id}/results-board', [TeacherExamController::class, 'results'])->name('exams.teacher_results');
     Route::get('/exams/{id}/play', [StudentExamController::class, 'play'])->name('exams.play');
     Route::post('/exams/{id}/submit', [StudentExamController::class, 'submit'])->name('exams.submit');
-    Route::get('/exams/{id}/result', [StudentExamController::class, 'result'])->name('exams.result');
+    Route::get('/exams/{id}/result/{result_id?}', [StudentExamController::class, 'result'])->name('exams.result');
 
     // ==========================================
     // ROUTES DÀNH RIÊNG CHO GIẢNG VIÊN (TEACHER)
     // ==========================================
     Route::prefix('teacher')->name('teacher.')->group(function () {
-        // Quản lý lớp & học viên
+        // Quản lý lớp học và học viên
         Route::get('/classrooms', [ClassroomController::class, 'teacherIndex'])->name('classrooms');
         Route::get('/students', [TeacherDashboardController::class, 'studentsIndex'])->name('students.index');
         Route::get('/students/export', [TeacherDashboardController::class, 'exportStudents'])->name('students.export');
@@ -316,7 +322,7 @@ Route::get('/dashboard', function () {
         Route::post('/documents/upload', [DocumentController::class, 'store'])->name('documents.store');
         Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
         
-        // Đề thi tự luyện (Sinh bằng AI)
+        // Đề thi tự luyện (sinh bằng AI)
         Route::get('/exams/create', [StudentExamController::class, 'createSelfPractice'])->name('exams.create');
         Route::post('/exams/store', [StudentExamController::class, 'storeSelfPractice'])->name('exams.store');
         Route::get('/question-banks', [StudentExamController::class, 'questionBanks'])->name('question-banks');
@@ -340,7 +346,7 @@ Route::get('/dashboard', function () {
     // ==========================================
     Route::prefix('admin')->name('admin.')->group(function () {
         
-        // Dashboard & Cài đặt hệ thống
+        // Dashboard và cài đặt hệ thống
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::get('/settings', [SettingController::class, 'index'])->name('settings');
         Route::post('/settings/test-email', [SettingController::class, 'testEmail'])->name('settings.test-email');
@@ -348,18 +354,20 @@ Route::get('/dashboard', function () {
         Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
         Route::get('/activities', [AdminDashboardController::class, 'activities'])->name('activities');
         
-        // Backup
+        // Sao lưu
         Route::get('/backup/database', [BackupController::class, 'downloadDatabase'])->name('backup.database');
         
-        // Quản lý Users (Giảng viên & Học viên)
+        // Quản lý người dùng (giảng viên và học viên)
         Route::get('/teachers', [AdminUserController::class, 'teacherIndex'])->name('teachers');
         Route::get('/teachers/detail/{id}', [AdminUserController::class, 'showTeacher'])->name('teachers.show');
         Route::put('/teachers/update/{id}', [AdminUserController::class, 'updateTeacher'])->name('teachers.update');
+        Route::delete('/teachers/{id}', [AdminUserController::class, 'destroyTeacher'])->name('teachers.destroy');
         Route::post('/teachers/{id}/lock', [AdminUserController::class, 'toggleLock'])->name('teachers.toggle_lock');
 
         Route::get('/students', [AdminUserController::class, 'studentIndex'])->name('students');
         Route::get('/students/detail/{id}', [AdminUserController::class, 'showStudent'])->name('students.show');
         Route::put('/students/update/{id}', [AdminUserController::class, 'updateStudent'])->name('students.update');
+        Route::delete('/students/{id}', [AdminUserController::class, 'destroyStudent'])->name('students.destroy');
         Route::post('/students/{id}/lock', [AdminUserController::class, 'toggleLock'])->name('students.toggle_lock'); 
         
         Route::get('/users', [AdminUserController::class, 'manageUsers'])->name('users');

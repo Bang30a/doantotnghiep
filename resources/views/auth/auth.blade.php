@@ -31,29 +31,38 @@
     @endif
 
     <div id="login-section" class="form-section {{ $mode == 'login' ? 'form-active' : '' }}">
-        <h2 class="auth-title h3">Chào mừng trở lại!</h2>
-        <p class="auth-subtitle">Đăng nhập để tiếp tục quá trình học tập của bạn</p>
+        <div class="auth-card-heading">
+            <div class="auth-form-icon"><i class="bi bi-box-arrow-in-right"></i></div>
+            <div>
+                <h2 class="auth-title h3">Chào mừng trở lại</h2>
+                <p class="auth-subtitle">Đăng nhập để tiếp tục học tập và quản lý đề thi.</p>
+            </div>
+        </div>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="role-toggle btn-group w-100" role="group">
                 <input type="radio" class="btn-check" name="role" id="role_student_login" value="student" autocomplete="off" checked>
-                <label class="btn" for="role_student_login">Học viên</label>
+                <label class="btn" for="role_student_login"><i class="bi bi-mortarboard me-2"></i>Học viên</label>
                 <input type="radio" class="btn-check" name="role" id="role_teacher_login" value="teacher" autocomplete="off">
-                <label class="btn" for="role_teacher_login">Giảng viên</label>
+                <label class="btn" for="role_teacher_login"><i class="bi bi-person-workspace me-2"></i>Giảng viên</label>
             </div>
 
-            <div class="mb-4">
+            <div class="auth-field mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control custom-input" placeholder="name@example.com" value="{{ old('email') }}" required autofocus>
+                <div class="auth-input-wrap">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" name="email" class="form-control custom-input" placeholder="name@example.com" value="{{ old('email') }}" required autofocus>
+                </div>
             </div>
 
-            <div class="mb-4">
+            <div class="auth-field mb-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <label class="form-label mb-0">Mật khẩu</label>
                     <a href="{{ route('password.request') }}" class="text-link small fw-bold">Quên mật khẩu?</a>
                 </div>
-                <div class="input-group">
+                <div class="input-group auth-input-wrap auth-password-wrap">
+                    <i class="bi bi-lock"></i>
                     <input type="password" name="password" class="form-control custom-input border-end-0" placeholder="••••••••" required>
                     <span class="input-group-text bg-white border-start-0 custom-input">
                         <i class="bi bi-eye toggle-password" style="cursor: pointer;"></i>
@@ -89,31 +98,43 @@
 
 
     <div id="register-section" class="form-section {{ $mode == 'register' ? 'form-active' : '' }}">
-        <h2 class="auth-title h3">Tạo tài khoản mới</h2>
-        <p class="auth-subtitle">Đăng ký để trải nghiệm các tính năng tuyệt vời</p>
+        <div class="auth-card-heading">
+            <div class="auth-form-icon"><i class="bi bi-person-plus"></i></div>
+            <div>
+                <h2 class="auth-title h3">Tạo tài khoản mới</h2>
+                <p class="auth-subtitle">Bắt đầu với không gian học tập AI của bạn.</p>
+            </div>
+        </div>
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="role-toggle btn-group w-100" role="group">
                 <input type="radio" class="btn-check" name="role" id="role_student_reg" value="student" autocomplete="off" checked>
-                <label class="btn" for="role_student_reg">Học viên</label>
+                <label class="btn" for="role_student_reg"><i class="bi bi-mortarboard me-2"></i>Học viên</label>
                 <input type="radio" class="btn-check" name="role" id="role_teacher_reg" value="teacher" autocomplete="off">
-                <label class="btn" for="role_teacher_reg">Giảng viên</label>
+                <label class="btn" for="role_teacher_reg"><i class="bi bi-person-workspace me-2"></i>Giảng viên</label>
             </div>
 
-            <div class="mb-3">
+            <div class="auth-field mb-3">
                 <label class="form-label">Họ và tên</label>
-                <input type="text" name="name" class="form-control custom-input" placeholder="Nguyễn Văn A" value="{{ old('name') }}" required>
+                <div class="auth-input-wrap">
+                    <i class="bi bi-person"></i>
+                    <input type="text" name="name" class="form-control custom-input" placeholder="Nguyễn Văn A" value="{{ old('name') }}" required>
+                </div>
             </div>
 
-            <div class="mb-3">
+            <div class="auth-field mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control custom-input" placeholder="name@example.com" value="{{ old('email') }}" required>
+                <div class="auth-input-wrap">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" name="email" class="form-control custom-input" placeholder="name@example.com" value="{{ old('email') }}" required>
+                </div>
             </div>
 
-            <div class="mb-3">
+            <div class="auth-field mb-3">
                 <label class="form-label">Mật khẩu</label>
-                <div class="input-group">
+                <div class="input-group auth-input-wrap auth-password-wrap">
+                    <i class="bi bi-lock"></i>
                     <input type="password" name="password" class="form-control custom-input border-end-0" placeholder="••••••••" required>
                     <span class="input-group-text bg-white border-start-0 custom-input">
                         <i class="bi bi-eye toggle-password" style="cursor: pointer;"></i>
@@ -121,9 +142,10 @@
                 </div>
             </div>
 
-            <div class="mb-4">
+            <div class="auth-field mb-4">
                 <label class="form-label">Xác nhận mật khẩu</label>
-                <div class="input-group">
+                <div class="input-group auth-input-wrap auth-password-wrap">
+                    <i class="bi bi-shield-check"></i>
                     <input type="password" name="password_confirmation" class="form-control custom-input border-end-0" placeholder="••••••••" required>
                     <span class="input-group-text bg-white border-start-0 custom-input">
                         <i class="bi bi-eye toggle-password" style="cursor: pointer;"></i>

@@ -3,7 +3,7 @@
 @section('title', 'Lớp học của tôi')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/student/student_classrooms.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_classrooms.css') }}">
 @endpush
 
 @section('content')
@@ -22,14 +22,14 @@
         </div>
     @endif
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 mt-3">
+    <div class="student-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 mt-3">
         <div>
             <h3 class="fw-bold mb-2 theme-text-dark d-flex align-items-center gap-2">
                 <i class="bi bi-mortarboard-fill theme-text-primary"></i> Lớp học của tôi
             </h3>
             <p class="text-muted fs-6 mb-0">Xem và quản lý các lớp học bạn đã tham gia</p>
         </div>
-        <button class="btn btn-theme-primary px-4 py-2 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#joinClassModal">
+        <button type="button" class="btn btn-theme-primary px-4 py-2 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#joinClassModal">
             <i class="bi bi-plus-lg"></i> Tham gia lớp
         </button>
     </div>
@@ -41,7 +41,7 @@
             </div>
             <h4 class="fw-bold mb-2 theme-text-dark">Chưa tham gia lớp học nào</h4>
             <p class="text-muted mb-4 opacity-75">Nhập mã lớp học từ giảng viên để tham gia và nhận bài tập ngay!</p>
-            <button class="btn btn-theme-primary px-5 py-3 fw-bold rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#joinClassModal">
+            <button type="button" class="btn btn-theme-primary px-5 py-3 fw-bold rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#joinClassModal">
                 <i class="bi bi-door-open-fill me-2"></i> Bắt đầu tham gia lớp học
             </button>
         </div>
@@ -155,5 +155,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/student/student_classrooms.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_classrooms.js') }}"></script>
 @endpush

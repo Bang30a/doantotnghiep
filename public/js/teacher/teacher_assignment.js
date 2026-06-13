@@ -6,6 +6,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const deadlineInput = document.getElementById('deadline_input');
     const assignmentForm = document.getElementById('assignmentForm');
     const btnSubmit = document.getElementById('btnSubmitForm');
+    const variantCountInput = document.getElementById('variant_count');
+    const shuffleQuestionsInput = document.getElementById('shuffle_questions');
+
+    if (variantCountInput && shuffleQuestionsInput) {
+        variantCountInput.addEventListener('input', function() {
+            let value = parseInt(variantCountInput.value || '1', 10);
+
+            if (Number.isNaN(value) || value < 1) value = 1;
+            if (value > 10) value = 10;
+
+            variantCountInput.value = value;
+
+            if (value > 1) {
+                shuffleQuestionsInput.checked = true;
+            }
+        });
+    }
 
     if (deadlineInput) {
         // 1. CHẶN THỜI GIAN QUÁ KHỨ KHÔNG CHO CHỌN
@@ -33,6 +50,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('⚠️ Lỗi cấu hình: Hạn nộp bài tập phải là một mốc thời gian trong tương lai, không được chọn ngày hoặc giờ đã qua bác ơi!');
                     deadlineInput.focus();
                     return false;
+                }
+
+                if (variantCountInput) {
+                    const variantCount = parseInt(variantCountInput.value || '1', 10);
+
+                    if (Number.isNaN(variantCount) || variantCount < 1 || variantCount > 10) {
+                        event.preventDefault();
+                        alert('Số lượng mã đề phải nằm trong khoảng từ 1 đến 10.');
+                        variantCountInput.focus();
+                        return false;
+                    }
                 }
 
                 // Hiển thị hiệu ứng loading trên nút nếu form hợp lệ

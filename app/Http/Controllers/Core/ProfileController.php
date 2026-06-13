@@ -32,7 +32,7 @@ class ProfileController extends Controller
         ]);
 
         $user->name = $request->name;
-        // $user->phone = $request->phone;
+        $user->phone = $request->phone;
 
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
@@ -116,11 +116,13 @@ class ProfileController extends Controller
         
         $request->validate([
             'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             // Email đã bị disable ở giao diện nên không cần validate và cập nhật
         ]);
 
         $user->name = $request->name;
+        $user->phone = $request->phone;
 
         // Xử lý Upload Avatar cho Student (Giống Teacher)
         if ($request->hasFile('avatar')) {

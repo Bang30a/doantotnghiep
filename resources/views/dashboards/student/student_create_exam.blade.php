@@ -3,22 +3,24 @@
 @section('title', 'Khởi tạo đề tự luyện')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/student/student_create_exam.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_create_exam.css') }}">
 @endpush
 
 @section('content')
 <div class="fixed-wrapper-teacher">
     
     {{-- Header & Nút Thao tác --}}
-    <div class="flex-shrink-0 mb-3 pb-2 border-bottom border-light-subtle">
+    <div class="student-page-heading flex-shrink-0 mb-3 pb-2 border-bottom border-light-subtle">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
-                <a href="{{ route('student.question-banks') }}" class="btn-back text-muted text-decoration-none fw-bold hover-text-primary transition-all d-inline-flex align-items-center gap-2 mb-2" style="font-size: 0.85rem;">
-                    <div class="bg-white shadow-sm rounded-circle d-flex align-items-center justify-content-center border border-light-subtle" style="width: 28px; height: 28px;">
-                        <i class="bi bi-arrow-left small"></i>
-                    </div> 
-                    Quay lại góc học tập
-                </a>
+                @if(request()->boolean('show_back'))
+                    <a href="{{ route('student.question-banks') }}" class="btn-back text-muted text-decoration-none fw-bold hover-text-primary transition-all d-inline-flex align-items-center gap-2 mb-2" style="font-size: 0.85rem;">
+                        <div class="bg-white shadow-sm rounded-circle d-flex align-items-center justify-content-center border border-light-subtle" style="width: 28px; height: 28px;">
+                            <i class="bi bi-arrow-left small"></i>
+                        </div>
+                        Quay lại góc học tập
+                    </a>
+                @endif
                 <h4 class="fw-900 mb-0 theme-text-dark d-flex align-items-center gap-2 fs-4">
                     Khởi tạo Đề tự luyện <i class="bi bi-robot text-purple ms-1"></i>
                 </h4>
@@ -44,7 +46,7 @@
                     @endforeach
                 </ul>
             </div>
-            <button type="button" class="btn-close mt-1 me-2" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close mt-1 me-2" data-bs-dismiss="alert" aria-label="Đóng"></button>
         </div>
     @endif
 
@@ -165,11 +167,13 @@
                                 <label class="form-label-custom">1. CHỌN TÀI LIỆU GỐC <span class="text-danger">*</span></label>
                                 <div class="input-group custom-input-group">
                                     <span class="input-group-text"><i class="bi bi-file-earmark-pdf fs-5"></i></span>
-                                    <select id="document_id" name="document_id" class="form-select text-dark fw-medium">
+                                    <select id="document_id" name="document_id" class="form-select text-dark fw-medium document-select">
                                         <option value="" selected disabled>Chọn tài liệu bài giảng...</option>
                                         @isset($documents)
                                             @foreach($documents as $doc)
-                                                <option value="{{ $doc->id }}">{{ $doc->title }} ({{ strtoupper($doc->file_type) }})</option>
+                                                <option value="{{ $doc->id }}" title="{{ $doc->title }} ({{ strtoupper($doc->file_type) }})">
+                                                    {{ \Illuminate\Support\Str::limit($doc->title, 42) }} ({{ strtoupper($doc->file_type) }})
+                                                </option>
                                             @endforeach
                                         @endisset
                                     </select>
@@ -297,8 +301,8 @@
         </div>
     </div>
 </div>
-{{-- MODAL LUU THANH CONG --}}
-@if(session('success_save_exam'))
+{{-- MODAL LƯU THÀNH CÔNG --}}
+@if(session('exam_saved'))
 <div class="modal fade" id="successSaveModal" tabindex="-1" aria-hidden="true" data-show-on-load="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
@@ -308,21 +312,21 @@
                     <i class="bi bi-check-circle-fill"></i>
                 </div>
 
-                <h4 class="fw-bold theme-text-dark mb-2">Luu de thanh cong!</h4>
+                <h4 class="fw-bold theme-text-dark mb-2">Lưu đề thành công!</h4>
 
                 <p class="text-muted mb-4">
-                    De tu luyen da duoc luu vao <strong>Ngan hang de</strong>.
+                    Đề tự luyện đã được lưu vào <strong>Ngân hàng đề</strong>.
                 </p>
 
                 <div class="d-flex justify-content-center gap-2">
                     <button type="button" class="btn btn-light rounded-pill px-4 fw-bold border" data-bs-dismiss="modal">
-                        Dong
+                        Đóng
                     </button>
 
                     <a href="{{ route('student.question-banks') }}"
                        class="btn btn-theme-primary rounded-pill px-4 fw-bold">
                         <i class="bi bi-folder-fill me-1"></i>
-                        Den ngan hang de
+                        Đến ngân hàng đề
                     </a>
                 </div>
             </div>
@@ -334,5 +338,5 @@
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/student/student_create_exam.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_create_exam.js') }}"></script>
 @endpush

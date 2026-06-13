@@ -3,7 +3,7 @@
 @section('title', 'Bảng điểm: ' . $exam->title)
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_results.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_results.css') }}">
 @endpush
 
 @section('content')
@@ -27,7 +27,7 @@
                 <p class="text-white opacity-75 fw-medium mb-0"><i class="bi bi-calendar-event me-1"></i> Kì thi ngày: {{ $exam->created_at->format('d/m/Y') }}</p>
             </div>
             <div class="col-md-4 text-md-end mt-4 mt-md-0">
-                <button class="btn bg-white theme-text-primary fw-bold rounded-pill px-4 py-2 shadow-sm transition-all hover-pulse" id="btn-export-excel">
+                <button type="button" class="btn bg-white theme-text-primary fw-bold rounded-pill px-4 py-2 shadow-sm transition-all hover-pulse" id="btn-export-excel" data-export-table="#resultsTable" data-export-name="bang-diem-{{ $exam->id }}">
                     <i class="bi bi-file-earmark-excel-fill me-1"></i> Xuất file Excel
                 </button>
             </div>
@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table custom-table mb-0 align-middle">
+            <table class="table custom-table mb-0 align-middle" id="resultsTable">
                 <thead class="bg-light">
                     <tr>
                         <th width="35%" class="ps-4">Học viên</th>
@@ -169,5 +169,5 @@
 @push('scripts')
     {{-- Tạm thời giữ lại jQuery nếu file JS bên dưới cần dùng để xử lý chức năng Tìm kiếm (searchStudent) hoặc Xuất Excel --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/teacher/teacher_results.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_results.js') }}"></script>
 @endpush

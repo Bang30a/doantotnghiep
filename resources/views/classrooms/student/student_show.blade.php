@@ -3,7 +3,7 @@
 @section('title', $classroom->name)
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/student/student_show.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_show.css') }}">
 @endpush
 
 @section('content')
@@ -142,7 +142,7 @@
 
                 <div class="task-action border-start-md ps-md-4 mt-3 mt-md-0 d-flex justify-content-end" style="min-width: 160px;">
                     @if($result)
-                        <a href="{{ route('exams.result', $exam->id) }}" class="btn btn-outline-success fw-bold rounded-pill w-100 py-2 d-flex justify-content-center align-items-center gap-2">
+                        <a href="{{ route('exams.result', ['id' => $exam->id, 'result_id' => $result->id]) }}" class="btn btn-outline-success fw-bold rounded-pill w-100 py-2 d-flex justify-content-center align-items-center gap-2">
                             <i class="bi bi-file-bar-graph"></i> Xem điểm
                         </a>
                     @else
@@ -166,5 +166,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/student/student_show.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_show.js') }}"></script>
 @endpush

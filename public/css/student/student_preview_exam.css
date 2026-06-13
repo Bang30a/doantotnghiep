@@ -9,6 +9,11 @@
     box-shadow: 0 0 0 0.25rem rgba(126, 34, 206, 0.25) !important;
 }
 
+.print-exam-paper,
+.print-answer-key-paper {
+    display: none;
+}
+
 /* ==========================================
    LAYOUT THẺ (CARDS)
 ========================================== */
@@ -96,6 +101,9 @@
     background-color: #F8FAFC;
     border-left: 4px solid var(--success) !important;
 }
+.show-answers .answer-block {
+    display: block !important;
+}
 
 /* ==========================================
    KHUNG AI GIẢI THÍCH 
@@ -132,4 +140,324 @@
     0% { transform: scale(0); opacity: 0; }
     80% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================
+   BẢN IN ĐỀ THI
+========================================== */
+@media print {
+    @page {
+        size: A4;
+        margin: 14mm;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+        color: #111827 !important;
+        font-size: 12pt;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .modern-sidebar,
+    .modern-tophead,
+    .preview-actions,
+    .form-check,
+    #auto-logout-form {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .content-area {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .exam-header-card {
+        background: #fff !important;
+        border: 0 !important;
+        border-bottom: 2px solid #111827 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin-bottom: 16px !important;
+        padding: 0 0 14px 0 !important;
+    }
+
+    .exam-header-card h2 {
+        color: #111827 !important;
+        font-size: 20pt !important;
+        line-height: 1.25 !important;
+    }
+
+    .questions-container {
+        display: block !important;
+    }
+
+    .question-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        background: #fff !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin-bottom: 12px !important;
+        padding: 14px !important;
+        transform: none !important;
+    }
+
+    .question-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    .q-number,
+    .icon-box,
+    .answer-box .ans-label {
+        box-shadow: none !important;
+    }
+
+    .q-number {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        background: #111827 !important;
+        color: #fff !important;
+        font-size: 11pt !important;
+    }
+
+    .answer-box {
+        background: #fff !important;
+        border: 1px solid #d1d5db !important;
+        color: #111827 !important;
+        box-shadow: none !important;
+    }
+
+    .answer-box .text-muted,
+    .question-card .text-muted {
+        color: #111827 !important;
+    }
+
+    .ai-explanation-box,
+    .essay-answer-box {
+        background: #fff !important;
+        border: 1px solid #d1d5db !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Khuôn in riêng, không phụ thuộc giao diện preview */
+@media print {
+    @page {
+        size: A4;
+        margin: 15mm 14mm;
+    }
+
+    .content-area > :not(.print-exam-paper):not(.print-answer-key-paper),
+    .modern-sidebar,
+    .modern-tophead,
+    #auto-logout-form {
+        display: none !important;
+    }
+
+    .print-exam-paper,
+    .print-answer-key-paper {
+        display: block !important;
+        position: static;
+        width: 100%;
+        background: #fff !important;
+        color: #111827 !important;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 12pt;
+        line-height: 1.45;
+    }
+
+    .print-answer-key-paper {
+        display: none !important;
+    }
+
+    body.print-with-answers .print-answer-key-paper {
+        display: block !important;
+        page-break-before: always;
+        break-before: page;
+    }
+
+    .print-paper-header {
+        text-align: center;
+        border-bottom: 2px solid #111827;
+        padding-bottom: 12px;
+        margin-bottom: 14px;
+    }
+
+    .print-brand {
+        font-size: 12pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0;
+    }
+
+    .print-meta-line {
+        font-size: 11pt;
+        font-weight: 700;
+        margin-top: 4px;
+    }
+
+    .print-paper-header h1 {
+        margin: 8px 0 4px;
+        color: #111827 !important;
+        font-size: 18pt !important;
+        font-weight: 700;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    .print-paper-header p {
+        margin: 0;
+        color: #374151 !important;
+        font-size: 11pt;
+    }
+
+    .print-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 18px;
+        border: 1px solid #111827;
+        padding: 8px 10px;
+        margin-bottom: 10px;
+    }
+
+    .print-student-info {
+        display: grid;
+        grid-template-columns: 1.8fr 1fr 1fr;
+        gap: 12px;
+        margin: 10px 0;
+    }
+
+    .print-note {
+        border: 1px dashed #6b7280;
+        padding: 7px 9px;
+        margin: 10px 0 14px;
+        font-size: 11pt;
+        font-style: italic;
+    }
+
+    .print-question-list {
+        display: block;
+    }
+
+    .print-question-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #d1d5db;
+    }
+
+    .print-question-title {
+        font-weight: 400;
+        margin-bottom: 8px;
+    }
+
+    .print-options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 16px;
+        margin-left: 18px;
+    }
+
+    .print-option {
+        color: #111827 !important;
+    }
+
+    .print-answer-lines {
+        margin-top: 8px;
+    }
+
+    .print-answer-lines div {
+        height: 22px;
+        border-bottom: 1px dotted #9ca3af;
+    }
+
+    .print-empty {
+        text-align: center;
+        padding: 24px 0;
+        font-style: italic;
+    }
+
+    .print-answer-list {
+        display: block;
+    }
+
+    .print-answer-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 12px;
+        padding: 10px 0 12px;
+        border-bottom: 1px solid #d1d5db;
+    }
+
+    .print-answer-title {
+        margin-bottom: 7px;
+        font-weight: 400;
+    }
+
+    .print-question-score {
+        float: right;
+        min-width: 70px;
+        text-align: right;
+        font-weight: 700;
+    }
+
+    .print-answer-content,
+    .print-explanation-content {
+        margin-left: 18px;
+        margin-top: 6px;
+        color: #111827 !important;
+    }
+
+    .print-answer-label {
+        font-weight: 700;
+        margin-bottom: 3px;
+    }
+
+    .print-score-note {
+        font-weight: 400;
+        font-style: italic;
+    }
+
+    .print-rubric-list {
+        list-style: none;
+        margin: 6px 0 0;
+        padding: 0;
+    }
+
+    .print-rubric-list li {
+        display: grid;
+        grid-template-columns: 14px 1fr 76px;
+        gap: 6px;
+        align-items: start;
+        padding: 3px 0;
+    }
+
+    .print-rubric-sub {
+        margin-left: 18px;
+    }
+
+    .print-rubric-marker,
+    .print-rubric-score {
+        font-weight: 700;
+    }
+
+    .print-rubric-score {
+        text-align: right;
+        white-space: nowrap;
+    }
 }

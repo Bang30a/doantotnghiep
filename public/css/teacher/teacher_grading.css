@@ -98,3 +98,104 @@
     outline: none; 
     background-color: #ffffff !important; 
 }
+
+.student-answer-box {
+    background:
+        linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        #FFFFFF;
+    background-size: 42px 42px;
+}
+
+.grading-rich-display {
+    min-height: 180px;
+    padding: 18px;
+    border: 1px solid #D9E2EF;
+    border-radius: 12px;
+    background:
+        linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 35px, #F1F5F9 36px);
+    background-size: 100% 36px;
+}
+
+.grading-rich-display p,
+.grading-rich-display div {
+    margin: 0 0 10px;
+}
+
+.grading-rich-display ul,
+.grading-rich-display ol {
+    margin: 8px 0 10px 22px;
+    padding-left: 18px;
+}
+
+.grading-rich-display font[size="2"] { font-size: 0.9rem; }
+.grading-rich-display font[size="3"] { font-size: 1rem; }
+.grading-rich-display font[size="4"] { font-size: 1.15rem; }
+.grading-rich-display font[size="5"] { font-size: 1.32rem; }
+
+.grading-feedback-editor {
+    overflow: hidden;
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    background: #FFFFFF;
+    box-shadow: 0 14px 28px -26px rgba(15, 23, 42, 0.68);
+}
+
+.grading-feedback-editor .edu-rich-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px;
+    border-bottom: 1px solid #E2E8F0;
+    background: #F8FAFC;
+}
+
+.grading-feedback-editor .edu-rich-toolbar button,
+.grading-feedback-editor .edu-rich-toolbar select {
+    min-width: 34px;
+    height: 34px;
+    border: 1px solid #D9E2EF;
+    border-radius: 8px;
+    color: #334155;
+    background: #FFFFFF;
+    font-weight: 800;
+}
+
+.grading-feedback-editor .edu-rich-toolbar button:hover,
+.grading-feedback-editor .edu-rich-toolbar select:hover {
+    color: var(--theme-primary);
+    border-color: var(--theme-subtle);
+    background: var(--theme-light);
+}
+
+.grading-feedback-editor .edu-rich-toolbar select {
+    width: auto;
+    padding: 0 8px;
+}
+
+.grading-feedback-editor .toolbar-divider {
+    width: 1px;
+    height: 24px;
+    margin: 0 3px;
+    background: #D9E2EF;
+}
+
+.grading-feedback-editor .edu-rich-editor-surface {
+    min-height: 132px;
+    padding: 14px 16px;
+    outline: none;
+    color: var(--theme-dark);
+    line-height: 1.75;
+    background: #FFFFFF;
+}
+
+.grading-feedback-editor .edu-rich-editor-surface:empty::before {
+    content: attr(data-placeholder);
+    color: #94A3B8;
+    pointer-events: none;
+}
+
+.grading-feedback-editor:focus-within {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.1);
+}

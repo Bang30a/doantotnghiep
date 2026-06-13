@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Services\Shared\ClassroomService;
 use App\Models\Classroom;
 use App\Models\ActivityLog;
+use App\Models\Exam;
 use App\Models\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ClassroomController extends Controller
 {
@@ -81,15 +84,22 @@ class ClassroomController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'student') {
-            $examIds = $classroom->exams->pluck('id');
+            $classroom->loadMissing('exams.questions.answers');
+            $allExamIds = $classroom->exams->pluck('id');
+
+            $allResults = Result::with('exam.questions')
+                ->where('user_id', $user->id)
+                ->whereIn('exam_id', $allExamIds)
+                ->get();
+
+            $visibleExams = $this->visibleExamsForStudent($classroom->exams, $allResults, $user->id);
+            $classroom->setRelation('exams', $visibleExams);
+
+            $examIds = $visibleExams->pluck('id');
 
             $totalExams = $classroom->exams->count();
 
-            // Load them exam.questions de biet bai nao la tu luan
-            $results = Result::with('exam.questions')
-                ->where('user_id', $user->id)
-                ->whereIn('exam_id', $examIds)
-                ->get();
+            $results = $allResults->whereIn('exam_id', $examIds)->values();
 
             $completedExams = $results->count();
 
@@ -137,8 +147,8 @@ class ClassroomController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
         ], [
-            'name.required' => 'Vui long nhap ten lop hoc.',
-            'name.max' => 'Ten lop hoc khong duoc qua 255 ky tu.',
+            'name.required' => 'Vui lòng nhập tên lớp học.',
+            'name.max' => 'Tên lớp học không được quá 255 ký tự.',
         ]);
 
         try {
@@ -150,6 +160,45 @@ class ClassroomController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ], [
+            'name.required' => 'Vui long nhap ten lop hoc.',
+            'name.max' => 'Ten lop hoc khong duoc qua 255 ky tu.',
+        ]);
+
+        $classroom = Classroom::where('teacher_id', Auth::id())->findOrFail($id);
+        $classroom->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()
+            ->route('teacher.classrooms')
+            ->with('success', 'Đã cập nhật tên lớp học thành công!');
+    }
+
+    public function destroy($id)
+    {
+        $classroom = Classroom::where('teacher_id', Auth::id())->findOrFail($id);
+        $className = $classroom->name;
+
+        $classroom->delete();
+
+        ActivityLog::create([
+            'type' => 'teacher_deleted_classroom',
+            'title' => 'Giáo viên xóa lớp học',
+            'description' => 'Giáo viên <strong>' . Auth::user()->name . '</strong> đã xóa lớp học <span class="text-danger fw-bold">"' . $className . '"</span>.',
+            'icon_class' => 'bi-trash3-fill',
+            'color_theme' => 'danger'
+        ]);
+
+        return redirect()
+            ->route('teacher.classrooms')
+            ->with('success', 'Đã xóa lớp học thành công!');
     }
 
     public function join(Request $request, ClassroomService $classroomService)
@@ -427,10 +476,15 @@ class ClassroomController extends Controller
         $request->validate([
             'exam_id' => 'required|exists:exams,id',
             'deadline' => 'nullable|date',
+            'variant_count' => 'nullable|integer|min:1|max:10',
+            'shuffle_questions' => 'nullable|boolean',
         ], [
             'exam_id.required' => 'Vui long chon de thi.',
             'exam_id.exists' => 'De thi khong hop le.',
             'deadline.date' => 'Han nop khong hop le.',
+            'variant_count.integer' => 'Số lượng mã đề không hợp lệ.',
+            'variant_count.min' => 'Cần tạo tối thiểu 1 mã đề.',
+            'variant_count.max' => 'Mỗi lần chỉ nên tạo tối đa 10 mã đề.',
         ]);
 
         $classroom = Classroom::findOrFail($classroomId);
@@ -439,17 +493,100 @@ class ClassroomController extends Controller
             abort(403, 'Ban khong co quyen giao bai cho lop nay.');
         }
 
-        $exam = \App\Models\Exam::where('teacher_id', Auth::id())
+        $exam = Exam::with('questions.answers')
+            ->where('teacher_id', Auth::id())
             ->where('id', $request->exam_id)
             ->firstOrFail();
 
-        $exam->update([
-            'classroom_id' => $classroom->id,
-            'deadline' => $request->deadline,
-        ]);
+        $variantCount = max(1, min(10, (int) $request->input('variant_count', 1)));
+        $shuffleQuestions = $request->boolean('shuffle_questions') || $variantCount > 1;
+
+        DB::transaction(function () use ($exam, $classroom, $request, $variantCount, $shuffleQuestions) {
+            if ($shuffleQuestions || $variantCount > 1) {
+                $this->createExamVariants($exam, $classroom, $request->deadline, $variantCount, $shuffleQuestions);
+                return;
+            }
+
+            $exam->update([
+                'classroom_id' => $classroom->id,
+                'deadline' => $request->deadline,
+            ]);
+        });
+
+        $message = $variantCount > 1
+            ? 'Đã giao bài tập và tạo ' . $variantCount . ' mã đề đảo câu hỏi cho lớp!'
+            : ($shuffleQuestions ? 'Đã giao bài tập với câu hỏi được đảo thứ tự!' : 'Giao bài tập cho lớp thành công!');
 
         return redirect()
         ->route('classrooms.show', $classroom->id)
-        ->with('success', 'Giao bai tap cho lop thanh cong!');
+        ->with('success', $message);
+    }
+
+    private function createExamVariants(Exam $sourceExam, Classroom $classroom, ?string $deadline, int $variantCount, bool $shuffleQuestions): void
+    {
+        $variantGroup = (string) Str::uuid();
+
+        for ($variantNumber = 1; $variantNumber <= $variantCount; $variantNumber++) {
+            $variantLabel = str_pad((string) $variantNumber, 2, '0', STR_PAD_LEFT);
+            $titleSuffix = $variantCount > 1 ? ' - Mã đề ' . $variantLabel : ' - Đề đảo câu';
+
+            $variantExam = Exam::create([
+                'teacher_id' => $sourceExam->teacher_id,
+                'source_exam_id' => $sourceExam->id,
+                'variant_group' => $variantGroup,
+                'variant_number' => $variantNumber,
+                'variant_count' => $variantCount,
+                'shuffle_questions' => $shuffleQuestions,
+                'classroom_id' => $classroom->id,
+                'document_id' => $sourceExam->document_id,
+                'title' => $sourceExam->title . $titleSuffix,
+                'subject' => $sourceExam->subject,
+                'duration' => $sourceExam->duration,
+                'deadline' => $deadline,
+            ]);
+
+            $questions = $shuffleQuestions
+                ? $sourceExam->questions->shuffle()
+                : $sourceExam->questions;
+
+            foreach ($questions as $question) {
+                $newQuestion = $variantExam->questions()->create([
+                    'content' => $question->content,
+                    'difficulty' => $question->difficulty ?? 'medium',
+                    'type' => $question->type ?? 'multiple_choice',
+                    'ai_explanation' => $question->ai_explanation,
+                ]);
+
+                foreach ($question->answers as $answer) {
+                    $newQuestion->answers()->create([
+                        'content' => $answer->content,
+                        'is_correct' => (bool) $answer->is_correct,
+                    ]);
+                }
+            }
+        }
+    }
+
+    private function visibleExamsForStudent($exams, $results, int $userId)
+    {
+        return $exams
+            ->groupBy(fn ($exam) => $exam->variant_group ?: 'exam_' . $exam->id)
+            ->map(function ($group, $groupKey) use ($results, $userId) {
+                $sortedGroup = $group->sortBy(fn ($exam) => $exam->variant_number ?? 1)->values();
+
+                if ($sortedGroup->count() === 1) {
+                    return $sortedGroup->first();
+                }
+
+                $submittedResult = $results->first(fn ($result) => $sortedGroup->pluck('id')->contains($result->exam_id));
+                if ($submittedResult) {
+                    return $sortedGroup->firstWhere('id', $submittedResult->exam_id) ?? $sortedGroup->first();
+                }
+
+                $index = abs(crc32($userId . ':' . $groupKey)) % $sortedGroup->count();
+                return $sortedGroup[$index];
+            })
+            ->sortByDesc('created_at')
+            ->values();
     }
 }

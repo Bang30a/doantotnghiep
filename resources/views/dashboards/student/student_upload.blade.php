@@ -3,8 +3,8 @@
 @section('title', 'Quản lý tài liệu')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin_settings.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/student/student_upload.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_settings.css') }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_upload.css') }}">
 @endpush
 
 @section('content')
@@ -33,7 +33,7 @@
         </div>
     @endif
 
-    <div class="mb-4">
+    <div class="student-page-heading mb-4">
         <h2 class="fw-bold mb-1 theme-text-dark">Quản lý tài liệu</h2>
         <p class="text-muted fs-6 mb-0">Upload và lưu trữ tài liệu học tập cá nhân</p>
     </div>
@@ -142,5 +142,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/student/student_upload.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_upload.js') }}"></script>
 @endpush

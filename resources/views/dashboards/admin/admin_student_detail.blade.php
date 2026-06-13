@@ -3,13 +3,13 @@
 @section('title', 'Chi tiết Học viên: ' . ($student->name ?? ''))
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_student_detail.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_student_detail.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Tiêu đề trang & Nút quay lại -->
-    <div class="d-flex align-items-center gap-3 mb-4 mt-2 border-bottom border-light-subtle pb-3">
+    <div class="admin-page-heading d-flex align-items-center gap-3 mb-4 mt-2 pb-3">
         <a href="{{ route('admin.students') ?? '#' }}" class="btn-back">
             <i class="bi bi-arrow-left"></i>
         </a>
@@ -71,9 +71,13 @@
                 <h6 class="fw-bold text-danger mb-3 d-flex align-items-center gap-2">
                     <i class="bi bi-exclamation-triangle-fill"></i> Khu vực nguy hiểm
                 </h6>
-                <button type="button" class="btn w-100 fw-bold rounded-3 py-2.5 d-flex align-items-center justify-content-center gap-2 transition-all hover-lift" style="background-color: #fee2e2; color: #dc3545; border: 1px solid #f8d7da;">
-                    <i class="bi bi-trash3-fill"></i> Xóa tài khoản vĩnh viễn
-                </button>
+                <form action="{{ route('admin.students.destroy', $student->id ?? 0) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa vĩnh viễn tài khoản học viên này? Toàn bộ dữ liệu liên quan sẽ bị xóa và không thể khôi phục.');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn w-100 fw-bold rounded-3 py-2.5 d-flex align-items-center justify-content-center gap-2 transition-all hover-lift" style="background-color: #fee2e2; color: #dc3545; border: 1px solid #f8d7da;">
+                        <i class="bi bi-trash3-fill"></i> Xóa tài khoản vĩnh viễn
+                    </button>
+                </form>
                 <p class="text-muted small mt-3 mb-0 text-center">Toàn bộ dữ liệu của học viên này sẽ bị xóa sạch khỏi hệ thống.</p>
             </div>
         </div>
@@ -139,5 +143,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/admin/admin_student_detail.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/admin/admin_student_detail.js') }}"></script>
 @endpush

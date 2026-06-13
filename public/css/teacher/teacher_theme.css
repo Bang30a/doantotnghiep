@@ -1,0 +1,738 @@
+/* Teacher shared visual system */
+body.teacher-shell {
+    --teacher-primary: #6D28D9;
+    --teacher-primary-dark: #4C1D95;
+    --teacher-teal: #0F766E;
+    --teacher-blue: #2563EB;
+    --teacher-amber: #D97706;
+    --teacher-rose: #E11D48;
+    --teacher-ink: #111827;
+    --teacher-muted: #64748B;
+    --teacher-bg: #EAF1F6;
+    --teacher-surface: #FFFFFF;
+    --teacher-border: #CCD8E7;
+    --teacher-border-soft: #E2E8F0;
+    --teacher-shadow: 0 20px 45px -36px rgba(15, 23, 42, 0.64);
+    --teacher-shadow-hover: 0 26px 52px -38px rgba(15, 23, 42, 0.74);
+    --teacher-radius: 8px;
+
+    --theme-primary: var(--teacher-primary);
+    --theme-primary-hover: var(--teacher-primary-dark);
+    --theme-light: #F5F3FF;
+    --theme-subtle: #DDD6FE;
+    --theme-dark: var(--teacher-ink);
+    --theme-gray: var(--teacher-muted);
+    --bg-soft: #F8FAFC;
+    --border-soft: var(--teacher-border-soft);
+
+    background:
+        linear-gradient(135deg, #F8FBFF 0%, #EEF5F8 44%, #EAF1F6 100%) !important;
+    color: var(--teacher-ink);
+}
+
+body.teacher-shell .main-wrapper {
+    background:
+        linear-gradient(90deg, rgba(15, 23, 42, 0.024) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.84) 0%, rgba(238, 245, 248, 0.94) 34%, #EAF1F6 100%),
+        linear-gradient(135deg, rgba(109, 40, 217, 0.075) 0%, rgba(15, 118, 110, 0.07) 58%, rgba(217, 119, 6, 0.045) 100%) !important;
+    background-size: 64px 64px, auto, auto;
+}
+
+body.teacher-shell .content-area {
+    padding-top: 18px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0) 260px);
+}
+
+body.teacher-shell .teacher-page-heading {
+    position: relative;
+    overflow: hidden;
+    padding: 22px 26px !important;
+    border: 1px solid var(--teacher-border) !important;
+    border-radius: var(--teacher-radius);
+    background:
+        linear-gradient(90deg, rgba(37, 99, 235, 0.105) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(248, 250, 252, 0.94) 58%, rgba(236, 253, 245, 0.76) 100%);
+    background-size: 42px 42px, 42px 42px, auto;
+    box-shadow: var(--teacher-shadow);
+}
+
+body.teacher-shell .teacher-page-heading::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--teacher-primary) 0%, var(--teacher-teal) 100%);
+}
+
+body.teacher-shell .teacher-page-heading > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.teacher-shell .teacher-page-heading h1,
+body.teacher-shell .teacher-page-heading h2,
+body.teacher-shell .teacher-page-heading h3,
+body.teacher-shell .teacher-page-heading h4 {
+    color: var(--teacher-ink) !important;
+    letter-spacing: 0;
+}
+
+body.teacher-shell .teacher-page-heading p {
+    color: var(--teacher-muted) !important;
+}
+
+body.teacher-shell .btn-theme-primary,
+body.teacher-shell .btn-purple-main,
+body.teacher-shell .btn-purple-gradient,
+body.teacher-shell .bg-purple-custom {
+    background: var(--teacher-primary) !important;
+    border: 1px solid var(--teacher-primary) !important;
+    color: #FFFFFF !important;
+    border-radius: var(--teacher-radius) !important;
+    box-shadow: 0 16px 30px -22px rgba(109, 40, 217, 0.88) !important;
+}
+
+body.teacher-shell .btn-theme-primary:hover,
+body.teacher-shell .btn-purple-main:hover,
+body.teacher-shell .btn-purple-gradient:hover {
+    background: var(--teacher-primary-dark) !important;
+    border-color: var(--teacher-primary-dark) !important;
+    transform: translateY(-1px);
+}
+
+body.teacher-shell .btn-outline-theme,
+body.teacher-shell .btn-outline-purple,
+body.teacher-shell .btn-purple-soft,
+body.teacher-shell .btn-back {
+    color: var(--teacher-primary) !important;
+    background: #FFFFFF !important;
+    border: 1px solid #DDD6FE !important;
+    border-radius: var(--teacher-radius) !important;
+}
+
+body.teacher-shell .btn-outline-theme:hover,
+body.teacher-shell .btn-outline-purple:hover,
+body.teacher-shell .btn-purple-soft:hover,
+body.teacher-shell .btn-back:hover {
+    background: #F5F3FF !important;
+    border-color: rgba(109, 40, 217, 0.34) !important;
+    color: var(--teacher-primary-dark) !important;
+}
+
+body.teacher-shell .btn-emerald-gradient {
+    background: var(--teacher-teal) !important;
+    border: 1px solid var(--teacher-teal) !important;
+    color: #FFFFFF !important;
+    border-radius: var(--teacher-radius) !important;
+    box-shadow: 0 16px 30px -24px rgba(15, 118, 110, 0.76) !important;
+}
+
+body.teacher-shell .btn-emerald-gradient:hover {
+    background: #0B5E58 !important;
+    border-color: #0B5E58 !important;
+}
+
+body.teacher-shell .btn-magic-gradient {
+    background: linear-gradient(135deg, var(--teacher-primary) 0%, var(--teacher-blue) 52%, var(--teacher-teal) 100%) !important;
+    border: 1px solid transparent !important;
+    color: #FFFFFF !important;
+    border-radius: var(--teacher-radius) !important;
+    box-shadow: 0 16px 30px -24px rgba(37, 99, 235, 0.76) !important;
+}
+
+body.teacher-shell .btn-magic-gradient:hover {
+    filter: saturate(1.05) brightness(0.96);
+}
+
+body.teacher-shell .theme-text-primary,
+body.teacher-shell .text-purple,
+body.teacher-shell .text-purple-dark {
+    color: var(--teacher-primary) !important;
+}
+
+body.teacher-shell .text-emerald,
+body.teacher-shell .text-green {
+    color: var(--teacher-teal) !important;
+}
+
+body.teacher-shell .text-blue {
+    color: var(--teacher-blue) !important;
+}
+
+body.teacher-shell .text-orange,
+body.teacher-shell .text-warning {
+    color: var(--teacher-amber) !important;
+}
+
+body.teacher-shell .bg-purple-light,
+body.teacher-shell .bg-purple-soft {
+    background: #F5F3FF !important;
+}
+
+body.teacher-shell .bg-purple-gradient,
+body.teacher-shell .bg-theme-primary,
+body.teacher-shell .class-banner,
+body.teacher-shell .exam-header,
+body.teacher-shell .score-header,
+body.teacher-shell .grading-header,
+body.teacher-shell .profile-header {
+    background: linear-gradient(135deg, var(--teacher-primary) 0%, var(--teacher-blue) 48%, var(--teacher-teal) 100%) !important;
+}
+
+body.teacher-shell .banner-bg-shape,
+body.teacher-shell .score-header .bg-icon,
+body.teacher-shell .grading-header .bg-icon,
+body.teacher-shell .profile-header .bg-icon,
+body.teacher-shell .class-banner-icon {
+    display: none !important;
+}
+
+body.teacher-shell .teacher-page-heading,
+body.teacher-shell .stat-card,
+body.teacher-shell .stat-card-top,
+body.teacher-shell .stat-card-mini,
+body.teacher-shell .section-card,
+body.teacher-shell .filter-card,
+body.teacher-shell .search-card,
+body.teacher-shell .doc-card,
+body.teacher-shell .classroom-card,
+body.teacher-shell .premium-card,
+body.teacher-shell .question-list-card,
+body.teacher-shell .config-card,
+body.teacher-shell .chart-card,
+body.teacher-shell .analysis-box,
+body.teacher-shell .question-detail-card,
+body.teacher-shell .question-box,
+body.teacher-shell .grading-input-wrapper,
+body.teacher-shell .item-card,
+body.teacher-shell .guide-section,
+body.teacher-shell .glass-card,
+body.teacher-shell .list-item-teacher,
+body.teacher-shell .card:not(.modal-content) {
+    border: 1px solid var(--teacher-border) !important;
+    border-radius: var(--teacher-radius) !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    box-shadow: var(--teacher-shadow) !important;
+}
+
+body.teacher-shell .stat-card:hover,
+body.teacher-shell .stat-card-top:hover,
+body.teacher-shell .stat-card-mini:hover,
+body.teacher-shell .section-card:hover,
+body.teacher-shell .filter-card:hover,
+body.teacher-shell .search-card:hover,
+body.teacher-shell .doc-card:hover,
+body.teacher-shell .classroom-card:hover,
+body.teacher-shell .premium-card:hover,
+body.teacher-shell .chart-card:hover,
+body.teacher-shell .analysis-box:hover,
+body.teacher-shell .question-detail-card:hover,
+body.teacher-shell .question-box:hover,
+body.teacher-shell .item-card:hover,
+body.teacher-shell .glass-card:hover,
+body.teacher-shell .list-item-teacher:hover,
+body.teacher-shell .card:not(.modal-content):hover {
+    border-color: rgba(109, 40, 217, 0.22) !important;
+    box-shadow: var(--teacher-shadow-hover) !important;
+}
+
+body.teacher-shell .score-header,
+body.teacher-shell .exam-header,
+body.teacher-shell .grading-header,
+body.teacher-shell .profile-header,
+body.teacher-shell .class-banner {
+    border-radius: var(--teacher-radius) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    box-shadow: var(--teacher-shadow) !important;
+}
+
+body.teacher-shell .score-header:hover,
+body.teacher-shell .exam-header:hover,
+body.teacher-shell .grading-header:hover,
+body.teacher-shell .profile-header:hover,
+body.teacher-shell .class-banner:hover {
+    box-shadow: var(--teacher-shadow-hover) !important;
+}
+
+body.teacher-shell .section-card.bg-theme-primary {
+    background: linear-gradient(135deg, var(--teacher-primary) 0%, var(--teacher-blue) 48%, var(--teacher-teal) 100%) !important;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+body.teacher-shell .section-card.bg-theme-primary h1,
+body.teacher-shell .section-card.bg-theme-primary h2,
+body.teacher-shell .section-card.bg-theme-primary h3,
+body.teacher-shell .section-card.bg-theme-primary h4,
+body.teacher-shell .section-card.bg-theme-primary h5,
+body.teacher-shell .section-card.bg-theme-primary h6,
+body.teacher-shell .section-card.bg-theme-primary p {
+    color: #FFFFFF !important;
+}
+
+body.teacher-shell .profile-header .glass-card {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+body.teacher-shell .profile-header .glass-card h1,
+body.teacher-shell .profile-header .glass-card h2,
+body.teacher-shell .profile-header .glass-card h3,
+body.teacher-shell .profile-header .glass-card small,
+body.teacher-shell .profile-header .glass-card span {
+    color: #FFFFFF !important;
+}
+
+body.teacher-shell .form-control,
+body.teacher-shell .form-select,
+body.teacher-shell .input-group-text,
+body.teacher-shell .custom-input,
+body.teacher-shell .custom-search-input,
+body.teacher-shell .filter-select,
+body.teacher-shell .custom-input-group,
+body.teacher-shell .input-group-custom,
+body.teacher-shell .quantity-input-box,
+body.teacher-shell .variant-count-control .form-control {
+    border-color: #D9E2EF !important;
+    border-radius: var(--teacher-radius) !important;
+    background-color: #FFFFFF !important;
+}
+
+body.teacher-shell .input-group .input-group-text {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+body.teacher-shell .input-group .form-control,
+body.teacher-shell .input-group .form-select {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+body.teacher-shell .form-control:focus,
+body.teacher-shell .form-select:focus,
+body.teacher-shell .custom-input:focus,
+body.teacher-shell .custom-search-input:focus,
+body.teacher-shell .custom-input-group:focus-within,
+body.teacher-shell .input-group-custom:focus-within,
+body.teacher-shell .filter-select:focus {
+    border-color: rgba(109, 40, 217, 0.56) !important;
+    box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.1) !important;
+}
+
+body.teacher-shell .icon-wrapper,
+body.teacher-shell .icon-wrapper-md,
+body.teacher-shell .icon-wrapper-sm,
+body.teacher-shell .icon-box,
+body.teacher-shell .icon-box-rounded,
+body.teacher-shell .icon-box-small,
+body.teacher-shell .avatar-placeholder,
+body.teacher-shell .student-avatar,
+body.teacher-shell .avatar-sm,
+body.teacher-shell .class-avatar,
+body.teacher-shell .classroom-avatar,
+body.teacher-shell .doc-icon-wrapper,
+body.teacher-shell .settings-tab-btn i,
+body.teacher-shell .rank-badge,
+body.teacher-shell .empty-icon-wrapper {
+    border-radius: var(--teacher-radius) !important;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 1) .icon-wrapper,
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 1) .icon-wrapper-md,
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 1) .icon-box,
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 1) .icon-box-rounded {
+    background: #F5F3FF !important;
+    color: var(--teacher-primary) !important;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 2) .icon-wrapper,
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 2) .icon-wrapper-md,
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 2) .icon-box,
+body.teacher-shell .row > [class*="col"]:nth-child(3n + 2) .icon-box-rounded {
+    background: #ECFDF5 !important;
+    color: var(--teacher-teal) !important;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(3n) .icon-wrapper,
+body.teacher-shell .row > [class*="col"]:nth-child(3n) .icon-wrapper-md,
+body.teacher-shell .row > [class*="col"]:nth-child(3n) .icon-box,
+body.teacher-shell .row > [class*="col"]:nth-child(3n) .icon-box-rounded {
+    background: #EFF6FF !important;
+    color: var(--teacher-blue) !important;
+}
+
+body.teacher-shell .custom-table thead th,
+body.teacher-shell .table thead th {
+    background: #F8FAFC !important;
+    color: #334155 !important;
+    border-bottom: 1px solid var(--teacher-border-soft) !important;
+}
+
+body.teacher-shell .custom-table tbody tr,
+body.teacher-shell .table tbody tr {
+    border-color: var(--teacher-border-soft) !important;
+}
+
+body.teacher-shell .custom-table tbody tr:hover,
+body.teacher-shell .hover-row:hover,
+body.teacher-shell .student-row:hover {
+    background: #F8FAFC !important;
+    transform: none !important;
+}
+
+body.teacher-shell .teacher-page-heading::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(360px, 42%);
+    z-index: 0;
+    background:
+        linear-gradient(135deg, transparent 0 28%, rgba(109, 40, 217, 0.08) 28% 58%, rgba(15, 118, 110, 0.08) 58% 100%);
+    pointer-events: none;
+}
+
+body.teacher-shell .teacher-dashboard-hero {
+    min-height: 138px;
+    align-items: center !important;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.32) !important;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 48%),
+        linear-gradient(135deg, #4C1D95 0%, #2563EB 48%, #0F766E 100%) !important;
+    background-size: 42px 42px, auto, auto !important;
+}
+
+body.teacher-shell .teacher-dashboard-hero::before {
+    width: 6px;
+    background: linear-gradient(180deg, #F59E0B 0%, #22C55E 48%, #60A5FA 100%);
+}
+
+body.teacher-shell .teacher-dashboard-hero::after {
+    background: linear-gradient(135deg, transparent 0 30%, rgba(255, 255, 255, 0.09) 30% 58%, rgba(255, 255, 255, 0.05) 58% 100%) !important;
+}
+
+body.teacher-shell .teacher-dashboard-hero h2,
+body.teacher-shell .teacher-dashboard-hero p,
+body.teacher-shell .teacher-dashboard-hero .theme-text-dark {
+    color: #FFFFFF !important;
+}
+
+body.teacher-shell .teacher-dashboard-hero p {
+    opacity: 0.84 !important;
+}
+
+body.teacher-shell .teacher-dashboard-hero .btn-theme-primary {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border-color: rgba(255, 255, 255, 0.36) !important;
+    color: var(--teacher-ink) !important;
+}
+
+body.teacher-shell .stat-card,
+body.teacher-shell .stat-card-top,
+body.teacher-shell .stat-card-mini,
+body.teacher-shell .bottom-stat {
+    position: relative;
+    overflow: hidden;
+}
+
+body.teacher-shell .stat-card::before,
+body.teacher-shell .stat-card-top::before,
+body.teacher-shell .stat-card-mini::before,
+body.teacher-shell .bottom-stat::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--stat-accent, var(--teacher-primary));
+}
+
+body.teacher-shell .stat-card::after,
+body.teacher-shell .stat-card-top::after,
+body.teacher-shell .stat-card-mini::after,
+body.teacher-shell .bottom-stat::after {
+    content: "";
+    position: absolute;
+    inset: auto -1px -1px auto;
+    width: 104px;
+    height: 104px;
+    opacity: 0.25;
+    background: linear-gradient(135deg, transparent 0 43%, var(--stat-soft, #F5F3FF) 43% 100%);
+    pointer-events: none;
+}
+
+body.teacher-shell .stat-card > *,
+body.teacher-shell .stat-card-top > *,
+body.teacher-shell .stat-card-mini > *,
+body.teacher-shell .bottom-stat > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 1) .stat-card,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 1) .stat-card-top,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 1) .stat-card-mini,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 1) .bottom-stat {
+    --stat-accent: var(--teacher-primary);
+    --stat-soft: #F5F3FF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9F7FF 58%, #F5F3FF 100%) !important;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 2) .stat-card,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 2) .stat-card-top,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 2) .stat-card-mini,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 2) .bottom-stat {
+    --stat-accent: var(--teacher-teal);
+    --stat-soft: #ECFDF5;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F7FEFB 58%, #ECFDF5 100%) !important;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 3) .stat-card,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 3) .stat-card-top,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 3) .stat-card-mini,
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 3) .bottom-stat {
+    --stat-accent: var(--teacher-blue);
+    --stat-soft: #EFF6FF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FBFF 58%, #EFF6FF 100%) !important;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n) .stat-card,
+body.teacher-shell .row > [class*="col"]:nth-child(4n) .stat-card-top,
+body.teacher-shell .row > [class*="col"]:nth-child(4n) .stat-card-mini,
+body.teacher-shell .row > [class*="col"]:nth-child(4n) .bottom-stat {
+    --stat-accent: var(--teacher-amber);
+    --stat-soft: #FFFBEB;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 58%, #FFFBEB 100%) !important;
+}
+
+body.teacher-shell .section-card:not(.bg-theme-primary),
+body.teacher-shell .chart-card,
+body.teacher-shell .analysis-box,
+body.teacher-shell .guide-section,
+body.teacher-shell .search-card,
+body.teacher-shell .filter-card {
+    background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.88) 0%, rgba(255, 255, 255, 0.98) 74%) !important;
+}
+
+body.teacher-shell .section-card:not(.bg-theme-primary),
+body.teacher-shell .chart-card,
+body.teacher-shell .analysis-box,
+body.teacher-shell .guide-section,
+body.teacher-shell .search-card,
+body.teacher-shell .filter-card,
+body.teacher-shell .doc-card,
+body.teacher-shell .classroom-card,
+body.teacher-shell .premium-card,
+body.teacher-shell .question-list-card,
+body.teacher-shell .config-card,
+body.teacher-shell .item-card,
+body.teacher-shell .question-detail-card,
+body.teacher-shell .question-box,
+body.teacher-shell .grading-input-wrapper,
+body.teacher-shell .glass-card,
+body.teacher-shell .list-item-teacher,
+body.teacher-shell .card:not(.modal-content):not(.stat-card):not(.stat-card-top):not(.stat-card-mini) {
+    --teacher-card-accent: var(--teacher-primary);
+    box-shadow: inset 5px 0 0 var(--teacher-card-accent), var(--teacher-shadow) !important;
+}
+
+body.teacher-shell .section-card:not(.bg-theme-primary):hover,
+body.teacher-shell .chart-card:hover,
+body.teacher-shell .analysis-box:hover,
+body.teacher-shell .guide-section:hover,
+body.teacher-shell .search-card:hover,
+body.teacher-shell .filter-card:hover,
+body.teacher-shell .doc-card:hover,
+body.teacher-shell .classroom-card:hover,
+body.teacher-shell .premium-card:hover,
+body.teacher-shell .question-list-card:hover,
+body.teacher-shell .config-card:hover,
+body.teacher-shell .item-card:hover,
+body.teacher-shell .question-detail-card:hover,
+body.teacher-shell .question-box:hover,
+body.teacher-shell .grading-input-wrapper:hover,
+body.teacher-shell .glass-card:hover,
+body.teacher-shell .list-item-teacher:hover,
+body.teacher-shell .card:not(.modal-content):not(.stat-card):not(.stat-card-top):not(.stat-card-mini):hover {
+    box-shadow: inset 5px 0 0 var(--teacher-card-accent), var(--teacher-shadow-hover) !important;
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 1) :is(.section-card:not(.bg-theme-primary), .chart-card, .analysis-box, .guide-section, .search-card, .filter-card, .doc-card, .classroom-card, .premium-card, .question-list-card, .config-card, .item-card, .question-detail-card, .question-box, .grading-input-wrapper, .glass-card, .list-item-teacher, .card:not(.modal-content):not(.stat-card):not(.stat-card-top):not(.stat-card-mini)) {
+    --teacher-card-accent: var(--teacher-primary);
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 2) :is(.section-card:not(.bg-theme-primary), .chart-card, .analysis-box, .guide-section, .search-card, .filter-card, .doc-card, .classroom-card, .premium-card, .question-list-card, .config-card, .item-card, .question-detail-card, .question-box, .grading-input-wrapper, .glass-card, .list-item-teacher, .card:not(.modal-content):not(.stat-card):not(.stat-card-top):not(.stat-card-mini)) {
+    --teacher-card-accent: var(--teacher-teal);
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n + 3) :is(.section-card:not(.bg-theme-primary), .chart-card, .analysis-box, .guide-section, .search-card, .filter-card, .doc-card, .classroom-card, .premium-card, .question-list-card, .config-card, .item-card, .question-detail-card, .question-box, .grading-input-wrapper, .glass-card, .list-item-teacher, .card:not(.modal-content):not(.stat-card):not(.stat-card-top):not(.stat-card-mini)) {
+    --teacher-card-accent: var(--teacher-blue);
+}
+
+body.teacher-shell .row > [class*="col"]:nth-child(4n) :is(.section-card:not(.bg-theme-primary), .chart-card, .analysis-box, .guide-section, .search-card, .filter-card, .doc-card, .classroom-card, .premium-card, .question-list-card, .config-card, .item-card, .question-detail-card, .question-box, .grading-input-wrapper, .glass-card, .list-item-teacher, .card:not(.modal-content):not(.stat-card):not(.stat-card-top):not(.stat-card-mini)) {
+    --teacher-card-accent: var(--teacher-amber);
+}
+
+body.teacher-shell .score-header,
+body.teacher-shell .exam-header,
+body.teacher-shell .grading-header,
+body.teacher-shell .profile-header,
+body.teacher-shell .class-banner {
+    box-shadow: inset 6px 0 0 #F59E0B, var(--teacher-shadow) !important;
+}
+
+body.teacher-shell .score-header:hover,
+body.teacher-shell .exam-header:hover,
+body.teacher-shell .grading-header:hover,
+body.teacher-shell .profile-header:hover,
+body.teacher-shell .class-banner:hover {
+    box-shadow: inset 6px 0 0 #F59E0B, var(--teacher-shadow-hover) !important;
+}
+
+body.teacher-shell .doc-card,
+body.teacher-shell .classroom-card,
+body.teacher-shell .item-card,
+body.teacher-shell .question-detail-card,
+body.teacher-shell .list-item-teacher {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+body.teacher-shell .doc-card:hover,
+body.teacher-shell .classroom-card:hover,
+body.teacher-shell .item-card:hover,
+body.teacher-shell .question-detail-card:hover,
+body.teacher-shell .list-item-teacher:hover {
+    transform: translateY(-2px);
+}
+
+body.teacher-shell .custom-nav-pills,
+body.teacher-shell .nav-tabs-custom {
+    gap: 10px;
+}
+
+body.teacher-shell .custom-nav-pills .nav-link,
+body.teacher-shell .nav-tabs-custom .nav-link,
+body.teacher-shell .custom-tabs-container {
+    border-radius: var(--teacher-radius) !important;
+}
+
+body.teacher-shell .custom-nav-pills .nav-link,
+body.teacher-shell .nav-tabs-custom .nav-link {
+    background: #FFFFFF !important;
+    color: var(--teacher-muted) !important;
+    border: 1px solid var(--teacher-border) !important;
+    box-shadow: none !important;
+}
+
+body.teacher-shell .custom-nav-pills .nav-link.active,
+body.teacher-shell .nav-tabs-custom .nav-link.active {
+    color: var(--teacher-primary) !important;
+    border-color: #DDD6FE !important;
+    background: #F5F3FF !important;
+}
+
+body.teacher-shell .settings-tab-btn.active {
+    background: #F5F3FF !important;
+    color: var(--teacher-primary) !important;
+}
+
+body.teacher-shell .settings-tab-btn {
+    border-left-width: 3px;
+}
+
+body.teacher-shell .upload-zone,
+body.teacher-shell .assignment-variant-box,
+body.teacher-shell .dashed-info-box,
+body.teacher-shell .empty-state,
+body.teacher-shell .empty-questions,
+body.teacher-shell .chart-empty-state,
+body.teacher-shell .student-answer-box,
+body.teacher-shell .ai-hint-box,
+body.teacher-shell .answer-item,
+body.teacher-shell .answer-option,
+body.teacher-shell .meta-tag,
+body.teacher-shell .class-tag,
+body.teacher-shell .code-badge {
+    border-radius: var(--teacher-radius) !important;
+}
+
+body.teacher-shell .upload-zone {
+    border-color: #BFD0E4 !important;
+    background: #F8FAFC !important;
+}
+
+body.teacher-shell .upload-zone:hover,
+body.teacher-shell .upload-zone.dragover {
+    border-color: var(--teacher-teal) !important;
+    background: #ECFDF5 !important;
+}
+
+body.teacher-shell .quick-action-item {
+    border-radius: var(--teacher-radius) !important;
+}
+
+body.teacher-shell .quick-action-item.light {
+    background: #FFFFFF !important;
+    border: 1px solid var(--teacher-border-soft) !important;
+}
+
+body.teacher-shell .quick-action-item.light:hover,
+body.teacher-shell .list-item-teacher:hover {
+    background: #F8FAFC !important;
+    transform: translateY(-1px) !important;
+}
+
+body.teacher-shell .quick-action-item.dark {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+body.teacher-shell .bottom-stat {
+    border: 1px solid var(--teacher-border) !important;
+    border-radius: var(--teacher-radius) !important;
+    box-shadow: var(--teacher-shadow) !important;
+}
+
+body.teacher-shell .fixed-wrapper-teacher {
+    width: 100%;
+    max-width: 1580px;
+    margin: 0 auto;
+}
+
+body.teacher-shell .fixed-wrapper-teacher .teacher-page-heading {
+    flex-shrink: 0;
+}
+
+body.teacher-shell #configHeader,
+body.teacher-shell .premium-card > .card-header,
+body.teacher-shell .question-list-card > .card-header,
+body.teacher-shell .card-footer,
+body.teacher-shell .modal-header,
+body.teacher-shell .modal-footer {
+    background: #FFFFFF !important;
+    border-color: var(--teacher-border-soft) !important;
+}
+
+body.teacher-shell .question-scroll-area::-webkit-scrollbar-thumb,
+body.teacher-shell .document-list::-webkit-scrollbar-thumb,
+body.teacher-shell .tab-content::-webkit-scrollbar-thumb {
+    background: #94A3B8;
+}
+
+@media (max-width: 768px) {
+    body.teacher-shell .teacher-page-heading {
+        padding: 20px 18px 20px 22px !important;
+    }
+
+    body.teacher-shell .teacher-page-heading .btn,
+    body.teacher-shell .teacher-page-heading a.btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

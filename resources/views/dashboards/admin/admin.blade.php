@@ -5,16 +5,21 @@
 @section('content')
 
     <!-- Header chào mừng -->
-    <div class="mb-4 mt-3 d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <div class="admin-page-heading admin-dashboard-hero mb-4 mt-3 d-flex justify-content-between align-items-end flex-wrap gap-3">
         <div>
             @php $firstName = explode(' ', Auth::user()->name ?? 'Admin')[0]; @endphp
             <h2 class="fw-800 text-dark mb-1">
                 Xin chào, {{ $firstName }}! <span class="wave-emoji"></span>
             </h2>
             <p class="text-muted fs-6 fw-medium mb-0">Quản trị toàn bộ hệ thống và dữ liệu của EduQuiz AI</p>
+            <div class="admin-hero-chips d-flex flex-wrap gap-2 mt-3">
+                <span><i class="bi bi-shield-check"></i> Hệ thống ổn định</span>
+                <span><i class="bi bi-activity"></i> {{ $todayActivity ?? 0 }} hoạt động hôm nay</span>
+                <span><i class="bi bi-people"></i> {{ $totalUsers ?? 0 }} tài khoản</span>
+            </div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('admin.backup.database') }}" class="btn bg-white border shadow-sm rounded-pill fw-bold text-dark px-4 py-2 hover-lift transition-all">
+            <a href="{{ route('admin.backup.database') }}" class="btn admin-hero-button bg-white border shadow-sm rounded-pill fw-bold text-dark px-4 py-2 hover-lift transition-all">
                 <i class="bi bi-cloud-download me-1"></i> Sao lưu Dữ liệu
             </a>
         </div>
@@ -23,7 +28,7 @@
     <!-- Thẻ KPI Thống kê -->
     <div class="row g-4 mb-4">
         <div class="col-md-6 col-xl-3">
-            <div class="admin-kpi-card bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
+            <div class="admin-kpi-card kpi-users bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="text-muted mb-0 fw-bold text-uppercase letter-spacing-1" style="font-size: 0.75rem;">Tổng người dùng</p>
                     <div class="admin-kpi-icon bg-purple-light theme-text-primary"><i class="bi bi-people-fill"></i></div>
@@ -32,7 +37,7 @@
             </div>
         </div>
         <div class="col-md-6 col-xl-3">
-            <div class="admin-kpi-card bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
+            <div class="admin-kpi-card kpi-students bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="text-muted mb-0 fw-bold text-uppercase letter-spacing-1" style="font-size: 0.75rem;">Học viên</p>
                     <div class="admin-kpi-icon bg-emerald-soft text-emerald"><i class="bi bi-person-badge-fill"></i></div>
@@ -41,7 +46,7 @@
             </div>
         </div>
         <div class="col-md-6 col-xl-3">
-            <div class="admin-kpi-card bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
+            <div class="admin-kpi-card kpi-teachers bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="text-muted mb-0 fw-bold text-uppercase letter-spacing-1" style="font-size: 0.75rem;">Giảng viên</p>
                     <div class="admin-kpi-icon bg-info-soft text-info"><i class="bi bi-person-workspace"></i></div>
@@ -50,7 +55,7 @@
             </div>
         </div>
         <div class="col-md-6 col-xl-3">
-            <div class="admin-kpi-card bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
+            <div class="admin-kpi-card kpi-ai bg-white rounded-4 p-4 shadow-sm border-0 h-100 hover-lift">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="text-muted mb-0 fw-bold text-uppercase letter-spacing-1" style="font-size: 0.75rem;">Lượt dùng AI (Nay)</p>
                     <div class="admin-kpi-icon bg-warning-soft text-warning-dark"><i class="bi bi-lightning-charge-fill"></i></div>

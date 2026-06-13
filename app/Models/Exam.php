@@ -34,6 +34,11 @@ class Exam extends Model
     }
     protected $fillable = [
         'teacher_id', 
+        'source_exam_id',
+        'variant_group',
+        'variant_number',
+        'variant_count',
+        'shuffle_questions',
         'classroom_id', 
         'document_id', 
         'title', 

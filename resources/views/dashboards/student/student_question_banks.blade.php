@@ -3,7 +3,7 @@
 @section('title', 'Ngân hàng đề')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/student/student_question_banks.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_question_banks.css') }}">
 @endpush
 
 @section('content')
@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
+    <div class="student-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
         <div>
             <h3 class="fw-bold mb-1 theme-text-dark d-flex align-items-center gap-2">
                 <i class="bi bi-collection-play theme-text-primary"></i> Ngân hàng đề của tôi
@@ -22,7 +22,7 @@
             <p class="text-muted fs-6 mb-0">Lưu trữ, quản lý và ôn tập các bộ câu hỏi cá nhân</p>
         </div>
         
-        <a href="{{ route('student.exams.create') ?? '#' }}" class="btn btn-theme-primary px-4 py-2 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2">
+        <a href="{{ route('student.exams.create', ['show_back' => 1]) ?? '#' }}" class="btn btn-theme-primary px-4 py-2 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2">
             <i class="bi bi-magic"></i> Tạo đề mới bằng AI
         </a>
     </div>
@@ -53,7 +53,7 @@
                 </select>
             </div>
             <div class="col-md-1 text-end">
-                <button class="btn btn-light border rounded-3 w-100 h-100 text-muted hover-theme" title="Tải lại bộ lọc">
+                <button type="button" id="resetFilters" class="btn btn-light border rounded-3 w-100 h-100 text-muted hover-theme" title="Tải lại bộ lọc">
                     <i class="bi bi-arrow-clockwise"></i>
                 </button>
             </div>
@@ -62,7 +62,7 @@
 
     <div class="row g-4" id="bankContainer">
         @forelse($questionBanks ?? [] as $bank)
-            <div class="col-md-6 col-lg-4 bank-item">
+            <div class="col-md-6 col-lg-4 bank-item" data-created="{{ optional($bank->created_at)->timestamp ?? 0 }}" data-score="{{ $bank->target_score ?? 0 }}">
                 <div class="bank-card card border-0 shadow-sm h-100 d-flex flex-column rounded-4">
                     
                     <div class="bank-card-header p-4 pb-0 d-flex justify-content-between align-items-start">
@@ -70,19 +70,17 @@
                             <i class="bi bi-stack"></i>
                         </div>
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-light rounded-circle text-muted p-2 border-0" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" class="btn btn-sm btn-light rounded-circle text-muted p-2 border-0" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow-sm border-purple-subtle rounded-3">
-                                <li><a class="dropdown-item py-2" href="#"><i class="bi bi-pencil-square me-2 theme-text-primary"></i>Chỉnh sửa</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item py-2 text-danger btn-delete-bank" href="#" data-id="{{ $bank->id }}"><i class="bi bi-trash3 me-2"></i>Xóa đề</a></li>
+                                <li><button type="button" class="dropdown-item py-2 text-danger btn-delete-bank" data-id="{{ $bank->id }}" data-url="{{ route('student.question-banks.destroy', $bank->id) }}"><i class="bi bi-trash3 me-2"></i>Xóa đề</button></li>
                             </ul>
                         </div>
                     </div>
                     
                     <div class="bank-card-body flex-grow-1 p-4 pt-3">
-                        <h5 class="fw-bold mb-2 theme-text-dark text-truncate" title="{{ $bank->title }}">{{ $bank->title }}</h5>
+                        <h5 class="fw-bold mb-2 theme-text-dark text-truncate title-text" title="{{ $bank->title }}">{{ $bank->title }}</h5>
                         <span class="badge border border-purple-subtle text-purple-dark bg-purple-light px-3 py-1 rounded-pill mb-3 fw-medium">
                             {{ $bank->subject ?? 'Môn chung' }}
                         </span>
@@ -125,7 +123,7 @@
                     </div>
                     <h4 class="fw-bold mb-2 theme-text-dark">Ngân hàng đề trống</h4>
                     <p class="text-muted mb-4 opacity-75">Bạn chưa lưu bộ câu hỏi nào. Hãy tải tài liệu lên và để AI giúp bạn tạo đề thi nhé!</p>
-                    <a href="{{ route('student.exams.create') ?? '#' }}" class="btn btn-theme-primary px-5 py-3 fw-bold rounded-pill shadow-sm">
+                    <a href="{{ route('student.exams.create', ['show_back' => 1]) ?? '#' }}" class="btn btn-theme-primary px-5 py-3 fw-bold rounded-pill shadow-sm">
                         <i class="bi bi-magic me-2"></i> Tạo đề ôn tập đầu tiên
                     </a>
                 </div>
@@ -142,5 +140,5 @@
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/student/student_question_banks.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_question_banks.js') }}"></script>
 @endpush

@@ -4,12 +4,12 @@
 
 @push('styles')
     <!-- Link file CSS riêng -->
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_teacher.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_teacher.css') }}">
 @endpush
 
 @section('content')
     <!-- Tiêu đề trang & Thanh công cụ -->
-    <div class="d-flex flex-column flex-xl-row justify-content-between align-items-xl-end mb-4 gap-3 mt-2 border-bottom border-light-subtle pb-3">
+    <div class="admin-page-heading d-flex flex-column flex-xl-row justify-content-between align-items-xl-end mb-4 gap-3 mt-2 pb-3">
         <div>
             <h3 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Quản lý Giảng viên <i class="bi bi-person-workspace theme-text-primary"></i>
@@ -183,5 +183,5 @@
 
 @push('scripts')
     <!-- Link file JS riêng -->
-    <script src="{{ asset('js/admin/admin_teacher.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/admin/admin_teacher.js') }}"></script>
 @endpush

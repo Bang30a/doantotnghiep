@@ -31,6 +31,12 @@ class AppServiceProvider extends ServiceProvider
                     config(['session.lifetime' => $settings['session_timeout']]);
                 }
 
+                $systemTimezone = $settings['system_timezone'] ?? 'Asia/Ho_Chi_Minh';
+                if (in_array($systemTimezone, \DateTimeZone::listIdentifiers(), true)) {
+                    config(['app.timezone' => $systemTimezone]);
+                    date_default_timezone_set($systemTimezone);
+                }
+
                 // 3. Ghi đè cấu hình SMTP
                 if (!empty($settings['smtp_host']) && !empty($settings['smtp_username'])) {
                     config([

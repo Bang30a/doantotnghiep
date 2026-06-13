@@ -7,6 +7,7 @@ use App\Models\StudentAnswer;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\ActivityLog;
+use App\Support\RichTextSanitizer;
 use Illuminate\Support\Facades\Auth;
 
 class GradingService
@@ -18,7 +19,7 @@ class GradingService
             ->where('question_id', $question_id)
             ->update([
                 'score' => $score,
-                'feedback' => $feedback
+                'feedback' => RichTextSanitizer::sanitize($feedback)
             ]);
 
         // 2. Tính lại tổng điểm

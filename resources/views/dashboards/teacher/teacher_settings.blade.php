@@ -3,7 +3,7 @@
 @section('title', 'Cài đặt cá nhân')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_settings.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_settings.css') }}">
 @endpush
 
 @section('content')
@@ -13,10 +13,10 @@
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden sticky-top hover-lift" style="top: 24px;">
                 <div class="card-body p-2">
                     <div class="settings-menu">
-                        <button class="settings-tab-btn active rounded-3" data-target="tab-profile">
+                        <button type="button" class="settings-tab-btn active rounded-3" data-target="tab-profile">
                             <i class="bi bi-person-badge-fill"></i> Thông tin chung
                         </button>
-                        <button class="settings-tab-btn rounded-3" data-target="tab-security" id="btn-tab-security">
+                        <button type="button" class="settings-tab-btn rounded-3" data-target="tab-security" id="btn-tab-security">
                             <i class="bi bi-shield-lock-fill"></i> Bảo mật & Mật khẩu
                         </button>
                     </div>
@@ -77,6 +77,7 @@
                                         <span class="input-group-text bg-white text-purple border-end-0"><i class="bi bi-telephone-fill"></i></span>
                                         <input type="text" name="phone" class="form-control border-start-0 fw-medium ps-0" value="{{ old('phone', $user->phone ?? '') }}" placeholder="Nhập số điện thoại...">
                                     </div>
+                                    @error('phone') <span class="text-danger small fw-bold mt-1 d-block">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label fw-bold text-muted small text-uppercase letter-spacing-1">Email đăng nhập</label>
@@ -175,5 +176,5 @@
         { "hasPasswordError": {{ session('error_tab') == 'password' || $errors->has('current_password') || $errors->has('new_password') ? 'true' : 'false' }} }
     </script>
 
-    <script src="{{ asset('js/teacher/teacher_settings.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_settings.js') }}"></script>
 @endpush

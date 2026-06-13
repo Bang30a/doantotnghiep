@@ -153,11 +153,22 @@ class ExamController extends Controller
     }
     private function generateAiSuggestion($questionContent, $bareme, $studentAnswer)
         {
-            return app(\App\Services\AiExamService::class)->gradeEssayAnswer(
-                $questionContent,
-                $bareme,
-                $studentAnswer
-            );
+            try {
+                return app(\App\Services\AiExamService::class)->gradeEssayAnswer(
+                    $questionContent,
+                    $bareme,
+                    $studentAnswer
+                );
+            } catch (\Throwable $e) {
+                Log::warning('AI essay grading suggestion failed', [
+                    'error' => $e->getMessage(),
+                ]);
+
+                return [
+                    'score' => null,
+                    'feedback' => 'AI chưa thể phân tích bài làm lúc này. Giảng viên có thể chấm thủ công hoặc thử lại sau.',
+                ];
+            }
         }
     public function saveGrade(Request $request, $result_id)
         {

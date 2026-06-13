@@ -3,7 +3,7 @@
 @section('title', 'Cài đặt hệ thống')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_settings.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_settings.css') }}">
 @endpush
 
 @section('content')
@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <div class="d-flex justify-content-between align-items-center border-bottom border-light-subtle pb-2 mb-2">
+        <div class="admin-page-heading d-flex justify-content-between align-items-center pb-2 mb-2">
             <div class="d-flex align-items-center gap-3">
                 <h4 class="fw-900 text-dark mb-0 d-flex align-items-center gap-2">
                     Cài đặt hệ thống <i class="bi bi-gear-fill theme-text-primary fs-5"></i>
@@ -28,7 +28,7 @@
             </div>
             
             <div class="d-flex gap-2">
-                <button type="button" class="btn btn-light fw-bold px-3 py-1.5 rounded-3 shadow-sm border small transition-all">Khôi phục</button>
+                <button type="button" id="btn-reset-settings" class="btn btn-light fw-bold px-3 py-1.5 rounded-3 shadow-sm border small transition-all">Khôi phục</button>
                 <button type="submit" form="settingsForm" class="btn btn-purple-gradient text-white fw-bold px-4 py-1.5 rounded-3 shadow-sm d-flex align-items-center gap-2 small transition-all">
                     <i class="bi bi-floppy-fill"></i> Lưu cài đặt
                 </button>
@@ -85,11 +85,15 @@
                             <input type="email" name="admin_email" class="form-control custom-input rounded-3 py-2 fw-medium text-dark" value="{{ $settings['admin_email'] ?? 'admin@eduquiz.ai' }}">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold text-muted small text-uppercase">Ngôn ngữ mặc định</label>
-                            <select name="default_language" class="form-select custom-input rounded-3 py-2 fw-bold text-primary bg-primary bg-opacity-10 border-primary border-opacity-25">
-                                <option value="vi" {{ ($settings['default_language'] ?? 'vi') == 'vi' ? 'selected' : '' }}>Tiếng Việt</option>
-                                <option value="en" {{ ($settings['default_language'] ?? '') == 'en' ? 'selected' : '' }}>English</option>
+                            @php $systemTimezone = $settings['system_timezone'] ?? 'Asia/Ho_Chi_Minh'; @endphp
+                            <label class="form-label fw-bold text-muted small text-uppercase">Múi giờ hệ thống</label>
+                            <select name="system_timezone" class="form-select custom-input rounded-3 py-2 fw-bold text-primary bg-primary bg-opacity-10 border-primary border-opacity-25">
+                                <option value="Asia/Ho_Chi_Minh" {{ $systemTimezone == 'Asia/Ho_Chi_Minh' ? 'selected' : '' }}>Việt Nam - GMT+7</option>
+                                <option value="UTC" {{ $systemTimezone == 'UTC' ? 'selected' : '' }}>UTC - Giờ chuẩn quốc tế</option>
+                                <option value="Asia/Bangkok" {{ $systemTimezone == 'Asia/Bangkok' ? 'selected' : '' }}>Bangkok - GMT+7</option>
+                                <option value="Asia/Tokyo" {{ $systemTimezone == 'Asia/Tokyo' ? 'selected' : '' }}>Tokyo - GMT+9</option>
                             </select>
+                            <div class="form-text small text-muted">Áp dụng cho thời gian nộp bài, lịch sử hoạt động và báo cáo.</div>
                         </div>
                     </div>
 
@@ -181,9 +185,13 @@
                             <span class="text-muted small fw-medium">/ {{ $totalSpaceGB ?? 50 }} GB</span>
                         </span>
                     </div>
+                    @php
+                        $rawUsedPercentage = (float) ($usedPercentage ?? 0);
+                        $displayUsedPercentage = $rawUsedPercentage > 0 ? max($rawUsedPercentage, 0.8) : 0;
+                    @endphp
                     
                     <div class="progress mb-4 bg-light border" style="height: 10px; border-radius: 10px;">
-                        <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: {{ $usedPercentage ?? 0 }}%;"></div>
+                        <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: {{ $displayUsedPercentage }}%;" aria-valuenow="{{ number_format($rawUsedPercentage, 4, '.', '') }}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
 
                     <div class="row g-3 mb-2 text-center">
@@ -216,5 +224,5 @@
 </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/admin/admin_settings.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/admin/admin_settings.js') }}"></script>
 @endpush

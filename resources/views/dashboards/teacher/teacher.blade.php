@@ -3,11 +3,11 @@
 @section('title', 'Bảng điều khiển')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_dashboard.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_dashboard.css') }}">
 @endpush
 
 @section('content')
-    <div class="mb-4 mt-2 d-flex align-items-center justify-content-between">
+    <div class="teacher-page-heading teacher-dashboard-hero mb-4 mt-2 d-flex align-items-center justify-content-between">
         <div>
             @php
                 $firstName = explode(' ', Auth::user()->name)[0];

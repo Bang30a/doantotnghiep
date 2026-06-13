@@ -9,7 +9,11 @@ class StudentAnswer extends Model
     protected $guarded = [];
 
     public function examResult() {
-        return $this->belongsTo(ExamResult::class);
+        return $this->belongsTo(Result::class, 'exam_result_id');
+    }
+
+    public function result() {
+        return $this->belongsTo(Result::class, 'exam_result_id');
     }
 
     public function question() {

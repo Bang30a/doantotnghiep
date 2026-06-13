@@ -106,6 +106,61 @@
     font-weight: 400;
 }
 
+.assignment-variant-box {
+    background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%);
+    border: 1px solid #e9d5ff;
+}
+
+.variant-toggle {
+    cursor: pointer;
+}
+
+.variant-toggle .form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-color: #c084fc;
+    box-shadow: none;
+}
+
+.variant-toggle .form-check-input:checked {
+    background-color: var(--theme-primary);
+    border-color: var(--theme-primary);
+}
+
+.variant-count-control {
+    width: 170px;
+    flex-shrink: 0;
+}
+
+.variant-count-control .form-control {
+    border-radius: 14px;
+    border: 1px solid #e9d5ff;
+    background: #fff;
+    color: var(--theme-primary);
+    min-height: 46px;
+}
+
+.variant-count-control .form-control:focus {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.12);
+}
+
+.variant-hint {
+    background: #fff;
+    border: 1px dashed #d8b4fe;
+    color: #6b21a8;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+@media (max-width: 767px) {
+    .variant-count-control {
+        width: 100%;
+    }
+}
+
 /* Nút bấm chủ đề Tím Gradient */
 .btn-theme-primary {
     background: linear-gradient(135deg, #9333ea, var(--theme-primary));

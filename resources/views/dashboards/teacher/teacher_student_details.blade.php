@@ -4,7 +4,7 @@
 
 @push('styles')
     {{-- Chèn CSS riêng của trang này --}}
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_student_details.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_student_details.css') }}">
 @endpush
 
 @section('content')
@@ -144,5 +144,5 @@
 @push('scripts')
     {{-- Tạm thời giữ lại jQuery nếu file JS bên dưới cần dùng --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/teacher/teacher_student_details.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_student_details.js') }}"></script>
 @endpush

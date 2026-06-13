@@ -6,8 +6,11 @@ $(document).ready(function() {
 
     // Lấy mã màu từ CSS Variables (giúp đồng bộ 100% với CSS)
     const style = getComputedStyle(document.body);
-    const purpleMain = style.getPropertyValue('--theme-primary').trim() || '#7C3AED';
-    const purpleLight = style.getPropertyValue('--theme-light').trim() || '#F5F3FF';
+    const purpleMain = style.getPropertyValue('--student-primary').trim() || '#6D28D9';
+    const tealMain = style.getPropertyValue('--student-teal').trim() || '#0F766E';
+    const blueMain = style.getPropertyValue('--student-blue').trim() || '#2563EB';
+    const amberMain = style.getPropertyValue('--student-amber').trim() || '#D97706';
+    const roseMain = style.getPropertyValue('--student-rose').trim() || '#E11D48';
 
     // ==========================================
     // 1. Biểu đồ Đường (Tiến độ điểm số)
@@ -18,8 +21,8 @@ $(document).ready(function() {
         
         // Tạo hiệu ứng đổ màu (Gradient)
         let gradientPurple = ctxProgress.createLinearGradient(0, 0, 0, 400);
-        gradientPurple.addColorStop(0, 'rgba(124, 58, 237, 0.2)'); 
-        gradientPurple.addColorStop(1, 'rgba(124, 58, 237, 0)');   
+        gradientPurple.addColorStop(0, 'rgba(15, 118, 110, 0.22)');
+        gradientPurple.addColorStop(1, 'rgba(15, 118, 110, 0)');
 
         new Chart(ctxProgress, {
             type: 'line',
@@ -28,11 +31,11 @@ $(document).ready(function() {
                 datasets: [{
                     label: 'Điểm trung bình',
                     data: dbData.line.data,
-                    borderColor: purpleMain,
+                    borderColor: tealMain,
                     backgroundColor: gradientPurple,
                     borderWidth: 3,
                     pointBackgroundColor: '#ffffff',
-                    pointBorderColor: purpleMain,
+                    pointBorderColor: tealMain,
                     pointBorderWidth: 2,
                     pointRadius: 4,
                     pointHoverRadius: 6,
@@ -84,7 +87,7 @@ $(document).ready(function() {
         const pieLabels = hasData ? dbData.pie.labels : ['Chưa có bài làm'];
         const pieData = hasData ? dbData.pie.data : [1];
         const pieColors = hasData 
-            ? [purpleMain, '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#64748B']
+            ? [purpleMain, tealMain, blueMain, amberMain, roseMain, '#64748B']
             : ['#E2E8F0']; // Màu xám nhạt nếu chưa có dữ liệu
 
         new Chart(ctxSubject, {

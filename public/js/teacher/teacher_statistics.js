@@ -61,6 +61,16 @@ document.addEventListener('DOMContentLoaded', function () {
     Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
     Chart.defaults.color = '#64748b';
 
+    const rootStyle = getComputedStyle(document.body);
+    const theme = {
+        primary: rootStyle.getPropertyValue('--teacher-primary').trim() || '#6D28D9',
+        primaryDark: rootStyle.getPropertyValue('--teacher-primary-dark').trim() || '#4C1D95',
+        teal: rootStyle.getPropertyValue('--teacher-teal').trim() || '#0F766E',
+        blue: rootStyle.getPropertyValue('--teacher-blue').trim() || '#2563EB',
+        amber: rootStyle.getPropertyValue('--teacher-amber').trim() || '#D97706',
+        rose: rootStyle.getPropertyValue('--teacher-rose').trim() || '#E11D48'
+    };
+
     const commonGrid = {
         color: '#eef2f7',
         drawBorder: false
@@ -87,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     datasets: [{
                         label: 'Điểm TB',
                         data: data.classScores,
-                        backgroundColor: 'rgba(124, 58, 237, 0.9)',
-                        hoverBackgroundColor: 'rgba(91, 33, 182, 1)',
+                        backgroundColor: theme.blue,
+                        hoverBackgroundColor: theme.primary,
                         borderRadius: 12,
                         barThickness: 42
                     }]
@@ -136,8 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     datasets: [{
                         label: 'Số lượt bài',
                         data: data.distributionData,
-                        backgroundColor: 'rgba(16, 185, 129, 0.9)',
-                        hoverBackgroundColor: 'rgba(5, 150, 105, 1)',
+                        backgroundColor: theme.teal,
+                        hoverBackgroundColor: theme.blue,
                         borderRadius: 10,
                         barThickness: 38
                     }]
@@ -183,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     labels: data.completionLabels || ['Đã nộp', 'Chưa nộp'],
                     datasets: [{
                         data: data.completionData,
-                        backgroundColor: ['#10b981', '#fee2e2'],
+                        backgroundColor: [theme.teal, '#FEE2E2'],
                         borderWidth: 4,
                         borderColor: '#ffffff',
                         hoverOffset: 8
@@ -230,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: difficultyLabels,
                 datasets: [{
                     data: difficultyData,
-                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                    backgroundColor: [theme.teal, theme.amber, theme.rose],
                     borderWidth: 4,
                     borderColor: '#ffffff',
                     hoverOffset: 8
@@ -269,26 +279,26 @@ document.addEventListener('DOMContentLoaded', function () {
                         {
                             label: 'Điểm TB',
                             data: data.perfScores,
-                            borderColor: '#7c3aed',
-                            backgroundColor: 'rgba(124, 58, 237, 0.15)',
+                            borderColor: theme.blue,
+                            backgroundColor: 'rgba(37, 99, 235, 0.13)',
                             yAxisID: 'y',
                             tension: 0.42,
                             fill: true,
                             pointRadius: 4,
                             pointHoverRadius: 7,
-                            pointBackgroundColor: '#7c3aed'
+                            pointBackgroundColor: theme.blue
                         },
                         {
                             label: 'Tỷ lệ hoàn thành (%)',
                             data: data.perfRates,
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.12)',
+                            borderColor: theme.teal,
+                            backgroundColor: 'rgba(15, 118, 110, 0.12)',
                             yAxisID: 'y1',
                             tension: 0.42,
                             fill: true,
                             pointRadius: 4,
                             pointHoverRadius: 7,
-                            pointBackgroundColor: '#10b981'
+                            pointBackgroundColor: theme.teal
                         }
                     ]
                 },

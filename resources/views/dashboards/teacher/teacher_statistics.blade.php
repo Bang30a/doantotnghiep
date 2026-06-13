@@ -3,7 +3,7 @@
 @section('title', 'Thống kê & Báo cáo')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_statistics.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_statistics.css') }}">
 @endpush
 
 @section('content')
@@ -23,7 +23,7 @@
         }
     @endphp
     <!-- Tiêu đề trang -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 pb-3 mt-2">
+    <div class="teacher-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 pb-3 mt-2">
         <div class="mb-3 mb-md-0">
             <h3 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Thống kê tổng quan <i class="bi bi-bar-chart-line-fill text-purple"></i>
@@ -438,5 +438,5 @@
     
     {{-- Tạm thời giữ lại jQuery nếu file JS bên dưới cần dùng --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/teacher/teacher_statistics.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_statistics.js') }}"></script>
 @endpush

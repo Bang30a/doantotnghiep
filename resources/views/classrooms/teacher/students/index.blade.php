@@ -3,13 +3,13 @@
 @section('title', 'Quản lý Học viên')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_students.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_students.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Tiêu đề trang & Nút hành động -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 border-bottom border-light-subtle pb-3 mt-2 gap-3">
+    <div class="teacher-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 mt-2 gap-3">
         <div>
             <h3 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Quản lý Học viên <i class="bi bi-people-fill theme-text-primary"></i>
@@ -70,16 +70,8 @@
                 <tbody>
                     @forelse($students as $index => $student)
                         @php
-                            $totalScore = 0;
-                            $completedCount = $student->results->count() ?? 0;
-                            if ($completedCount > 0) {
-                                foreach($student->results as $r) {
-                                    $totalScore += ($r->score / max(1, $r->total_questions)) * 10;
-                                }
-                                $avg = $totalScore / $completedCount;
-                            } else {
-                                $avg = 0;
-                            }
+                            $completedCount = $student->completed_count ?? ($student->results->count() ?? 0);
+                            $avg = $student->average_score10 ?? 0;
                             $avgClass = $avg >= 8 ? 'text-emerald bg-emerald-soft border-emerald-subtle' : ($avg >= 5 ? 'text-warning bg-warning-light border-warning-subtle' : 'text-danger bg-danger-soft border-danger-subtle');
                         @endphp
                         <tr class="transition-all hover-row">

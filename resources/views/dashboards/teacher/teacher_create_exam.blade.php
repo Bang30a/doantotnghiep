@@ -3,13 +3,13 @@
 @section('title', isset($exam) ? 'Chỉnh sửa Đề thi' : 'Tạo đề thi mới')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_exam.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_exam.css') }}">
 @endpush
 
 @section('content')
 <div class="fixed-wrapper-teacher">
     {{-- Header & Nút Quay lại --}}
-    <div class="flex-shrink-0 mb-3 pb-2 border-bottom border-light-subtle">
+    <div class="teacher-page-heading flex-shrink-0 mb-3 pb-2">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
                 <a href="{{ route('teacher.exams.index') }}" class="btn-back text-muted text-decoration-none fw-bold hover-text-primary transition-all d-inline-flex align-items-center gap-2 mb-2" style="font-size: 0.85rem;">
@@ -24,7 +24,7 @@
                 </h4>
             </div>
             <div class="d-flex gap-2">
-                <button type="submit" form="studentExamForm" class="btn btn-theme-primary px-4 py-2 fw-bold rounded-pill d-flex align-items-center gap-2 transition-all shadow-sm">
+                <button type="submit" form="studentExamForm" id="btn-save-exam" class="btn btn-theme-primary px-4 py-2 fw-bold rounded-pill d-flex align-items-center gap-2 transition-all shadow-sm">
                     <i class="bi bi-floppy-fill"></i> {{ isset($exam) ? 'Cập nhật đề thi' : 'Lưu & Hoàn tất' }}
                 </button>
             </div>
@@ -42,7 +42,7 @@
                     @endforeach
                 </ul>
             </div>
-            <button type="button" class="btn-close mt-1 me-2" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close mt-1 me-2" data-bs-dismiss="alert" aria-label="Đóng"></button>
         </div>
     @endif
 
@@ -157,12 +157,12 @@
                     <div class="custom-tabs-container mb-4 flex-shrink-0">
                         <ul class="nav nav-pills w-100 custom-pills p-1 rounded-pill bg-light border" id="toolTabs">
                             <li class="nav-item w-50">
-                                <button class="nav-link w-100 active fw-bold py-2 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="pill" data-bs-target="#ai-pane">
+                                <button type="button" class="nav-link w-100 active fw-bold py-2 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="pill" data-bs-target="#ai-pane">
                                     <i class="bi bi-magic text-warning"></i> Dùng AI
                                 </button>
                             </li>
                             <li class="nav-item w-50">
-                                <button class="nav-link w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="pill" data-bs-target="#manual-pane">
+                                <button type="button" class="nav-link w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="pill" data-bs-target="#manual-pane">
                                     <i class="bi bi-pencil-square text-secondary"></i> Nhập tay
                                 </button>
                             </li>
@@ -178,17 +178,19 @@
                                 <label class="form-label-custom">1. CHỌN TÀI LIỆU GỐC <span class="text-danger">*</span></label>
                                 <div class="input-group custom-input-group">
                                     <span class="input-group-text"><i class="bi bi-file-earmark-pdf fs-5"></i></span>
-                                    <select id="document_id" name="document_id" class="form-select text-dark fw-medium">
+                                    <select id="document_id" name="document_id" class="form-select text-dark fw-medium document-select">
                                         <option value="" selected disabled>Chọn tài liệu bài giảng...</option>
                                         @isset($documents)
                                             @foreach($documents as $doc)
-                                                <option value="{{ $doc->id }}">{{ $doc->title }} ({{ strtoupper($doc->file_type) }})</option>
+                                                <option value="{{ $doc->id }}" title="{{ $doc->title }} ({{ strtoupper($doc->file_type) }})">
+                                                    {{ \Illuminate\Support\Str::limit($doc->title, 42) }} ({{ strtoupper($doc->file_type) }})
+                                                </option>
                                             @endforeach
                                         @endisset
                                     </select>
                                 </div>
                                 <div class="text-end mt-2">
-                                    <a href="{{ route('student.documents') ?? '#' }}" class="text-purple text-decoration-none fw-bold small hover-text-primary">
+                                    <a href="{{ route('teacher.documents.index') }}" class="text-purple text-decoration-none fw-bold small hover-text-primary">
                                         <i class="bi bi-cloud-arrow-up-fill me-1"></i> Tải tài liệu mới lên
                                     </a>
                                 </div>
@@ -281,9 +283,8 @@
         </div>
     </form>
 </div>
-</div>
 
-{{-- MODAL CHINH SUA CAU HOI --}}
+{{-- MODAL CHỈNH SỬA CÂU HỎI --}}
 <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden teacher-edit-modal">
@@ -291,11 +292,11 @@
                 <div>
                     <h5 class="modal-title fw-bold theme-text-dark mb-1">
                         <i class="bi bi-pencil-square text-purple me-2"></i>
-                        Chinh sua cau hoi
+                        Chỉnh sửa câu hỏi
                     </h5>
-                    <p class="text-muted small mb-0">Cap nhat noi dung cau hoi, dap an va giai thich</p>
+                    <p class="text-muted small mb-0">Cập nhật nội dung câu hỏi, đáp án và giải thích</p>
                 </div>
-                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Dong"></button>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
 
             <div class="modal-body p-4">
@@ -303,7 +304,7 @@
                 <input type="hidden" id="edit_q_type">
 
                 <div class="mb-3">
-                    <label class="form-label-custom">NOI DUNG CAU HOI <span class="text-danger">*</span></label>
+                    <label class="form-label-custom">NỘI DUNG CÂU HỎI <span class="text-danger">*</span></label>
                     <div class="input-group custom-input-group align-items-start">
                         <span class="input-group-text pt-2">
                             <i class="bi bi-question-circle fs-5"></i>
@@ -311,26 +312,26 @@
                         <textarea id="edit_q_content"
                                   class="form-control"
                                   rows="3"
-                                  placeholder="Nhap noi dung cau hoi..."></textarea>
+                                  placeholder="Nhập nội dung câu hỏi..."></textarea>
                     </div>
                 </div>
 
                 <div id="edit_mcq_area" class="mb-3">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <label class="form-label-custom mb-0">
-                            DAP AN TRAC NGHIEM <span class="text-danger">*</span>
+                            ĐÁP ÁN TRẮC NGHIỆM <span class="text-danger">*</span>
                         </label>
-                        <small class="text-muted">(chon radio cho dap an dung)</small>
+                        <small class="text-muted">(chọn radio cho đáp án đúng)</small>
                     </div>
 
                     <div class="manual-answer-list" id="edit_answers_container">
-                        {{-- JS render 4 dap an vao day --}}
+                        {{-- JS render 4 đáp án vào đây --}}
                     </div>
                 </div>
 
                 <div class="mb-0">
                     <label class="form-label-custom">
-                        GIAI THICH AI / GOI Y DAP AN
+                        GIẢI THÍCH AI / GỢI Ý ĐÁP ÁN
                     </label>
                     <div class="input-group custom-input-group align-items-start">
                         <span class="input-group-text pt-2">
@@ -339,26 +340,60 @@
                         <textarea id="edit_q_explanation"
                                   class="form-control"
                                   rows="4"
-                                  placeholder="Nhap giai thich ngan gon hoac goi y dap an..."></textarea>
+                                  placeholder="Nhập giải thích ngắn gọn hoặc gợi ý đáp án..."></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer border-0 px-4 pb-4 pt-0">
                 <button type="button" class="btn btn-light rounded-pill px-4 fw-bold border" data-bs-dismiss="modal">
-                    Huy bo
+                    Hủy bỏ
                 </button>
                 <button type="button" id="btn-update-question" class="btn btn-theme-primary rounded-pill px-4 fw-bold shadow-sm">
                     <i class="bi bi-check-circle-fill me-1"></i>
-                    Luu thay doi
+                    Lưu thay đổi
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+{{-- MODAL LƯU THÀNH CÔNG --}}
+@if(session('exam_saved'))
+<div class="modal fade" id="successSaveModal" tabindex="-1" aria-hidden="true" data-show-on-load="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+            <div class="modal-body text-center p-5">
+                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle"
+                     style="width: 72px; height: 72px; background: #dcfce7; color: #16a34a; font-size: 2.2rem;">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+
+                <h4 class="fw-bold theme-text-dark mb-2">Lưu đề thành công!</h4>
+
+                <p class="text-muted mb-4">
+                    Đề thi đã được lưu vào <strong>Ngân hàng đề</strong>.
+                </p>
+
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-light rounded-pill px-4 fw-bold border" data-bs-dismiss="modal">
+                        Đóng
+                    </button>
+
+                    <a href="{{ route('teacher.exams.index') }}"
+                       class="btn btn-theme-primary rounded-pill px-4 fw-bold">
+                        <i class="bi bi-folder-fill me-1"></i>
+                        Đến danh sách đề
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 @endsection
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/teacher/teacher_create_exam.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_create_exam.js') }}"></script>
 @endpush

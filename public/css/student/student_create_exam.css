@@ -32,6 +32,24 @@
     box-shadow: 0 8px 20px rgba(192, 38, 211, 0.3);
     transform: translateY(-2px);
 }
+.btn-magic-gradient:disabled,
+.btn-magic-gradient.disabled {
+    background: linear-gradient(135deg, #7E22CE 0%, #C026D3 100%) !important;
+    color: #ffffff !important;
+    opacity: 0.92 !important;
+    transform: none !important;
+    box-shadow: 0 8px 20px rgba(192, 38, 211, 0.24) !important;
+}
+.btn-magic-gradient:disabled i,
+.btn-magic-gradient.disabled i {
+    color: #FFD700 !important;
+}
+.btn-magic-gradient:disabled .spinner-border,
+.btn-magic-gradient.disabled .spinner-border {
+    color: #ffffff !important;
+    border-color: currentColor;
+    border-right-color: transparent;
+}
 
 /* Typography & Labels */
 .custom-label {
@@ -72,6 +90,22 @@
 .quantity-input-box input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/* Giữ dropdown tài liệu gọn trong cột phải, kể cả khi tên file dài */
+.document-select {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.document-select option {
+    max-width: 420px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Input group nhập tay */

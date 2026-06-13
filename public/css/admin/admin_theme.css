@@ -1,0 +1,538 @@
+/* Admin shared visual system */
+body.admin-shell {
+    --admin-primary: #4F46E5;
+    --admin-primary-dark: #312E81;
+    --admin-teal: #0F766E;
+    --admin-blue: #2563EB;
+    --admin-amber: #D97706;
+    --admin-rose: #E11D48;
+    --admin-ink: #111827;
+    --admin-muted: #64748B;
+    --admin-bg: #EAF1F6;
+    --admin-surface: #FFFFFF;
+    --admin-border: #CCD8E7;
+    --admin-border-soft: #E2E8F0;
+    --admin-shadow: 0 20px 45px -36px rgba(15, 23, 42, 0.64);
+    --admin-shadow-hover: 0 26px 52px -38px rgba(15, 23, 42, 0.74);
+    --admin-radius: 8px;
+
+    --theme-primary: var(--admin-primary);
+    --theme-primary-hover: var(--admin-primary-dark);
+    --theme-light: #EEF2FF;
+    --theme-subtle: #C7D2FE;
+    --theme-dark: var(--admin-ink);
+    --theme-gray: var(--admin-muted);
+    --bg-soft: #F8FAFC;
+    --border-soft: var(--admin-border-soft);
+
+    background:
+        linear-gradient(135deg, #F8FBFF 0%, #EEF5F8 44%, #EAF1F6 100%) !important;
+    color: var(--admin-ink);
+}
+
+body.admin-shell .main-wrapper {
+    background:
+        linear-gradient(90deg, rgba(15, 23, 42, 0.028) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(238, 245, 248, 0.94) 34%, #EAF1F6 100%),
+        linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(15, 118, 110, 0.07) 58%, rgba(217, 119, 6, 0.05) 100%) !important;
+    background-size: 64px 64px, auto, auto;
+}
+
+body.admin-shell .content-area {
+    padding-top: 18px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 260px);
+}
+
+body.admin-shell .admin-page-heading {
+    position: relative;
+    overflow: hidden;
+    padding: 22px 26px !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.92) 58%, rgba(236, 253, 245, 0.72) 100%);
+    box-shadow: var(--admin-shadow);
+}
+
+body.admin-shell .admin-page-heading::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--admin-primary) 0%, var(--admin-teal) 100%);
+}
+
+body.admin-shell .admin-page-heading > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.admin-shell .admin-page-heading h1,
+body.admin-shell .admin-page-heading h2,
+body.admin-shell .admin-page-heading h3,
+body.admin-shell .admin-page-heading h4 {
+    color: var(--admin-ink) !important;
+    letter-spacing: 0;
+}
+
+body.admin-shell .admin-page-heading p {
+    color: var(--admin-muted) !important;
+}
+
+body.admin-shell .admin-page-heading::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(360px, 42%);
+    z-index: 0;
+    background:
+        linear-gradient(135deg, transparent 0 28%, rgba(79, 70, 229, 0.08) 28% 58%, rgba(15, 118, 110, 0.08) 58% 100%);
+    pointer-events: none;
+}
+
+body.admin-shell .btn-theme-primary,
+body.admin-shell .btn-purple-main,
+body.admin-shell .btn-purple-gradient,
+body.admin-shell .custom-pills .nav-link.active {
+    background: var(--admin-primary) !important;
+    border: 1px solid var(--admin-primary) !important;
+    color: #FFFFFF !important;
+    border-radius: var(--admin-radius) !important;
+    box-shadow: 0 16px 30px -22px rgba(79, 70, 229, 0.82) !important;
+}
+
+body.admin-shell .btn-theme-primary:hover,
+body.admin-shell .btn-purple-main:hover,
+body.admin-shell .btn-purple-gradient:hover {
+    background: var(--admin-primary-dark) !important;
+    border-color: var(--admin-primary-dark) !important;
+    transform: translateY(-1px);
+}
+
+body.admin-shell .btn-outline-theme,
+body.admin-shell .btn-outline-purple,
+body.admin-shell .btn-purple-soft,
+body.admin-shell .btn-back {
+    color: var(--admin-primary) !important;
+    background: #FFFFFF !important;
+    border: 1px solid #C7D2FE !important;
+    border-radius: var(--admin-radius) !important;
+}
+
+body.admin-shell .btn-outline-theme:hover,
+body.admin-shell .btn-outline-purple:hover,
+body.admin-shell .btn-purple-soft:hover,
+body.admin-shell .btn-back:hover {
+    background: #EEF2FF !important;
+    border-color: rgba(79, 70, 229, 0.34) !important;
+    color: var(--admin-primary-dark) !important;
+}
+
+body.admin-shell .btn-emerald-gradient {
+    background: var(--admin-teal) !important;
+    border: 1px solid var(--admin-teal) !important;
+    color: #FFFFFF !important;
+    border-radius: var(--admin-radius) !important;
+    box-shadow: 0 16px 30px -24px rgba(15, 118, 110, 0.76) !important;
+}
+
+body.admin-shell .theme-text-primary,
+body.admin-shell .text-purple,
+body.admin-shell .text-purple-dark,
+body.admin-shell .text-primary {
+    color: var(--admin-primary) !important;
+}
+
+body.admin-shell .text-emerald,
+body.admin-shell .text-green {
+    color: var(--admin-teal) !important;
+}
+
+body.admin-shell .text-blue,
+body.admin-shell .text-info {
+    color: var(--admin-blue) !important;
+}
+
+body.admin-shell .text-warning,
+body.admin-shell .text-warning-dark {
+    color: var(--admin-amber) !important;
+}
+
+body.admin-shell .bg-purple-light,
+body.admin-shell .bg-purple-soft,
+body.admin-shell .bg-primary.bg-opacity-10 {
+    background: #EEF2FF !important;
+}
+
+body.admin-shell .bg-purple-gradient,
+body.admin-shell .bg-purple-custom,
+body.admin-shell .exam-banner,
+body.admin-shell .profile-cover {
+    background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-blue) 48%, var(--admin-teal) 100%) !important;
+}
+
+body.admin-shell .admin-page-heading,
+body.admin-shell .admin-kpi-card,
+body.admin-shell .section-card,
+body.admin-shell .stat-card,
+body.admin-shell .filter-card,
+body.admin-shell .search-card,
+body.admin-shell .question-card,
+body.admin-shell .card:not(.modal-content) {
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius) !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    box-shadow: var(--admin-shadow) !important;
+}
+
+body.admin-shell .admin-page-heading:hover,
+body.admin-shell .admin-kpi-card:hover,
+body.admin-shell .section-card:hover,
+body.admin-shell .stat-card:hover,
+body.admin-shell .filter-card:hover,
+body.admin-shell .search-card:hover,
+body.admin-shell .question-card:hover,
+body.admin-shell .card:not(.modal-content):hover {
+    border-color: rgba(79, 70, 229, 0.24) !important;
+    box-shadow: var(--admin-shadow-hover) !important;
+}
+
+body.admin-shell .exam-banner,
+body.admin-shell .profile-cover {
+    background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-blue) 48%, var(--admin-teal) 100%) !important;
+    border-radius: var(--admin-radius) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    color: #FFFFFF !important;
+    box-shadow: var(--admin-shadow) !important;
+}
+
+body.admin-shell .glass-stat {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    border-radius: var(--admin-radius) !important;
+    color: #FFFFFF !important;
+}
+
+body.admin-shell .form-control,
+body.admin-shell .form-select,
+body.admin-shell .input-group-text,
+body.admin-shell .custom-input,
+body.admin-shell .search-focus {
+    border-color: #D9E2EF !important;
+    border-radius: var(--admin-radius) !important;
+    background-color: #FFFFFF !important;
+}
+
+body.admin-shell .input-group .input-group-text {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+body.admin-shell .input-group .form-control,
+body.admin-shell .input-group .form-select {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+body.admin-shell .form-control:focus,
+body.admin-shell .form-select:focus,
+body.admin-shell .custom-input:focus,
+body.admin-shell .search-focus:focus-within {
+    border-color: rgba(79, 70, 229, 0.56) !important;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important;
+}
+
+body.admin-shell .admin-kpi-icon,
+body.admin-shell .admin-icon-sm,
+body.admin-shell .qa-icon,
+body.admin-shell .timeline-icon,
+body.admin-shell .avatar-container,
+body.admin-shell .exam-icon-box,
+body.admin-shell .doc-icon-wrapper,
+body.admin-shell .icon-wrapper-md,
+body.admin-shell .empty-icon-wrapper,
+body.admin-shell .empty-state-icon,
+body.admin-shell .profile-avatar-wrapper,
+body.admin-shell .profile-avatar {
+    border-radius: var(--admin-radius) !important;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n + 1) .admin-kpi-icon,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 1) .icon-wrapper-md {
+    background: #EEF2FF !important;
+    color: var(--admin-primary) !important;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n + 2) .admin-kpi-icon,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 2) .icon-wrapper-md {
+    background: #ECFDF5 !important;
+    color: var(--admin-teal) !important;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n + 3) .admin-kpi-icon,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 3) .icon-wrapper-md {
+    background: #EFF6FF !important;
+    color: var(--admin-blue) !important;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n) .admin-kpi-icon,
+body.admin-shell .row > [class*="col"]:nth-child(4n) .icon-wrapper-md {
+    background: #FFFBEB !important;
+    color: var(--admin-amber) !important;
+}
+
+body.admin-shell .admin-qa-item {
+    border-radius: var(--admin-radius) !important;
+}
+
+body.admin-shell .admin-qa-item.dark {
+    background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-blue) 52%, var(--admin-teal) 100%) !important;
+    color: #FFFFFF !important;
+}
+
+body.admin-shell .admin-qa-item.light {
+    background: #FFFFFF !important;
+    border: 1px solid var(--admin-border-soft) !important;
+}
+
+body.admin-shell .admin-qa-item.light:hover {
+    background: #F8FAFC !important;
+    border-color: rgba(79, 70, 229, 0.28) !important;
+    transform: translateY(-1px) !important;
+}
+
+body.admin-shell .custom-table thead th,
+body.admin-shell .table thead th {
+    background: #F8FAFC !important;
+    color: #334155 !important;
+    border-bottom: 1px solid var(--admin-border-soft) !important;
+}
+
+body.admin-shell .custom-table tbody tr,
+body.admin-shell .table tbody tr {
+    border-color: var(--admin-border-soft) !important;
+}
+
+body.admin-shell .custom-table tbody tr:hover,
+body.admin-shell .hover-row:hover {
+    background: #F8FAFC !important;
+    transform: none !important;
+}
+
+body.admin-shell .dropdown-menu,
+body.admin-shell .modal-content {
+    border-radius: var(--admin-radius) !important;
+    border: 1px solid var(--admin-border-soft) !important;
+}
+
+body.admin-shell .modal-header,
+body.admin-shell .modal-footer,
+body.admin-shell .card-header,
+body.admin-shell .card-footer {
+    background: #FFFFFF !important;
+    border-color: var(--admin-border-soft) !important;
+}
+
+body.admin-shell .custom-pills .nav-link {
+    border-radius: var(--admin-radius) !important;
+    border: 1px solid var(--admin-border-soft) !important;
+}
+
+body.admin-shell .custom-switch:checked {
+    background-color: var(--admin-primary) !important;
+}
+
+body.admin-shell .answer-box,
+body.admin-shell .option-item,
+body.admin-shell .correct-option,
+body.admin-shell .btn-tool,
+body.admin-shell .badge,
+body.admin-shell .custom-pagination,
+body.admin-shell .pagination .page-link {
+    border-radius: var(--admin-radius) !important;
+}
+
+body.admin-shell .correct-option {
+    background: #EEF2FF !important;
+    border-color: var(--admin-primary) !important;
+    color: var(--admin-primary) !important;
+}
+
+body.admin-shell .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #94A3B8;
+}
+
+body.admin-shell .stat-card,
+body.admin-shell .card.border-0.shadow-sm.rounded-4.p-4,
+body.admin-shell .card.border-0.shadow-sm.rounded-4.p-4.p-md-5 {
+    position: relative;
+    overflow: hidden;
+}
+
+body.admin-shell .stat-card::before,
+body.admin-shell .card.border-0.shadow-sm.rounded-4.p-4::before,
+body.admin-shell .card.border-0.shadow-sm.rounded-4.p-4.p-md-5::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--stat-accent, var(--admin-primary));
+}
+
+body.admin-shell .stat-card > *,
+body.admin-shell .card.border-0.shadow-sm.rounded-4.p-4 > *,
+body.admin-shell .card.border-0.shadow-sm.rounded-4.p-4.p-md-5 > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n + 1) .stat-card,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 1) .card.border-0.shadow-sm.rounded-4.p-4,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 1) .card.border-0.shadow-sm.rounded-4.p-4.p-md-5 {
+    --stat-accent: var(--admin-primary);
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFF 58%, #EEF2FF 100%) !important;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n + 2) .stat-card,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 2) .card.border-0.shadow-sm.rounded-4.p-4,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 2) .card.border-0.shadow-sm.rounded-4.p-4.p-md-5 {
+    --stat-accent: var(--admin-teal);
+    background: linear-gradient(135deg, #FFFFFF 0%, #F7FEFB 58%, #ECFDF5 100%) !important;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n + 3) .stat-card,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 3) .card.border-0.shadow-sm.rounded-4.p-4,
+body.admin-shell .row > [class*="col"]:nth-child(4n + 3) .card.border-0.shadow-sm.rounded-4.p-4.p-md-5 {
+    --stat-accent: var(--admin-blue);
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FBFF 58%, #EFF6FF 100%) !important;
+}
+
+body.admin-shell .row > [class*="col"]:nth-child(4n) .stat-card,
+body.admin-shell .row > [class*="col"]:nth-child(4n) .card.border-0.shadow-sm.rounded-4.p-4,
+body.admin-shell .row > [class*="col"]:nth-child(4n) .card.border-0.shadow-sm.rounded-4.p-4.p-md-5 {
+    --stat-accent: var(--admin-amber);
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 58%, #FFFBEB 100%) !important;
+}
+
+body.admin-shell .admin-dashboard-hero {
+    min-height: 138px;
+    align-items: center !important;
+    border-color: rgba(255, 255, 255, 0.32) !important;
+    color: #FFFFFF !important;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 48%),
+        linear-gradient(135deg, #312E81 0%, #2563EB 48%, #0F766E 100%) !important;
+    background-size: 42px 42px, auto, auto !important;
+}
+
+body.admin-shell .admin-dashboard-hero::before {
+    inset: 0 auto 0 0;
+    width: 6px;
+    background: linear-gradient(180deg, #F59E0B 0%, #22C55E 48%, #60A5FA 100%);
+}
+
+body.admin-shell .admin-dashboard-hero::after {
+    opacity: 0.36;
+}
+
+body.admin-shell .admin-dashboard-hero h2,
+body.admin-shell .admin-dashboard-hero p {
+    color: #FFFFFF !important;
+}
+
+body.admin-shell .admin-dashboard-hero p {
+    opacity: 0.82;
+}
+
+body.admin-shell .admin-hero-chips span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.13);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+body.admin-shell .admin-hero-button {
+    border-color: rgba(255, 255, 255, 0.36) !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    color: #111827 !important;
+}
+
+body.admin-shell .admin-kpi-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 164px;
+}
+
+body.admin-shell .admin-kpi-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--kpi-accent, var(--admin-primary));
+}
+
+body.admin-shell .admin-kpi-card::after {
+    content: "";
+    position: absolute;
+    inset: auto -1px -1px auto;
+    width: 112px;
+    height: 112px;
+    opacity: 0.28;
+    background:
+        linear-gradient(135deg, transparent 0 43%, var(--kpi-soft, #EEF2FF) 43% 100%);
+    pointer-events: none;
+}
+
+body.admin-shell .admin-kpi-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.admin-shell .admin-kpi-card.kpi-users {
+    --kpi-accent: #4F46E5;
+    --kpi-soft: #EEF2FF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFF 58%, #EEF2FF 100%) !important;
+}
+
+body.admin-shell .admin-kpi-card.kpi-students {
+    --kpi-accent: #0F766E;
+    --kpi-soft: #ECFDF5;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F7FEFB 58%, #ECFDF5 100%) !important;
+}
+
+body.admin-shell .admin-kpi-card.kpi-teachers {
+    --kpi-accent: #2563EB;
+    --kpi-soft: #EFF6FF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FBFF 58%, #EFF6FF 100%) !important;
+}
+
+body.admin-shell .admin-kpi-card.kpi-ai {
+    --kpi-accent: #D97706;
+    --kpi-soft: #FFFBEB;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 58%, #FFFBEB 100%) !important;
+}
+
+body.admin-shell .section-card {
+    background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.9) 0%, rgba(255, 255, 255, 0.98) 74%) !important;
+}
+
+@media (max-width: 768px) {
+    body.admin-shell .admin-page-heading {
+        padding: 20px 18px 20px 22px !important;
+    }
+
+    body.admin-shell .admin-page-heading .btn,
+    body.admin-shell .admin-page-heading a.btn,
+    body.admin-shell .admin-page-heading form {
+        width: 100%;
+    }
+}

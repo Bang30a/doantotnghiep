@@ -3,13 +3,13 @@
 @section('title', 'Giao bài tập')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_assignment.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_assignment.css') }}">
 @endpush
 
 @section('content')
 <div class="container-fluid py-4">
 
-    <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom border-light-subtle">
+    <div class="teacher-page-heading d-flex align-items-center justify-content-between mb-4 pb-3">
         <div>
             <a href="{{ route('teacher.classrooms.show', $classroom->id) }}" class="btn-back text-muted text-decoration-none fw-bold d-inline-flex align-items-center gap-2 mb-2">
                 <div class="back-icon-box bg-white shadow-sm rounded-circle d-flex align-items-center justify-content-center border">
@@ -71,7 +71,31 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label-custom"><i class="bi bi-clock-history me-1"></i> 2. Thời hạn khóa cổng nộp bài <span class="text-danger">*</span></label>
+                        <label class="form-label-custom"><i class="bi bi-shuffle me-1"></i> 2. Đảo đề & số lượng mã đề</label>
+                        <div class="assignment-variant-box p-3 p-md-4 rounded-4">
+                            <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between">
+                                <label class="variant-toggle d-flex align-items-start gap-3 mb-0">
+                                    <input type="checkbox" name="shuffle_questions" value="1" class="form-check-input mt-1" id="shuffle_questions" {{ old('shuffle_questions') ? 'checked' : '' }}>
+                                    <span>
+                                        <span class="d-block fw-bold text-dark">Đảo thứ tự câu hỏi khi phát đề</span>
+                                        <span class="d-block text-muted small mt-1">Mỗi mã đề sẽ dùng cùng nội dung nhưng thứ tự câu hỏi khác nhau.</span>
+                                    </span>
+                                </label>
+
+                                <div class="variant-count-control">
+                                    <label for="variant_count" class="form-label-custom mb-1">Số lượng mã đề</label>
+                                    <input type="number" name="variant_count" id="variant_count" class="form-control text-center fw-bold" value="{{ old('variant_count', 1) }}" min="1" max="10">
+                                </div>
+                            </div>
+                            <div class="variant-hint mt-3">
+                                <i class="bi bi-info-circle-fill me-1"></i>
+                                Nếu chọn từ 2 mã đề trở lên, hệ thống sẽ tự động đảo câu hỏi và phân mỗi học viên thấy một mã đề.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label-custom"><i class="bi bi-clock-history me-1"></i> 3. Thời hạn khóa cổng nộp bài <span class="text-danger">*</span></label>
                         <div class="input-group custom-input-group">
                             <span class="input-group-text"><i class="bi bi-calendar-alarm fs-5"></i></span>
                             <input type="datetime-local" name="deadline" id="deadline_input" class="form-control" value="{{ old('deadline') }}" required>
@@ -82,7 +106,7 @@
                     </div>
 
                     <div class="mb-5">
-                        <label class="form-label-custom"><i class="bi bi-envelope-heart me-1"></i> 3. Lời nhắn / Lời dặn dò gửi lớp</label>
+                        <label class="form-label-custom"><i class="bi bi-envelope-heart me-1"></i> 4. Lời nhắn / Lời dặn dò gửi lớp</label>
                         <div class="input-group custom-input-group align-items-start">
                             <span class="input-group-text pt-3"><i class="bi bi-chat-dots fs-5"></i></span>
                             <textarea name="note" class="form-control" rows="4" placeholder="VD: Bài kiểm tra có tính vào điểm điều kiện. Các em hãy ôn tập kỹ chương 2 và làm bài nghiêm túc nhé...">{{ old('note') }}</textarea>
@@ -145,5 +169,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/teacher/teacher_assignment.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_assignment.js') }}"></script>
 @endpush

@@ -3,7 +3,7 @@
 @section('title', 'Quản lý Lớp: ' . $classroom->name)
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_classes.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_classes.css') }}">
 @endpush
 
 @section('content')
@@ -34,7 +34,7 @@
                 <p class="mb-1 text-white opacity-75 small text-uppercase fw-bold letter-spacing-1">Mã tham gia lớp</p>
                 <div class="d-flex align-items-center justify-content-center justify-content-lg-end gap-3">
                     <span class="fs-2 fw-800 font-monospace tracking-wide">{{ $classroom->code }}</span>
-                    <button class="btn btn-light rounded-circle shadow-sm btn-copy" title="Sao chép mã" onclick="navigator.clipboard.writeText('{{ $classroom->code }}'); alert('Đã sao chép mã lớp: {{ $classroom->code }}');">
+                    <button type="button" class="btn btn-light rounded-circle shadow-sm btn-copy" title="Sao chép mã" onclick="navigator.clipboard.writeText('{{ $classroom->code }}'); alert('Đã sao chép mã lớp: {{ $classroom->code }}');">
                         <i class="bi bi-copy theme-text-primary"></i>
                     </button>
                 </div>
@@ -89,7 +89,7 @@
         <div class="tab-pane fade show active" id="exams" role="tabpanel">
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-3">
                 <h5 class="fw-bold mb-0 text-dark">Danh sách bài tập</h5>
-                <a href="{{ route('teacher.classrooms.assignments.create', $classroom->id) }}" class="btn btn-primary rounded-pill px-4 fw-bold">
+                <a href="{{ route('teacher.classrooms.assignments.create', $classroom->id) }}" class="btn btn-theme-primary rounded-pill px-4 fw-bold text-white shadow-sm">
                     <i class="bi bi-plus-circle-fill"></i> Giao bài tập mới
                 </a>
             </div>

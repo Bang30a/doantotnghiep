@@ -3,14 +3,14 @@
 @section('title', 'Chấm bài: ' . $result->user->name)
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_grading.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_grading.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Nút quay lại -->
     <div class="mb-4 mt-2">
-        <button id="btn-back" class="btn-back border-0 bg-white">
+        <button type="button" id="btn-back" class="btn-back border-0 bg-white">
             <i class="bi bi-arrow-left"></i> Quay lại danh sách
         </button>
     </div>
@@ -134,9 +134,9 @@
                                         <h6 class="fw-bold text-muted mb-3 text-uppercase small d-flex align-items-center gap-2">
                                             <i class="bi bi-person-lines-fill text-primary fs-5"></i> Bài làm của học viên:
                                         </h6>
-                                        <div class="text-dark lh-lg fw-medium">
+                                        <div class="text-dark lh-lg fw-medium rich-text-content grading-rich-display">
                                             @php $studentAnswer = $userAnswerRecord->content ?? null; @endphp
-                                            {!! nl2br(e($studentAnswer ?? 'Học viên đã bỏ trống câu này.')) !!}
+                                            {!! \App\Support\RichTextSanitizer::render($studentAnswer, 'Học viên đã bỏ trống câu này.') !!}
                                         </div>
                                     </div>
                                     
@@ -252,7 +252,36 @@
                                         </div>
                                         
                                         <div class="mb-4">
-                                            <textarea id="feedback-{{ $q->id }}" name="feedback_{{ $q->id }}" class="form-control feedback-input p-3 bg-light shadow-sm fw-medium" rows="3" placeholder="Giảng viên gõ lời phê hoặc nhận xét cho học viên tại đây...">{{ $userAnswerRecord->feedback ?? '' }}</textarea>
+                                            <div class="edu-rich-editor grading-feedback-editor">
+                                                <div class="edu-rich-toolbar" role="toolbar" aria-label="Công cụ định dạng nhận xét">
+                                                    <button type="button" title="In đậm" data-rich-command="bold"><i class="bi bi-type-bold"></i></button>
+                                                    <button type="button" title="In nghiêng" data-rich-command="italic"><i class="bi bi-type-italic"></i></button>
+                                                    <button type="button" title="Gạch chân" data-rich-command="underline"><i class="bi bi-type-underline"></i></button>
+                                                    <span class="toolbar-divider"></span>
+                                                    <select title="Cỡ chữ" data-rich-command="fontSize">
+                                                        <option value="">Cỡ chữ</option>
+                                                        <option value="2">Nhỏ</option>
+                                                        <option value="3">Vừa</option>
+                                                        <option value="4">Lớn</option>
+                                                        <option value="5">Rất lớn</option>
+                                                    </select>
+                                                    <span class="toolbar-divider"></span>
+                                                    <button type="button" title="Căn trái" data-rich-command="justifyLeft"><i class="bi bi-text-left"></i></button>
+                                                    <button type="button" title="Căn giữa" data-rich-command="justifyCenter"><i class="bi bi-text-center"></i></button>
+                                                    <button type="button" title="Căn phải" data-rich-command="justifyRight"><i class="bi bi-text-right"></i></button>
+                                                    <button type="button" title="Căn đều" data-rich-command="justifyFull"><i class="bi bi-justify"></i></button>
+                                                    <span class="toolbar-divider"></span>
+                                                    <button type="button" title="Danh sách chấm" data-rich-command="insertUnorderedList"><i class="bi bi-list-ul"></i></button>
+                                                    <button type="button" title="Danh sách số" data-rich-command="insertOrderedList"><i class="bi bi-list-ol"></i></button>
+                                                    <button type="button" title="Xóa định dạng" data-rich-command="removeFormat"><i class="bi bi-eraser"></i></button>
+                                                </div>
+
+                                                <div class="edu-rich-editor-surface feedback-input"
+                                                     contenteditable="true"
+                                                     data-placeholder="Giảng viên gõ lời phê hoặc nhận xét cho học viên tại đây...">{!! \App\Support\RichTextSanitizer::render($userAnswerRecord->feedback ?? null) !!}</div>
+
+                                                <textarea id="feedback-{{ $q->id }}" name="feedback_{{ $q->id }}" class="d-none edu-rich-editor-input">{{ \App\Support\RichTextSanitizer::sanitize($userAnswerRecord->feedback ?? '') }}</textarea>
+                                            </div>
                                         </div>
 
                                         <button type="submit" class="btn btn-purple-gradient w-100 py-3 rounded-pill fw-bold shadow-sm hover-lift d-flex align-items-center justify-content-center gap-2">
@@ -290,5 +319,6 @@
 
     {{-- Tạm thời giữ lại jQuery nếu file JS bên dưới cần dùng --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/teacher/teacher_grading.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/rich_text_editor.js') }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_grading.js') }}"></script>
 @endpush

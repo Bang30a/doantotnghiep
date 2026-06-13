@@ -2,7 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    const bankItems = document.querySelectorAll('.bank-item');
+    const bankContainer = document.getElementById('bankContainer');
+    let bankItems = Array.from(document.querySelectorAll('.bank-item'));
 
     // ==========================================
     // 1. TÌM KIẾM NHANH (Có tối ưu Debounce)
@@ -54,6 +55,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const sortFilter = document.getElementById('sortFilter');
+    if (sortFilter && bankContainer) {
+        sortFilter.addEventListener('change', () => {
+            const sortedItems = [...bankItems].sort((a, b) => {
+                if (sortFilter.value === 'oldest') {
+                    return Number(a.dataset.created || 0) - Number(b.dataset.created || 0);
+                }
+
+                if (sortFilter.value === 'highest_score') {
+                    return Number(b.dataset.score || 0) - Number(a.dataset.score || 0);
+                }
+
+                return Number(b.dataset.created || 0) - Number(a.dataset.created || 0);
+            });
+
+            sortedItems.forEach(item => bankContainer.appendChild(item));
+        });
+    }
+
+    const resetFilters = document.getElementById('resetFilters');
+    if (resetFilters) {
+        resetFilters.addEventListener('click', () => {
+            if (searchInput) searchInput.value = '';
+            if (subjectFilter) subjectFilter.value = '';
+            if (sortFilter) sortFilter.value = 'newest';
+
+            bankItems
+                .sort((a, b) => Number(b.dataset.created || 0) - Number(a.dataset.created || 0))
+                .forEach(item => {
+                    item.style.display = '';
+                    if (bankContainer) bankContainer.appendChild(item);
+                });
+        });
+    }
+
     // ==========================================
     // 3. XỬ LÝ XÓA ĐỀ BẰNG AJAX (CHUẨN LARAVEL)
     // ==========================================
@@ -80,9 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.disabled = true;
 
             try {
-                // GỌI AJAX THỰC TẾ ĐẾN CONTROLLER CỦA LARAVEL
-                // Thay đổi URL bên dưới cho khớp với Route của bạn (ví dụ: /student/banks/{id})
-                const response = await fetch(`/student/banks/${bankId}`, {
+                const response = await fetch(this.dataset.url || `/student/question-banks/${bankId}`, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
@@ -95,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Xóa mượt mà thẻ HTML bằng CSS Transition thay vì jQuery fadeOut
                     cardElement.style.transition = 'opacity 0.3s ease';
                     cardElement.style.opacity = '0';
+                    bankItems = bankItems.filter(item => item !== cardElement);
                     setTimeout(() => cardElement.remove(), 300);
                 } else {
                     const resData = await response.json();

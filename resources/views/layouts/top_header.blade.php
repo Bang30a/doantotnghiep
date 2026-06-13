@@ -1,7 +1,7 @@
 <header class="modern-tophead d-flex justify-content-between align-items-center">
     
     <div class="d-flex align-items-center gap-3 theme-text-dark">
-        <button class="toggle-btn shadow-sm me-2" id="toggleSidebar">
+        <button type="button" class="toggle-btn shadow-sm me-2" id="toggleSidebar">
             <i class="bi bi-list fs-5"></i>
         </button>
 

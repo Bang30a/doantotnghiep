@@ -40,9 +40,20 @@ class SettingController extends Controller
         $questionCount = DB::table('questions')->count();
 
         // Giả lập tính toán dung lượng (Bác có thể nâng cấp thành tính size file thật sau)
-        $totalMB = 0.39; 
+        $storagePath = storage_path('app');
+        $usedSpaceBytes = 0;
+
+        if (is_dir($storagePath)) {
+            foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($storagePath)) as $file) {
+                if ($file->isFile()) {
+                    $usedSpaceBytes += $file->getSize();
+                }
+            }
+        }
+
+        $totalMB = round($usedSpaceBytes / 1048576, 2);
         $totalSpaceGB = 50; 
-        $usedPercentage = ($totalMB / ($totalSpaceGB * 1024)) * 100;
+        $usedPercentage = min(100, ($totalMB / ($totalSpaceGB * 1024)) * 100);
 
         // Truyền TẤT CẢ các biến này ra View
         return view('dashboards.admin.admin_settings', compact(

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ? parseInt(metaTimeout.getAttribute('content'))
         : 60;
 
-    console.log("Session timeout JS:", sessionMinutes + " phut");
+    console.log("Thời gian hết phiên JS:", sessionMinutes + " phút");
 
     if (isNaN(sessionMinutes) || sessionMinutes < 2) {
         sessionMinutes = 2;

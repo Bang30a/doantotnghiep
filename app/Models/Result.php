@@ -18,4 +18,8 @@ class Result extends Model
     public function exam() {
         return $this->belongsTo(Exam::class);
     }
+
+    public function studentAnswers() {
+        return $this->hasMany(StudentAnswer::class, 'exam_result_id');
+    }
 }

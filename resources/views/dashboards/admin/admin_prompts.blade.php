@@ -4,13 +4,13 @@
 
 @push('styles')
     <!-- Link file CSS riêng -->
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_prompts.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/admin/admin_prompts.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Tiêu đề trang & Thanh công cụ -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 mt-2 border-bottom border-light-subtle pb-3">
+    <div class="admin-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 mt-2 pb-3">
         <div>
             <h3 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Cấu hình AI Prompts <i class="bi bi-robot theme-text-primary"></i>
@@ -57,7 +57,7 @@
                         <tr>
                             <th width="35%" class="ps-4 py-3 text-muted fw-bold text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">Tên Prompt</th>
                             <th width="30%" class="py-3 text-muted fw-bold text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">Mô tả chỉ thị</th>
-                            <th width="15%" class="text-center py-3 text-muted fw-bold text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">Model AI</th>
+                            <th width="15%" class="text-center py-3 text-muted fw-bold text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">Loại đề</th>
                             <th width="10%" class="text-center py-3 text-muted fw-bold text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">Trạng thái</th>
                             <th width="10%" class="text-end pe-4 py-3 text-muted fw-bold text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">Thao tác</th>
                         </tr>
@@ -84,8 +84,21 @@
                                     </span>
                                 </td>
                                 <td class="text-center py-3">
+                                    @php
+                                        $promptExamType = $prompt->exam_type ?? 'both';
+                                        $promptExamTypeLabel = match ($promptExamType) {
+                                            'multiple_choice' => 'Trắc nghiệm',
+                                            'essay' => 'Tự luận',
+                                            default => 'Cả hai',
+                                        };
+                                        $promptExamTypeIcon = match ($promptExamType) {
+                                            'multiple_choice' => 'bi-list-ul',
+                                            'essay' => 'bi-card-text',
+                                            default => 'bi-layers',
+                                        };
+                                    @endphp
                                     <span class="badge bg-light text-dark border border-secondary-subtle px-3 py-2 rounded-pill fw-bold shadow-sm d-inline-flex align-items-center gap-2">
-                                        <i class="bi bi-cpu-fill theme-text-primary"></i> {{ $prompt->model_type ?? 'gemini-pro' }}
+                                        <i class="bi {{ $promptExamTypeIcon }} theme-text-primary"></i> {{ $promptExamTypeLabel }}
                                     </span>
                                 </td>
                                 <td class="text-center py-3">
@@ -141,6 +154,15 @@
                                                             <option value="gemini-pro" selected>Google Gemini (Mặc định)</option>
                                                         </select>
                                                         <small class="text-muted fst-italic mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Tối ưu hóa cho mô hình Gemini.</small>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold text-dark mb-1">Dùng cho loại đề <span class="text-danger">*</span></label>
+                                                        <select name="exam_type" class="form-select bg-light rounded-3 py-2 shadow-none border-light-subtle" required>
+                                                            <option value="multiple_choice" {{ ($prompt->exam_type ?? 'both') === 'multiple_choice' ? 'selected' : '' }}>Trắc nghiệm</option>
+                                                            <option value="essay" {{ ($prompt->exam_type ?? 'both') === 'essay' ? 'selected' : '' }}>Tự luận</option>
+                                                            <option value="both" {{ ($prompt->exam_type ?? 'both') === 'both' ? 'selected' : '' }}>Cả hai</option>
+                                                        </select>
+                                                        <small class="text-muted fst-italic mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Hệ thống sẽ chọn prompt theo loại câu hỏi đang tạo.</small>
                                                     </div>
                                                     <div class="col-12">
                                                         <label class="form-label fw-bold text-dark mb-1">Mô tả ngắn</label>
@@ -216,6 +238,15 @@
                                 </select>
                                 <small class="text-muted fst-italic mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Hệ thống đang cấu hình tối ưu hóa cho Gemini.</small>
                             </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark mb-1">Dùng cho loại đề <span class="text-danger">*</span></label>
+                                <select name="exam_type" class="form-select bg-light rounded-3 py-2 shadow-none border-light-subtle" required>
+                                    <option value="multiple_choice">Trắc nghiệm</option>
+                                    <option value="essay">Tự luận</option>
+                                    <option value="both" selected>Cả hai</option>
+                                </select>
+                                <small class="text-muted fst-italic mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Chọn đúng loại để AI dùng prompt tương ứng khi tạo đề.</small>
+                            </div>
                             <div class="col-12">
                                 <label class="form-label fw-bold mb-1">Mô tả ngắn</label>
                                 <input type="text" name="description" class="form-control rounded-3 py-2 shadow-none border-light-subtle" placeholder="VD: Dùng để tạo ra các câu hỏi trắc nghiệm 4 đáp án...">
@@ -256,5 +287,5 @@
 
 @push('scripts')
     <!-- Link file JS riêng -->
-    <script src="{{ asset('js/admin/admin_prompts.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/admin/admin_prompts.js') }}"></script>
 @endpush

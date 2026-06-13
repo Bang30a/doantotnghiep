@@ -79,6 +79,25 @@ class UserService
 
         return $user;
     }
+
+    public function deleteUserByRole($id, string $role): string
+    {
+        $user = User::where('role', $role)->findOrFail($id);
+        $name = $user->name;
+        $roleLabel = $role === 'teacher' ? 'giảng viên' : 'học viên';
+
+        $user->delete();
+
+        ActivityLog::create([
+            'type' => 'admin_deleted_user',
+            'title' => 'Admin xóa tài khoản',
+            'description' => 'Quản trị viên <strong>' . Auth::user()->name . '</strong> đã xóa vĩnh viễn tài khoản ' . $roleLabel . ' <span class="text-danger fw-bold">"' . $name . '"</span>.',
+            'icon_class' => 'bi-trash3-fill',
+            'color_theme' => 'danger'
+        ]);
+
+        return 'Đã xóa tài khoản ' . $roleLabel . ' thành công!';
+    }
     /**
      * Khóa hoặc Mở khóa tài khoản người dùng
      */

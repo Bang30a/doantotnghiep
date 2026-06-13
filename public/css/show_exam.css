@@ -114,3 +114,156 @@
     background-color: var(--theme-light);
     box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08) !important;
 }
+
+/* Online exam detail refresh */
+.exam-show-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(180deg, #F8FBFF 0%, #F1F6FB 46%, #EEF4F8 100%);
+    color: #111827;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.exam-show-page .container {
+    padding-top: 28px !important;
+    padding-bottom: 48px !important;
+}
+
+.exam-show-page .exam-detail-header {
+    border: 1px solid #CCD8E7 !important;
+    border-left: 0 !important;
+    border-radius: 8px !important;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 58%, rgba(245, 243, 255, 0.9) 100%) !important;
+    box-shadow: 0 20px 45px -36px rgba(15, 23, 42, 0.62) !important;
+}
+
+.exam-show-page .exam-detail-header::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: linear-gradient(180deg, #6D28D9 0%, #0F766E 100%);
+}
+
+.exam-show-page .exam-detail-header h2 {
+    max-width: 760px;
+    color: #111827 !important;
+    font-size: clamp(1.45rem, 1.15vw + 1rem, 2.1rem);
+    letter-spacing: 0;
+}
+
+.exam-show-page .badge {
+    border-radius: 8px !important;
+}
+
+.exam-show-page .btn-theme-primary,
+.exam-show-page .btn-outline-theme {
+    border-radius: 8px !important;
+    min-height: 42px;
+}
+
+.exam-show-page .btn-theme-primary {
+    background: #6D28D9 !important;
+    border: 1px solid #6D28D9 !important;
+    box-shadow: 0 16px 28px -22px rgba(109, 40, 217, 0.9) !important;
+}
+
+.exam-show-page .btn-theme-primary:hover {
+    background: #4C1D95 !important;
+    transform: translateY(-1px);
+}
+
+.exam-show-page .btn-outline-theme {
+    border: 1px solid #DDD6FE !important;
+}
+
+.exam-show-page .questions-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.exam-show-page .question-detail-card {
+    margin-bottom: 0 !important;
+    border: 1px solid #CCD8E7 !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 18px 42px -36px rgba(15, 23, 42, 0.62) !important;
+}
+
+.exam-show-page .question-detail-card:hover {
+    transform: none;
+    border-color: rgba(109, 40, 217, 0.28) !important;
+    box-shadow: 0 24px 48px -36px rgba(15, 23, 42, 0.68) !important;
+}
+
+.exam-show-page .q-header {
+    background: #F8FAFC !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.exam-show-page .q-number {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 8px !important;
+    background: #F5F3FF !important;
+    color: #6D28D9 !important;
+    box-shadow: none !important;
+}
+
+.exam-show-page .q-header h5 {
+    color: #111827 !important;
+    font-size: 1.08rem !important;
+}
+
+.exam-show-page .answer-box {
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    border-color: #D9E2EF !important;
+    box-shadow: 0 12px 24px -24px rgba(15, 23, 42, 0.72);
+}
+
+.exam-show-page .answer-box:hover {
+    transform: translateY(-1px);
+}
+
+.exam-show-page .is-correct-box {
+    background: #ECFDF5 !important;
+    border-color: #A7F3D0 !important;
+    box-shadow: 0 12px 24px -24px rgba(16, 185, 129, 0.82) !important;
+}
+
+.exam-show-page .check-circle {
+    border-radius: 8px !important;
+}
+
+.exam-show-page .ai-explanation-box {
+    border-radius: 8px !important;
+    background:
+        linear-gradient(135deg, rgba(245, 243, 255, 0.96) 0%, rgba(255, 255, 255, 0.98) 100%) !important;
+    border: 1px solid #DDD6FE !important;
+    border-left: 4px solid #6D28D9 !important;
+    box-shadow: none !important;
+}
+
+.exam-show-page .ai-avatar {
+    border-radius: 8px !important;
+}
+
+@media (max-width: 768px) {
+    .exam-show-page .container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .exam-show-page .exam-detail-header .p-4,
+    .exam-show-page .exam-detail-header .p-md-5 {
+        padding: 22px !important;
+    }
+
+    .exam-show-page .q-header,
+    .exam-show-page .q-body {
+        padding: 20px !important;
+    }
+}

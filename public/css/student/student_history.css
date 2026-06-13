@@ -1,101 +1,538 @@
-/* ========================================================
-   public/css/student_history.css
-   CSS DÀNH RIÊNG CHO LỊCH SỬ HỌC VIÊN
-======================================================== */
+/* Student history - online exam inspired layout */
+.history-modern-page {
+    max-width: 1220px;
+    margin: 0 auto;
+}
 
-/* 1. Thẻ Thống Kê Tổng Quan (Stat Cards) */
+.history-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.history-hero-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.history-hero-icon,
+.history-stat-icon,
+.history-exam-icon,
+.history-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.history-hero-icon {
+    width: 52px;
+    height: 52px;
+    color: #FFFFFF;
+    font-size: 1.35rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--student-primary) 0%, var(--student-blue) 100%);
+    box-shadow: 0 18px 30px -20px rgba(37, 99, 235, 0.8);
+}
+
+.history-hero-badge {
+    min-width: 92px;
+    padding: 10px 14px;
+    text-align: center;
+    border-radius: var(--student-radius);
+    color: var(--student-primary);
+    background: #F5F3FF;
+    border: 1px solid #DDD6FE;
+}
+
+.history-hero-badge span {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.history-hero-badge small {
+    color: var(--student-muted);
+    font-weight: 700;
+}
+
+.history-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
 .history-stat-card {
-    border: none;
-    border-radius: 1.25rem;
-    padding: 1.5rem 1.75rem;
-    background: #ffffff;
-    height: 100%;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    border-top: 4px solid var(--theme-primary); /* Đổi sang biến dùng chung */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 142px;
+    padding: 22px 24px;
+    border-radius: var(--student-radius);
+    border: 1px solid var(--student-border);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--student-shadow);
+    position: relative;
+    overflow: hidden;
 }
 
-.history-stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.1);
-}
-
-.decoration-circle {
+.history-stat-card::before {
+    content: "";
     position: absolute;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: var(--theme-subtle);
-    top: -20px;
-    right: -20px;
-    pointer-events: none;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--history-accent, var(--student-primary));
 }
 
-/* 2. Từng dòng chi tiết Lịch sử (List Item) */
-.history-list-item {
-    border: 1px solid var(--border-soft);
-    border-radius: 1rem;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1rem;
-    background: #ffffff;
+.history-stat-card p {
+    margin: 18px 0 6px;
+    color: #475569;
+    font-weight: 700;
+}
+
+.history-stat-card h4 {
+    margin: 0;
+    color: var(--student-ink);
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 0;
+}
+
+.history-stat-card h4 span {
+    margin-left: 2px;
+    color: var(--student-muted);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.history-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    color: var(--history-accent, var(--student-primary));
+    background: var(--history-soft, #F5F3FF);
+    font-size: 1.3rem;
+}
+
+.history-stat-primary {
+    --history-accent: var(--student-primary);
+    --history-soft: #F5F3FF;
+}
+
+.history-stat-amber {
+    --history-accent: var(--student-amber);
+    --history-soft: #FEF3C7;
+}
+
+.history-stat-success {
+    --history-accent: #059669;
+    --history-soft: #D1FAE5;
+}
+
+.history-stat-blue {
+    --history-accent: var(--student-blue);
+    --history-soft: #DBEAFE;
+}
+
+.history-filter-panel {
+    padding: 20px 24px;
+    border: 1px solid var(--student-border);
+    border-radius: var(--student-radius);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--student-shadow);
+}
+
+.history-search-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 180px;
+    gap: 14px;
+}
+
+.history-search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--student-border);
+    border-radius: var(--student-radius);
+    background: #FFFFFF;
+}
+
+.history-search-box i {
+    color: #94A3B8;
+    font-size: 1.1rem;
+}
+
+.history-search-box input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    color: var(--student-ink);
+    background: transparent;
+    font-weight: 600;
+}
+
+.history-search-box input::placeholder {
+    color: #94A3B8;
+}
+
+.history-sort-select {
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--student-border);
+    border-radius: var(--student-radius);
+    color: var(--student-ink);
+    background-color: #FFFFFF;
+    font-weight: 700;
+}
+
+.history-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.history-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--student-radius);
+    color: #334155;
+    background: #F8FAFC;
+    font-weight: 800;
+    transition: all 0.2s ease;
+}
+
+.history-filter-chip span {
+    min-width: 24px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: #64748B;
+    background: #E2E8F0;
+    font-size: 0.78rem;
+}
+
+.history-filter-chip.active,
+.history-filter-chip:hover {
+    color: #FFFFFF;
+    border-color: var(--student-primary);
+    background: var(--student-primary);
+    box-shadow: 0 16px 28px -24px rgba(109, 40, 217, 0.85);
+}
+
+.history-filter-chip.active span,
+.history-filter-chip:hover span {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.history-results-list {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.3s ease;
-    border-left: 5px solid var(--border-soft);
+    gap: 18px;
 }
 
-@media (min-width: 768px) {
-    .history-list-item {
-        flex-direction: row;
-        align-items: center;
+.history-exam-card {
+    padding: 24px;
+    border: 1px solid var(--student-border);
+    border-left: 4px solid var(--history-card-accent, var(--student-primary));
+    border-radius: var(--student-radius);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--student-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.history-exam-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(109, 40, 217, 0.28);
+    box-shadow: var(--student-shadow-hover);
+}
+
+.history-score-success {
+    --history-card-accent: #059669;
+    --history-card-soft: #ECFDF5;
+}
+
+.history-score-warning {
+    --history-card-accent: #D97706;
+    --history-card-soft: #FFFBEB;
+}
+
+.history-score-danger {
+    --history-card-accent: #DC2626;
+    --history-card-soft: #FEF2F2;
+}
+
+.history-card-top {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: start;
+}
+
+.history-exam-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    color: var(--history-card-accent, var(--student-primary));
+    background: var(--history-card-soft, #F5F3FF);
+    border: 1px solid color-mix(in srgb, var(--history-card-accent, var(--student-primary)) 34%, #FFFFFF);
+    font-size: 1.5rem;
+}
+
+.history-exam-title h5 {
+    margin: 0 0 10px;
+    color: var(--student-ink);
+    font-size: 1.12rem;
+    font-weight: 900;
+    line-height: 1.4;
+}
+
+.history-meta-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.history-meta-pills span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--student-radius);
+    color: #475569;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.history-meta-pills .history-subject-pill {
+    color: var(--student-primary);
+    background: #F5F3FF;
+    border-color: #DDD6FE;
+}
+
+.history-score-block {
+    min-width: 92px;
+    text-align: right;
+}
+
+.history-score-block strong {
+    display: block;
+    color: var(--history-card-accent, var(--student-primary));
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.history-score-block span {
+    display: block;
+    margin-top: 4px;
+    color: #475569;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.history-card-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.history-metric {
+    padding: 14px 16px;
+    border-radius: var(--student-radius);
+    background: #F8FAFC;
+    border: 1px solid #EDF2F7;
+}
+
+.history-metric span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #64748B;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.history-metric strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--student-ink);
+    font-size: 0.95rem;
+}
+
+.history-metric-accuracy {
+    background: #ECFDF5;
+}
+
+.history-metric-accuracy strong,
+.history-metric-accuracy i {
+    color: #059669;
+}
+
+.history-metric-date {
+    background: #EFF6FF;
+}
+
+.history-metric-date i {
+    color: var(--student-blue);
+}
+
+.history-metric-time {
+    background: #FFFBEB;
+}
+
+.history-metric-time i {
+    color: var(--student-amber);
+}
+
+.history-progress-row {
+    margin-top: 18px;
+}
+
+.history-progress-row > div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    color: #475569;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.history-progress-row strong {
+    color: var(--student-ink);
+}
+
+.history-progress {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #E5E7EB;
+}
+
+.history-progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--history-card-accent, var(--student-primary)) 0%, var(--student-teal) 100%);
+}
+
+.history-card-action {
+    margin-top: 16px;
+}
+
+.history-detail-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid var(--student-primary);
+    border-radius: var(--student-radius);
+    color: #FFFFFF;
+    background: var(--student-primary);
+    font-weight: 900;
+    text-decoration: none;
+    box-shadow: 0 18px 30px -24px rgba(109, 40, 217, 0.9);
+    transition: all 0.2s ease;
+}
+
+.history-detail-btn:hover {
+    color: #FFFFFF;
+    background: var(--student-primary-dark);
+    border-color: var(--student-primary-dark);
+    transform: translateY(-1px);
+}
+
+.history-detail-btn.disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.history-empty-state {
+    padding: 56px 24px;
+    text-align: center;
+    border: 1px dashed #C4B5FD;
+    border-radius: var(--student-radius);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: var(--student-shadow);
+}
+
+.history-empty-icon {
+    width: 78px;
+    height: 78px;
+    margin-bottom: 18px;
+    color: var(--student-primary);
+    background: #F5F3FF;
+    border-radius: 18px;
+    font-size: 2rem;
+}
+
+.history-empty-state h5 {
+    color: var(--student-ink);
+    font-weight: 900;
+}
+
+.history-empty-state p {
+    max-width: 520px;
+    margin: 8px auto 22px;
+    color: var(--student-muted);
+    font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+    .history-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-.history-list-item:hover {
-    background-color: var(--bg-soft); 
-    border-color: var(--theme-subtle);
-    border-left-color: var(--theme-primary); 
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08);
+@media (max-width: 768px) {
+    .history-hero,
+    .history-card-top,
+    .history-progress-row > div:first-child {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .history-hero {
+        display: block;
+    }
+
+    .history-hero-badge {
+        margin-top: 16px;
+    }
+
+    .history-card-top {
+        display: flex;
+    }
+
+    .history-score-block {
+        text-align: left;
+    }
+
+    .history-search-row,
+    .history-card-metrics {
+        grid-template-columns: 1fr;
+    }
 }
 
-/* 3. Thẻ Hiển Thị Điểm Số (Score Badges) */
-.score-badge {
-    font-size: 0.95rem;
-    font-weight: 800;
-    padding: 0.4rem 1rem;
-    border-radius: 50rem;
-    display: inline-block;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+@media (max-width: 576px) {
+    .history-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .history-filter-panel,
+    .history-exam-card {
+        padding: 18px;
+    }
 }
-
-.score-bad { background-color: var(--danger-light); color: var(--danger); border: 1px solid #fca5a5; }
-.score-avg { background-color: var(--warning-light); color: var(--warning); border: 1px solid #fcd34d; }
-.score-good { background-color: var(--success-light); color: var(--success); border: 1px solid #6ee7b7; }
-
-/* 4. Nút Bấm Tùy Chỉnh Riêng Của Lịch Sử */
-.btn-outline-purple {
-    border: 2px solid var(--theme-subtle);
-    color: var(--theme-primary);
-    background: white;
-    font-weight: 700;
-    border-radius: 50rem;
-    padding: 8px 20px;
-    transition: all 0.3s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-}
-
-.btn-outline-purple:hover {
-    background: linear-gradient(135deg, var(--theme-primary-hover) 0%, var(--indigo) 100%);
-    border-color: transparent;
-    color: white;
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-    transform: translateY(-2px);
-}
-
-/* Giữ lại 2 class tiện ích nhỏ đề phòng blade cũ còn gọi */
-.text-purple { color: var(--theme-primary) !important; }
-.bg-purple-soft { background-color: var(--theme-light) !important; }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -11,18 +11,20 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/student/student_dashboard.css') }}?v={{ time() }}">
-    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}?v={{ time() }}">
-    <link rel="stylesheet" href="{{ asset('css/topheader.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/topheader.css') }}">
     @stack('styles')
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_theme.css') }}">
 </head>
-<body class="bg-body-custom">
+<body class="bg-body-custom student-shell">
 
     @include('layouts.student.student_sidebar')
 
@@ -50,7 +52,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <script src="{{ asset('js/sidebar.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/sidebar.js') }}"></script>
 
     <script>
         window.refreshCsrfUrl = "{{ route('refresh.csrf') }}";
@@ -58,7 +60,7 @@
         window.autoLogoutUrl = "{{ url('/auto-logout') }}";
     </script>
     
-    <script src="{{ asset('js/session_timeout.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/session_timeout.js') }}"></script>
     
     @stack('scripts') 
 </body>

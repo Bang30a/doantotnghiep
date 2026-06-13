@@ -3,11 +3,11 @@
 @section('title', 'Cài đặt cá nhân')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/student/student_settings.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_settings.css') }}">
 @endpush
 
 @section('content')
-    <div class="mb-4 border-bottom border-purple-subtle pb-3">
+    <div class="student-page-heading mb-4 border-bottom border-purple-subtle pb-3">
         <h3 class="fw-bold theme-text-dark mb-1 d-flex align-items-center gap-2">
             <i class="bi bi-person-lines-fill theme-text-primary"></i> Cài đặt cá nhân
         </h3>
@@ -19,10 +19,10 @@
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden sticky-top" style="top: 20px;">
                 <div class="card-body p-0">
                     <div class="settings-menu py-2">
-                        <button class="settings-tab-btn active" data-target="tab-profile">
+                        <button type="button" class="settings-tab-btn active" data-target="tab-profile">
                             <i class="bi bi-person-circle"></i> Thông tin chung
                         </button>
-                        <button class="settings-tab-btn" data-target="tab-security" id="btn-tab-security">
+                        <button type="button" class="settings-tab-btn" data-target="tab-security" id="btn-tab-security">
                             <i class="bi bi-shield-lock"></i> Bảo mật & Mật khẩu
                         </button>
                     </div>
@@ -80,6 +80,7 @@
                                         <span class="input-group-text bg-white theme-text-primary border-end-0"><i class="bi bi-telephone"></i></span>
                                         <input type="text" name="phone" class="form-control form-control-lg border-start-0 ps-0" value="{{ old('phone', Auth::user()->phone ?? '') }}">
                                     </div>
+                                    @error('phone') <span class="text-danger small mt-1 d-block">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label fw-bold text-muted small text-uppercase letter-spacing-1">Email đăng nhập</label>
@@ -173,5 +174,5 @@
     <script id="error-tab-data" type="application/json">
         { "hasPasswordError": {{ session('error_tab') == 'password' || $errors->has('current_password') || $errors->has('new_password') ? 'true' : 'false' }} }
     </script>
-    <script src="{{ asset('js/student/student_settings.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_settings.js') }}"></script>
 @endpush

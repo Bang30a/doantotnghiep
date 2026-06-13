@@ -1,11 +1,11 @@
 $(document).ready(function() {
         // ===============================
-    // DOI FORM NHAP TAY THEO LOAI CAU HOI
+    // ĐỔI FORM NHẬP TAY THEO LOẠI CÂU HỎI
     // ===============================
     function toggleManualQuestionForm() {
         let type = $('#exam_type').val();
 
-        console.log('Loai cau hoi dang chon:', type);
+        console.log('Loại câu hỏi đang chọn:', type);
 
         if (type === 'essay') {
             $('#manual_mcq_area').hide();
@@ -23,7 +23,7 @@ $(document).ready(function() {
     toggleManualQuestionForm();
     
     let modalElement = document.getElementById('successSaveModal');
-    if (modalElement && window.showSuccessModalOnLoad) {
+    if (modalElement && (modalElement.dataset.showOnLoad === 'true' || window.showSuccessModalOnLoad)) {
         let successModal = new bootstrap.Modal(modalElement);
         successModal.show();
     }
@@ -196,7 +196,7 @@ $(document).ready(function() {
                         <input type="text"
                             class="form-control edit-ans-input"
                             value="${ans.content || ''}"
-                            placeholder="Nhap dap an ${label}...">
+                            placeholder="Nhập đáp án ${label}...">
                     </div>
                 `;
             });
@@ -272,58 +272,134 @@ $(document).ready(function() {
         $('input[name="manual_correct"][value="0"]').prop('checked', true);
     });
 
-    $('#btn-generate-ai').click(function() {
+    $('#btn-generate-ai').click(async function() {
         let docId = $('#document_id').val();
-        let qCount = $('#question_count').val();
+        let qCount = Math.max(1, Math.min(50, parseInt($('#question_count').val() || '10', 10) || 10));
         let currentType = $('#exam_type').val();
+        let batchSize = currentType === 'essay' ? 5 : 10;
+        let totalBatches = Math.ceil(qCount / batchSize);
+        let maxBatches = totalBatches + 3;
 
         if(!docId) { alert('Vui lòng chọn tài liệu để AI phân tích!'); return; }
+
+        $('#question_count').val(qCount);
 
         let $btn = $(this); 
         let originalText = $btn.html();
         
         $btn.html('<span class="spinner-border spinner-border-sm"></span> Đang phân tích...').prop('disabled', true);
-        
-        $('#preview-questions-area').html(`
-            <div class="py-5 text-center bg-light rounded-3 mt-3">
-                <div class="spinner-border text-purple mb-2" style="width: 2rem; height: 2rem;" role="status"></div>
-                <h6 class="fw-bold text-purple fs-6">Đang sinh câu hỏi...</h6>
-                <p class="text-muted small mb-0" style="font-size: 0.8rem;">Vui lòng đợi trong giây lát</p>
-            </div>
-        `);
 
-        $.ajax({
-            url: $('#studentExamForm').data('ajax-url'),
-            type: 'POST',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                document_id: docId, 
-                question_count: qCount,
-                exam_type: currentType
-            },
-            success: function(response) {
-                if(response.success) {
-                    let aiData = response.data.map(q => ({...q, type: currentType}));
-                    quizQuestions = quizQuestions.concat(aiData);
-                    renderQuestionsUI();
+        const renderGeneratingState = function(batchNumber, generatedCount) {
+            const visibleTotalBatches = Math.max(totalBatches, batchNumber);
+
+            $('#preview-questions-area').html(`
+                <div class="py-5 text-center bg-light rounded-3 mt-3">
+                    <div class="spinner-border text-purple mb-2" style="width: 2rem; height: 2rem;" role="status"></div>
+                    <h6 class="fw-bold text-purple fs-6">Đang sinh câu hỏi...</h6>
+                    <p class="text-muted small mb-1" style="font-size: 0.8rem;">Đợt ${batchNumber}/${visibleTotalBatches} - đã tạo ${generatedCount}/${qCount} câu không trùng</p>
+                    <p class="text-muted small mb-0" style="font-size: 0.75rem;">Tối đa 50 câu/lần, hệ thống tự chia nhỏ và lọc câu trùng</p>
+                </div>
+            `);
+        };
+
+        try {
+            const ajaxUrl = $('#studentExamForm').data('ajax-url');
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            const generatedQuestions = [];
+            const normalizeQuestionContent = (content) => String(content || '')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd')
+                .replace(/Đ/g, 'd')
+                .toLowerCase()
+                .replace(/[^a-z0-9\s]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            const getExcludedQuestions = () => quizQuestions
+                .concat(generatedQuestions)
+                .map(q => q.content)
+                .filter(Boolean);
+
+            if (!ajaxUrl) {
+                throw new Error('Đường dẫn generate AI không hợp lệ.');
+            }
+
+            for (let batch = 1; generatedQuestions.length < qCount && batch <= maxBatches; batch++) {
+                if (generatedQuestions.length >= qCount) break;
+
+                let batchQuestionCount = Math.min(batchSize, qCount - generatedQuestions.length);
+                if (batchQuestionCount <= 0) break;
+
+                renderGeneratingState(batch, generatedQuestions.length);
+
+                const response = await fetch(ajaxUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken || '',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        document_id: docId,
+                        question_count: batchQuestionCount,
+                        exam_type: currentType,
+                        exclude_questions: getExcludedQuestions().slice(-80)
+                    })
+                });
+
+                const responseText = await response.text();
+                let resData = null;
+
+                try {
+                    resData = responseText ? JSON.parse(responseText) : null;
+                } catch (parseError) {
+                    throw new Error('Máy chủ trả về dữ liệu không hợp lệ. Có thể request AI đã bị timeout, vui lòng thử lại sau.');
                 }
-            },
-            error: function(xhr) {
-                let msg = 'Lỗi kết nối AI. Vui lòng thử lại sau.';
-                if(xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
-                
-                $('#preview-questions-area').html(`
+
+                if (!response.ok || !resData || !resData.success) {
+                    throw new Error(resData?.message || 'Lỗi kết nối AI. Vui lòng thử lại sau.');
+                }
+
+                let batchData = (resData.data || []).map(q => ({...q, type: q.type || currentType}));
+                const seenKeys = new Set(getExcludedQuestions().map(normalizeQuestionContent));
+                const uniqueBatchData = batchData.filter(q => {
+                    const key = normalizeQuestionContent(q.content);
+
+                    if (!key || seenKeys.has(key)) {
+                        return false;
+                    }
+
+                    seenKeys.add(key);
+                    return true;
+                });
+
+                generatedQuestions.push(...uniqueBatchData);
+            }
+
+            if (generatedQuestions.length === 0) {
+                throw new Error('AI chưa tạo được câu hỏi hợp lệ.');
+            }
+
+            if (generatedQuestions.length < qCount) {
+                throw new Error(`AI chỉ tạo được ${generatedQuestions.length}/${qCount} câu không trùng. Tài liệu có thể chưa đủ ý mới, vui lòng giảm số câu hoặc đổi tài liệu.`);
+            }
+
+            quizQuestions = quizQuestions.concat(generatedQuestions.slice(0, qCount));
+            renderQuestionsUI();
+        } catch (error) {
+            console.error('Lỗi AI Generate:', error);
+
+            $('#preview-questions-area').html(`
                     <div class="py-4 text-center bg-danger bg-opacity-10 text-danger rounded-3 mt-3">
                         <i class="bi bi-exclamation-triangle-fill fs-3 mb-2 d-block"></i>
                         <h6 class="fw-bold fs-6">Thất bại</h6>
-                        <p class="small fw-medium mb-0 px-3">${msg}</p>
+                    <p class="small fw-medium mb-0 px-3">${error.message || 'Lỗi kết nối AI. Vui lòng thử lại sau.'}</p>
                     </div>
                 `);
-            },
-            complete: function() {
-                $btn.html(originalText).prop('disabled', false);
-            }
-        });
+        } finally {
+            $btn.html(originalText).prop('disabled', false);
+        }
     });
 
     $('#studentExamForm').submit(function(e) {

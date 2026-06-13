@@ -3,7 +3,7 @@
 @section('title', 'Chi tiết đề thi: ' . $exam->title)
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_exam_details.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_exam_details.css') }}">
 @endpush
 
 @section('content')
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="d-flex gap-2 w-100 w-md-auto">
-                <button class="btn btn-outline-white fw-bold rounded-pill px-4 py-2 flex-grow-1 flex-md-grow-0 shadow-sm" id="btn-export-excel">
+                <button type="button" class="btn btn-outline-white fw-bold rounded-pill px-4 py-2 flex-grow-1 flex-md-grow-0 shadow-sm" id="btn-export-excel" data-export-table="#tableResults" data-export-name="bang-diem-{{ $exam->id }}">
                     <i class="bi bi-download me-1"></i> Xuất điểm
                 </button>
                 <a href="{{ route('teacher.exams.edit', $exam->id) }}" class="btn btn-light rounded-pill px-4 fw-bold shadow-sm d-inline-flex align-items-center">
@@ -213,5 +213,5 @@
 @push('scripts')
     {{-- Giữ lại file JS gốc để xử lý logic Tìm kiếm Học viên và Xuất Excel --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/teacher/teacher_exam_details.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_exam_details.js') }}"></script>
 @endpush

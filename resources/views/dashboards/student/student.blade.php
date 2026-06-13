@@ -3,12 +3,13 @@
 @section('title', 'Bảng điều khiển')
 
 @section('content')
-    <div class="mb-5 mt-4">
+    <div class="student-dashboard-page">
+    <section class="student-hero-band">
         <h2 class="fw-800 text-dark mb-1">
             Xin chào, {{ Auth::user()->name ?? 'Học viên' }}! <span class="wave">👋</span>
         </h2>
         <p class="text-muted fs-6 fw-medium">Hôm nay bạn muốn chinh phục kiến thức nào mới?</p>
-    </div>
+    </section>
 
     <div class="row g-4 mb-5">
         <div class="col-md-3">
@@ -149,29 +150,53 @@
         </div>
     </div>
 
-    <div class="mb-5">
-        <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
-            <span class="title-line"></span> Khám phá tính năng AI
-        </h5>
-        <div class="quick-actions-wrapper d-flex gap-3 flex-wrap">
-            <a href="{{ route('student.classrooms') ?? '#' }}" class="action-card rounded-4 p-3 flex-fill text-center">
-                <div class="action-icon bg-primary-light text-primary"><i class="bi bi-diagram-3"></i></div>
-                <span class="fw-bold small mt-2 d-block">Lớp học</span>
-            </a>
-            <a href="{{ route('student.documents') ?? '#' }}" class="action-card rounded-4 p-3 flex-fill text-center">
-                <div class="action-icon bg-success-light text-success"><i class="bi bi-folder-symlink"></i></div>
-                <span class="fw-bold small mt-2 d-block">Kho tài liệu</span>
-            </a>
-            <a href="{{ route('student.exams.create') ?? '#' }}" class="action-card active rounded-4 p-3 flex-fill text-center shadow-purple">
-                <div class="action-icon bg-purple text-white"><i class="bi bi-magic"></i></div>
-                <span class="fw-bold small mt-2 d-block">Tạo đề AI</span>
-            </a>
-            <a href="{{ route('student.question-banks') ?? '#' }}" class="action-card rounded-4 p-3 flex-fill text-center">
-                <div class="action-icon bg-warning-light text-warning"><i class="bi bi-collection-play"></i></div>
-                <span class="fw-bold small mt-2 d-block">Ngân hàng</span>
+    <section class="ai-launch-panel">
+        <div class="ai-launch-heading">
+            <div>
+                <h5><span class="title-line"></span> Khám phá tính năng AI</h5>
+                <p>Tạo đề luyện tập từ tài liệu, lưu vào ngân hàng và luyện lại bất cứ lúc nào.</p>
+            </div>
+            <a href="{{ route('student.exams.create', ['show_back' => 1]) }}" class="ai-launch-main-btn">
+                <i class="bi bi-magic"></i> Tạo đề ngay
             </a>
         </div>
-    </div>
+
+        <div class="ai-action-grid">
+            <a href="{{ route('student.exams.create', ['show_back' => 1]) }}" class="ai-action-card ai-action-primary">
+                <span class="ai-action-icon"><i class="bi bi-magic"></i></span>
+                <span class="ai-action-content">
+                    <strong>Tạo đề AI</strong>
+                    <small>Chọn tài liệu, cấu hình số câu rồi sinh đề trắc nghiệm hoặc tự luận.</small>
+                    <em>{{ ($documentsCount ?? 0) > 0 ? ($documentsCount . ' tài liệu sẵn sàng') : 'Cần upload tài liệu trước' }}</em>
+                </span>
+                <span class="ai-action-arrow"><i class="bi bi-arrow-right"></i></span>
+            </a>
+
+            <a href="{{ route('student.documents') }}" class="ai-action-card ai-action-docs">
+                <span class="ai-action-icon"><i class="bi bi-folder-symlink"></i></span>
+                <span class="ai-action-content">
+                    <strong>Kho tài liệu</strong>
+                    <small>{{ $documentsCount ?? 0 }} tài liệu đã lưu</small>
+                </span>
+            </a>
+
+            <a href="{{ route('student.question-banks') }}" class="ai-action-card ai-action-bank">
+                <span class="ai-action-icon"><i class="bi bi-collection-play"></i></span>
+                <span class="ai-action-content">
+                    <strong>Ngân hàng đề</strong>
+                    <small>{{ $questionBanksCount ?? 0 }} bộ đề tự luyện</small>
+                </span>
+            </a>
+
+            <a href="{{ route('student.classrooms') }}" class="ai-action-card ai-action-class">
+                <span class="ai-action-icon"><i class="bi bi-diagram-3"></i></span>
+                <span class="ai-action-content">
+                    <strong>Lớp học</strong>
+                    <small>{{ $classroomsCount ?? 0 }} lớp đang tham gia</small>
+                </span>
+            </a>
+        </div>
+    </section>
 
     <div class="row g-4 mb-5">
         <div class="col-md-4">
@@ -195,5 +220,6 @@
                 <p class="mb-0 text-muted small">Upload file PDF bài giảng để AI tạo ra bộ câu hỏi sát thực tế nhất.</p>
             </div>
         </div>
+    </div>
     </div>
 @endsection

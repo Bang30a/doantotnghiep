@@ -5,7 +5,7 @@
 @section('content')
 
     <!-- Tiêu đề trang & Nút quay lại -->
-    <div class="d-flex align-items-center gap-3 mb-4 mt-2 border-bottom border-light-subtle pb-3">
+    <div class="admin-page-heading d-flex align-items-center gap-3 mb-4 mt-2 pb-3">
         <a href="{{ route('admin.classrooms') }}" class="btn-back">
             <i class="bi bi-arrow-left"></i>
         </a>

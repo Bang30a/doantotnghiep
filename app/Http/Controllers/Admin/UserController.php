@@ -18,6 +18,11 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
+    public function manageUsers()
+    {
+        return redirect()->route('admin.teachers');
+    }
+
     // ==========================================
     // 1. QUẢN LÝ GIẢNG VIÊN
     // ==========================================
@@ -44,6 +49,13 @@ class UserController extends Controller
         $this->userService->updateUser($teacher, $request->validated());
         
         return back()->with('success', 'Đã cập nhật thông tin giảng viên thành công!');
+    }
+
+    public function destroyTeacher($id)
+    {
+        $message = $this->userService->deleteUserByRole($id, 'teacher');
+
+        return redirect()->route('admin.teachers')->with('success', $message);
     }
 
     // ==========================================
@@ -79,6 +91,13 @@ class UserController extends Controller
         
         return back()->with('success', 'Đã cập nhật thông tin học viên thành công!');
     }
+
+    public function destroyStudent($id)
+    {
+        $message = $this->userService->deleteUserByRole($id, 'student');
+
+        return redirect()->route('admin.students')->with('success', $message);
+    }
     // ==========================================
     // 4. KHÓA / MỞ KHÓA TÀI KHOẢN (GIẢNG VIÊN & HỌC VIÊN)
     // ==========================================
@@ -86,6 +105,16 @@ class UserController extends Controller
     {
         // Gọi Service xử lý logic và nhận lại câu thông báo
         $message = $this->userService->toggleLock($id);
+
+        if (request()->expectsJson()) {
+            $user = User::findOrFail($id);
+
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'is_locked' => $user->status === 'locked',
+            ]);
+        }
         
         return back()->with('success', $message);
     }

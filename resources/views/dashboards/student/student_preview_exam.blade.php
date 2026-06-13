@@ -3,7 +3,7 @@
 @section('title', 'Xem trước đề: ' . ($exam->title ?? 'Chi tiết đề thi'))
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/student/student_preview_exam.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/student/student_preview_exam.css') }}">
 @endpush
 
 @section('content')
@@ -17,8 +17,8 @@
                 <p class="text-muted mb-0">{{ $exam->description ?? 'Không có mô tả cho đề thi này.' }}</p>
             </div>
             
-            <div class="d-flex flex-wrap gap-3">
-                <button class="btn btn-outline-theme fw-bold d-flex align-items-center gap-2 px-4 py-2 rounded-3 border-purple-subtle text-purple-dark bg-light">
+            <div class="d-flex flex-wrap gap-3 preview-actions">
+                <button type="button" id="btnPrintExam" class="btn btn-outline-theme fw-bold d-flex align-items-center gap-2 px-4 py-2 rounded-3 border-purple-subtle text-purple-dark bg-light">
                     <i class="bi bi-printer"></i> In đề
                 </button>
                 <a href="{{ route('exams.play', $exam->id ?? 1) }}" class="btn btn-theme-primary fw-bold d-flex align-items-center gap-2 px-4 py-2 rounded-3 shadow-sm">
@@ -135,9 +135,192 @@
             </div>
         @endforelse
     </div>
+
+    @php
+        $printQuestions = collect($exam->questions ?? []);
+        $printQuestionCount = $printQuestions->count();
+        $formatPrintScore = function ($score) {
+            $formatted = number_format((float) $score, 2, ',', '.');
+            return rtrim(rtrim($formatted, '0'), ',');
+        };
+        $getQuestionScore = function () use ($printQuestionCount) {
+            return $printQuestionCount > 0 ? 10 / $printQuestionCount : 0;
+        };
+        $buildEssayRubricRows = function ($rawText, $questionScore) use ($formatPrintScore) {
+            $lines = preg_split('/\R+/', trim((string) $rawText));
+            $items = collect($lines)->map(fn ($line) => trim($line))->filter()->values();
+            $hasBulletRubric = $items->contains(fn ($line) => preg_match('/^\s*[-+]\s+/', $line));
+            $scoreUnits = $hasBulletRubric
+                ? $items->filter(fn ($line) => preg_match('/^\s*[-+]\s+/', $line))->count()
+                : $items->count();
+            $scoreUnits = max(1, $scoreUnits);
+            $unitScore = $questionScore / $scoreUnits;
+
+            $rows = $items->map(function ($line) use ($hasBulletRubric, $unitScore, $formatPrintScore) {
+                $isMainIdea = (bool) preg_match('/^\s*-\s+/', $line);
+                $isSubIdea = (bool) preg_match('/^\s*\+\s+/', $line);
+                $isScored = $hasBulletRubric ? ($isMainIdea || $isSubIdea) : true;
+                $cleanLine = preg_replace('/^\s*[-+]\s+/', '', $line);
+                $safeLine = e($cleanLine);
+                $safeLine = preg_replace('/\*\*(.*?)\*\*/s', '<strong>$1</strong>', $safeLine);
+
+                return [
+                    'html' => $safeLine,
+                    'score' => $isScored ? $formatPrintScore($unitScore) : null,
+                    'class' => $isMainIdea ? 'print-rubric-main' : ($isSubIdea ? 'print-rubric-sub' : 'print-rubric-line'),
+                    'marker' => $isSubIdea ? '+' : '-',
+                ];
+            });
+
+            return [
+                'rows' => $rows,
+                'unit_count' => $scoreUnits,
+                'unit_score' => $unitScore,
+            ];
+        };
+        $questionScore = $getQuestionScore();
+    @endphp
+
+    <section class="print-exam-paper" aria-hidden="true">
+        <div class="print-paper-header">
+            <div class="print-brand">EduQuiz AI</div>
+            <div class="print-meta-line">ĐỀ KIỂM TRA / ĐỀ TỰ LUYỆN</div>
+            <h1>{{ $exam->title }}</h1>
+            <p>{{ $exam->description ?? 'Không có mô tả cho đề thi này.' }}</p>
+        </div>
+
+        <div class="print-info-grid">
+            <div><strong>Môn:</strong> {{ $exam->subject ?? 'Môn chung' }}</div>
+            <div><strong>Thời gian:</strong> {{ $exam->duration ?? 0 }} phút</div>
+            <div><strong>Số câu:</strong> {{ isset($exam->questions) ? $exam->questions->count() : 0 }}</div>
+            <div><strong>Ngày tạo:</strong> {{ isset($exam->created_at) ? $exam->created_at->format('d/m/Y') : date('d/m/Y') }}</div>
+            <div><strong>Tổng điểm:</strong> 10 điểm</div>
+            <div><strong>Điểm mỗi câu:</strong> 10/{{ max(1, $printQuestionCount) }} điểm (~{{ $formatPrintScore($questionScore) }})</div>
+        </div>
+
+        <div class="print-student-info">
+            <span>Họ và tên: ....................................................</span>
+            <span>Lớp: ............................</span>
+            <span>Điểm: ............................</span>
+        </div>
+
+        <div class="print-note">
+            Học viên làm bài trực tiếp trên đề hoặc theo hướng dẫn của giảng viên. Chọn một đáp án đúng nhất với câu hỏi trắc nghiệm.
+        </div>
+
+        <div class="print-question-list">
+            @forelse($exam->questions ?? [] as $index => $question)
+                <article class="print-question-item">
+                    <div class="print-question-title">
+                        <strong>Câu {{ $index + 1 }}.</strong> {{ $question->content }}
+                    </div>
+
+                    @if($question->type === 'essay')
+                        <div class="print-answer-lines">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    @else
+                        <div class="print-options-grid">
+                            @foreach($question->answers as $aIndex => $answer)
+                                <div class="print-option">
+                                    <strong>{{ chr(65 + $aIndex) }}.</strong> {{ $answer->content }}
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </article>
+            @empty
+                <div class="print-empty">Đề thi này chưa có câu hỏi.</div>
+            @endforelse
+        </div>
+    </section>
+
+    <section class="print-answer-key-paper" aria-hidden="true">
+        <div class="print-paper-header">
+            <div class="print-brand">EduQuiz AI</div>
+            <div class="print-meta-line">ĐÁP ÁN VÀ HƯỚNG DẪN CHẤM</div>
+            <h1>{{ $exam->title }}</h1>
+            <p>Phần này chỉ được in khi bật chế độ hiển thị đáp án và giải thích AI.</p>
+        </div>
+
+        <div class="print-info-grid">
+            <div><strong>Tổng điểm:</strong> 10 điểm</div>
+            <div><strong>Số câu:</strong> {{ $printQuestionCount }}</div>
+            <div><strong>Điểm mỗi câu:</strong> 10/{{ max(1, $printQuestionCount) }} điểm (~{{ $formatPrintScore($questionScore) }})</div>
+            <div><strong>Nguyên tắc:</strong> Trắc nghiệm đúng được đủ điểm, tự luận chia theo từng ý.</div>
+        </div>
+
+        <div class="print-answer-list">
+            @forelse($exam->questions ?? [] as $index => $question)
+                <article class="print-answer-item">
+                    <div class="print-answer-title">
+                        <strong>Câu {{ $index + 1 }}.</strong> {{ $question->content }}
+                        <span class="print-question-score">{{ $formatPrintScore($questionScore) }} điểm</span>
+                    </div>
+
+                    @if($question->type === 'essay')
+                        @php
+                            $essayAnswer = $question->answers->first()->content ?? 'Chưa có gợi ý đáp án.';
+                            $essayRubric = $buildEssayRubricRows($essayAnswer, $questionScore);
+                        @endphp
+                        <div class="print-answer-content">
+                            <div class="print-answer-label">
+                                Gợi ý đáp án / bareme chấm điểm:
+                                <span class="print-score-note">
+                                    {{ $essayRubric['unit_count'] }} ý, mỗi ý {{ $formatPrintScore($essayRubric['unit_score']) }} điểm.
+                                </span>
+                            </div>
+                            <ul class="print-rubric-list">
+                                @foreach($essayRubric['rows'] as $rubricRow)
+                                    <li class="{{ $rubricRow['class'] }}">
+                                        <span class="print-rubric-marker">{{ $rubricRow['marker'] }}</span>
+                                        <span class="print-rubric-text">{!! $rubricRow['html'] !!}</span>
+                                        @if($rubricRow['score'] !== null)
+                                            <span class="print-rubric-score">{{ $rubricRow['score'] }} điểm</span>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @else
+                        @php
+                            $correctIndex = $question->answers->search(function ($answer) {
+                                return (bool) $answer->is_correct;
+                            });
+                            $correctAnswer = $correctIndex !== false ? $question->answers[$correctIndex] : null;
+                            $correctLabel = $correctIndex !== false ? chr(65 + $correctIndex) : '?';
+                        @endphp
+                        <div class="print-answer-content">
+                            <div class="print-answer-label">
+                                Đáp án đúng: {{ $correctLabel }}@if($correctAnswer). {{ $correctAnswer->content }}@endif
+                                <span class="print-score-note">({{ $formatPrintScore($questionScore) }} điểm)</span>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(!empty($question->ai_explanation))
+                        @php
+                            $safePrintExplanation = e($question->ai_explanation);
+                            $safePrintExplanation = preg_replace('/\*\*(.*?)\*\*/s', '<strong>$1</strong>', $safePrintExplanation);
+                        @endphp
+                        <div class="print-explanation-content">
+                            <div class="print-answer-label">Giải thích AI:</div>
+                            <div>{!! nl2br($safePrintExplanation) !!}</div>
+                        </div>
+                    @endif
+                </article>
+            @empty
+                <div class="print-empty">Đề thi này chưa có câu hỏi.</div>
+            @endforelse
+        </div>
+    </section>
 @endsection
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/student/student_preview_exam.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/student/student_preview_exam.js') }}"></script>
 @endpush

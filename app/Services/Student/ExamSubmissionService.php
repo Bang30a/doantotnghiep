@@ -7,6 +7,7 @@ use App\Models\Answer;
 use App\Models\Result;
 use App\Models\StudentAnswer;
 use App\Models\ActivityLog;
+use App\Support\RichTextSanitizer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,10 +32,16 @@ class ExamSubmissionService
 
                 if ($selectedInput) {
                     if ($question->type === 'essay') {
+                        $content = RichTextSanitizer::sanitize($selectedInput);
+
+                        if (RichTextSanitizer::isBlank($content)) {
+                            continue;
+                        }
+
                         StudentAnswer::create([
                             'exam_result_id' => $result->id,
                             'question_id' => $question->id,
-                            'content' => $selectedInput,
+                            'content' => $content,
                             'answer_id' => null
                         ]);
                     } else {

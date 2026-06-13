@@ -3,13 +3,13 @@
 @section('title', 'Kho tài liệu')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/teacher/teacher_documents.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ versioned_asset('css/teacher/teacher_documents.css') }}">
 @endpush
 
 @section('content')
 
     <!-- Tiêu đề & Nút Upload -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 border-bottom border-light-subtle pb-3 mt-2 gap-3">
+    <div class="teacher-page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 mt-2 gap-3">
         <div>
             <h3 class="fw-800 text-dark mb-1 d-flex align-items-center gap-2">
                 Kho Tài Liệu <i class="bi bi-folder2-open theme-text-primary"></i>
@@ -17,7 +17,7 @@
             <p class="text-muted fw-medium mb-0">Lưu trữ bài giảng, tài liệu PDF/Word để làm nguồn cho AI tạo đề thi</p>
         </div>
         
-        <button class="btn btn-purple-gradient text-white fw-bold rounded-pill px-4 py-2.5 d-flex align-items-center gap-2 hover-lift transition-all" data-bs-toggle="modal" data-bs-target="#uploadModal">
+        <button type="button" class="btn btn-purple-gradient text-white fw-bold rounded-pill px-4 py-2.5 d-flex align-items-center gap-2 hover-lift transition-all" data-bs-toggle="modal" data-bs-target="#uploadModal">
             <i class="bi bi-cloud-arrow-up-fill fs-5"></i> Tải tài liệu lên
         </button>
     </div>
@@ -137,7 +137,7 @@
                     </div>
                     <h4 class="text-dark fw-bold mb-2">Kho tài liệu trống</h4>
                     <p class="text-muted mb-4 max-w-md mx-auto fw-medium">Tải lên các file PDF, Word bài giảng của bạn. Hệ thống AI của EduQuiz sẽ phân tích và tạo ra hàng trăm câu hỏi tự động chỉ trong vài giây!</p>
-                    <button class="btn btn-purple-gradient rounded-pill px-4 py-2.5 fw-bold transition-all" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    <button type="button" class="btn btn-purple-gradient rounded-pill px-4 py-2.5 fw-bold transition-all" data-bs-toggle="modal" data-bs-target="#uploadModal">
                         <i class="bi bi-plus-lg me-1"></i> Tải tài liệu lên ngay
                     </button>
                 </div>
@@ -210,5 +210,5 @@
 
 @push('scripts')
     {{-- Giữ nguyên script xử lý giao diện Upload Modal (Tên file, kéo thả) --}}
-    <script src="{{ asset('js/teacher/teacher_documents.js') }}?v={{ time() }}"></script>
+    <script src="{{ versioned_asset('js/teacher/teacher_documents.js') }}"></script>
 @endpush
